@@ -12,10 +12,10 @@ void Platform::keyPressEvent(QKeyEvent * event)
 {
     switch (event->key()) { // TODO repos value
     case Qt::Key_Left:
-        setPos({x() - 20, y()});
+        setPos({x() - dx_, y()});
         break;
     case Qt::Key_Right:
-        setPos({x() + 20, y()});
+        setPos({x() + dx_, y()});
         break;
     }
 }

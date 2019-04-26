@@ -9,14 +9,14 @@ SOURCES += \
     game.cpp \
     entity.cpp \
     component.cpp \
-    player.cpp
+    platform.cpp
 
 HEADERS += \
     stdafx.hpp \
     game.hpp \
     entity.hpp \
     component.hpp \
-    player.hpp
+    platform.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
 

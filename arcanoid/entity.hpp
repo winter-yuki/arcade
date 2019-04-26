@@ -1,11 +1,10 @@
 #pragma once
 
 #include "stdafx.hpp"
-
 #include "component.hpp"
 
 
-class Entity final {
+class Entity {
 public:
     void addComponent(Component * component);
     void removeComponent(Component * component);
@@ -14,3 +13,6 @@ public:
 private:
     std::unordered_map<Component::Id, Component *> components_;
 };
+
+
+using EntityP = std::unique_ptr<Entity>;

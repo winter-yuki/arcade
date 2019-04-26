@@ -3,5 +3,5 @@
 
 Component::Id Component::getId() const
 {
-    return { typeid (*this) };
+    return { typeid (this) };
 }

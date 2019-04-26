@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <optional>
 #include <functional>
+#include <memory>
 
 #include <boost/noncopyable.hpp>
 

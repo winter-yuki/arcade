@@ -16,7 +16,8 @@ HEADERS += \
     game.hpp \
     entity.hpp \
     component.hpp \
-    platform.hpp
+    platform.hpp \
+    border.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
 

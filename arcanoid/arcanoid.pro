@@ -9,7 +9,6 @@ SOURCES += \
     game.cpp \
     entity.cpp \
     component.cpp \
-    render.cpp \
     player.cpp
 
 HEADERS += \
@@ -17,7 +16,9 @@ HEADERS += \
     game.hpp \
     entity.hpp \
     component.hpp \
-    render.hpp \
     player.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
+
+RESOURCES += \
+    arcanoid.qrc

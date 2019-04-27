@@ -11,7 +11,7 @@ class Move final
     Q_OBJECT
 
 public:
-    explicit Move(Entity * owner, Timer * timer);
+    explicit Move(Entity * owner, Timer const * timer);
     ~Move();
 
     void setV(QVector2D v); // Pixel per second
@@ -21,7 +21,7 @@ public slots:
     void update(int64_t dt);
 
 private:
-    Timer * timer_;
+    Timer const * timer_;
     QVector2D v_;
 };
 

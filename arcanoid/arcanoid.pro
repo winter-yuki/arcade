@@ -13,7 +13,8 @@ SOURCES += \
     ecarrowkeys.cpp \
     timer.cpp \
     move.cpp \
-    controller.cpp
+    controller.cpp \
+    eccollisions.cpp
 
 HEADERS += \
     stdafx.hpp \
@@ -24,7 +25,8 @@ HEADERS += \
     ecarrowkeys.hpp \
     timer.hpp \
     move.hpp \
-    controller.hpp
+    controller.hpp \
+    eccollisions.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
 

@@ -3,7 +3,7 @@
 #include "entity.hpp"
 
 
-Move::Move(Entity * owner, Timer * timer)
+Move::Move(Entity * owner, Timer const * timer)
     : Component(owner)
     , timer_   (timer)
 {

@@ -12,11 +12,13 @@ Game::Game(QWidget * parent)
     scene_->setSceneRect({{0, 0}, DEF_SIZE});
     setFixedSize(DEF_SIZE + QSize(5, 5));
 
-    auto backgroundImage = QPixmap(":/images/hydra.jpg").scaledToHeight(height());
-    setBackgroundBrush(QBrush(backgroundImage));
+    setBackgroundBrush(QBrush(QPixmap(":/images/hydra.jpg").scaled(size())));
 
 
     double borderWidth = 5;
+
+    // Create registry with tangible items
+    field_ = makeField();
 
     // Create player
     auto player = makePlayer();
@@ -24,14 +26,17 @@ Game::Game(QWidget * parent)
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
     entities_.push_back(player);
+    field_->addEntity(player);
 
     // Add bounds
     auto borders = makeBorders(borderWidth);
-    std::move(borders.begin(), borders.end(), std::back_inserter(entities_));
+    std::copy(borders.begin(), borders.end(), std::back_inserter(entities_));
+    std::copy(borders.begin(), borders.end(), std::back_inserter(field_->entities()));
 
     // Create ball TODO
     auto ball = makeBall();
     entities_.push_back(ball);
+    field_->addEntity(ball);
 }
 
 

@@ -2,6 +2,7 @@
 
 #include "stdafx.hpp"
 #include "entity.hpp"
+#include "field.hpp"
 
 
 class Game
@@ -20,4 +21,6 @@ private:
 
     QGraphicsScene * scene_;
     std::vector<EntityP> entities_;
+    FieldP field_;
+
 };

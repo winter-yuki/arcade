@@ -24,7 +24,7 @@ private:
 };
 
 
-using EntityP = std::unique_ptr<Entity>;
+using EntityP = std::shared_ptr<Entity>;
 inline EntityP makeEntity(QGraphicsScene * scene) {
-    return std::make_unique<Entity>(scene);
+    return std::make_shared<Entity>(scene);
 }

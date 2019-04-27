@@ -2,13 +2,11 @@
 
 
 ECArrowKeys::ECArrowKeys(QGraphicsScene * scene, EntityP entity)
-    : scene_ (scene)
-    , entity_(entity)
+    : Controller(scene, entity)
 {
-    assert(scene_);
-    assert(entity_->form());
+    assert(scene);
+    assert(entity->form());
 
-    scene_->addItem(this);
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
 }
@@ -28,7 +26,7 @@ double ECArrowKeys::dx() const
 
 void ECArrowKeys::setRBorder(double rborder)
 {
-    rborder_ = scene_->width() - rborder;
+    rborder_ = scene()->width() - rborder;
 }
 
 
@@ -52,41 +50,27 @@ double ECArrowKeys::lborder() const
 
 void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 {
-    auto pos = entity_->form()->pos();
+    auto pos = entity()->form()->pos();
     switch (event->key()) {
     case Qt::Key_Left:
         if (pos.x() - dx_ >= lborder_) {
-            entity_->form()->setX(pos.x() - dx_);
+            entity()->form()->setX(pos.x() - dx_);
         } else {
-            entity_->form()->setX(lborder_);
+            entity()->form()->setX(lborder_);
         }
         break;
 
     case Qt::Key_Right:
-        auto width = entity_->form()->boundingRect().width() * entity_->form()->scale();
+        auto width = entity()->form()->scale() *
+                entity()->form()->boundingRect().width();
         auto rpoint = pos.x() + width;
         if (rpoint + dx_ <= rborder_) {
-            entity_->form()->setX(pos.x() + dx_);
+            entity()->form()->setX(pos.x() + dx_);
         } else {
-            entity_->form()->setX(rborder_ - width);
+            entity()->form()->setX(rborder_ - width);
         }
         break;
     }
-}
-
-
-void ECArrowKeys::paint(QPainter * painter,
-                        QStyleOptionGraphicsItem const * option, QWidget * widget)
-{
-    Q_UNUSED(painter)
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-}
-
-
-QRectF ECArrowKeys::boundingRect() const
-{
-    return { 0, 0, 0, 0 };
 }
 
 

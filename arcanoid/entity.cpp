@@ -24,13 +24,19 @@ QGraphicsItem * Entity::form()
 
 void Entity::addComponent(Component * component)
 {
-    components_.insert({component->getId(), component});
+    addComponent(ComponentP(component));
 }
 
 
-void Entity::removeComponent(Component * component)
+void Entity::addComponent(ComponentP component)
 {
-    components_.erase(component->getId());
+    components_.insert({component->getId(), std::move(component)});
+}
+
+
+void Entity::removeComponent(Component::Id id)
+{
+    components_.erase(id);
 }
 
 
@@ -38,7 +44,7 @@ std::optional<Component *> Entity::findComponent(Component::Id id)
 {
     auto it = components_.find(id);
     if (it != components_.end()) {
-        return { it->second };
+        return { it->second.get() };
     }
     return std::nullopt;
 }

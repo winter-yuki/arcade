@@ -2,6 +2,7 @@
 
 #include "entity.hpp"
 #include "ecarrowkeys.hpp"
+#include "move.hpp"
 
 
 Game::Game(QWidget * parent)
@@ -15,7 +16,9 @@ Game::Game(QWidget * parent)
     setBackgroundBrush(QBrush(QPixmap(":/images/hydra.jpg").scaled(size())));
 
 
-    double borderWidth = 5;
+    // Set game update timer
+    timer_ = new Timer(this);
+    timer_->start(15);
 
     // Create registry with tangible items
     field_ = makeField();
@@ -23,6 +26,7 @@ Game::Game(QWidget * parent)
     // Create player
     auto player = makePlayer();
     auto * keyController = new ECArrowKeys(scene_, player);
+    double borderWidth = 5;
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
     entities_.push_back(player);
@@ -37,6 +41,10 @@ Game::Game(QWidget * parent)
     auto ball = makeBall();
     entities_.push_back(ball);
     field_->addEntity(ball);
+
+    auto move = new Move(ball.get(), timer_);
+    move->setV({0.2f, 0.5f});
+    ball->addComponent(move);
 }
 
 

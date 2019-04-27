@@ -3,17 +3,24 @@
 #include "stdafx.hpp"
 
 
-// TODO form of component
+class Entity;
+
 class Component
         : boost::noncopyable {
 public:
     using Id = std::type_index;
 
-    Component()          = default;
+    explicit Component(Entity * owner);
     virtual ~Component() = default;
 
     Id getId() const;
+
+    Entity * entity();
+
+private:
+    Entity * entity_;
 };
 
+using ComponentP = std::unique_ptr<Component>;
 
 #define GET_ID(componentType) Component::Id(typeid (componentType))

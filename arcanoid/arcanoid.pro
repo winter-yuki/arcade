@@ -10,7 +10,9 @@ SOURCES += \
     entity.cpp \
     component.cpp \
     field.cpp \
-    ecarrowkeys.cpp
+    ecarrowkeys.cpp \
+    timer.cpp \
+    move.cpp
 
 HEADERS += \
     stdafx.hpp \
@@ -18,7 +20,9 @@ HEADERS += \
     entity.hpp \
     component.hpp \
     field.hpp \
-    ecarrowkeys.hpp
+    ecarrowkeys.hpp \
+    timer.hpp \
+    move.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
 

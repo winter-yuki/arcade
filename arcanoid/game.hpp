@@ -3,6 +3,7 @@
 #include "stdafx.hpp"
 #include "entity.hpp"
 #include "field.hpp"
+#include "timer.hpp"
 
 
 class Game
@@ -22,6 +23,7 @@ private:
     const int64_t FRAME_RATE = 60;
 
     QGraphicsScene * scene_;
+    Timer * timer_;
     std::vector<EntityP> entities_;
     FieldP field_;
 };

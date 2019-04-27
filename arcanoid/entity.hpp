@@ -12,13 +12,14 @@ public:
     QGraphicsItem * form();
 
     void addComponent(Component * component);
-    void removeComponent(Component * component);
+    void addComponent(ComponentP  component);
+    void removeComponent(Component::Id id);
     std::optional<Component *> findComponent(Component::Id id);
 
 private:
     QGraphicsScene * scene_;
     QGraphicsItem  * form_ = nullptr;
-    std::unordered_map<Component::Id, Component *> components_;
+    std::unordered_map<Component::Id, ComponentP> components_;
 };
 
 

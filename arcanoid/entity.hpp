@@ -17,9 +17,7 @@ public:
 
 private:
     QGraphicsScene * scene_;
-
-    QGraphicsItem * form_ = nullptr;
-
+    QGraphicsItem  * form_ = nullptr;
     std::unordered_map<Component::Id, Component *> components_;
 };
 

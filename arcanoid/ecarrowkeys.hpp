@@ -16,9 +16,9 @@ public:
     void setLBorder(double lborder);
     double lborder() const;
 
-
     void keyPressEvent(QKeyEvent * event) override;
 
+    // Unused
     void paint(QPainter * painter, QStyleOptionGraphicsItem const * option,
                QWidget * widget = nullptr) override;
     QRectF boundingRect() const override;

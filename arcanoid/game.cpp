@@ -33,10 +33,17 @@ Game::Game(QWidget * parent)
     std::copy(borders.begin(), borders.end(), std::back_inserter(entities_));
     std::copy(borders.begin(), borders.end(), std::back_inserter(field_->entities()));
 
-    // Create ball TODO
+    // Create ball
     auto ball = makeBall();
     entities_.push_back(ball);
     field_->addEntity(ball);
+}
+
+
+Game::~Game()
+{
+    // QGraphicsView doesn't take ownership of scene.
+    delete scene_;
 }
 
 
@@ -52,12 +59,12 @@ EntityP Game::makePlayer()
 {
     assert(scene_);
 
-    auto * platform = new QGraphicsPixmapItem;
-    platform->setPixmap(QPixmap(":/images/player.png"));
-    double scale = 5;
-    platform->setScale(scale);
-    platform->setPos(scene_->width() / 2 - scale * platform->boundingRect().width() / 2,
-                     scene_->height() - scale * platform->boundingRect().height());
+    auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 20});
+    platform->setPos({scene_->width() / 2 - platform->boundingRect().width() / 2,
+                     scene_->height() - platform->boundingRect().height()});
+    QColor color(0xAA00BB);
+    platform->setPen({color});
+    platform->setBrush({color});
 
     auto player = makeEntity(scene_);
     player->addForm(platform);

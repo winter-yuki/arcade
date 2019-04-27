@@ -7,8 +7,8 @@ int main(int argc, char * argv[])
 {
     QApplication app(argc, argv);
 
-    auto * game = new Game;
-    game->launch();
+    Game game;
+    game.launch();
 
     return QApplication::exec();
 }

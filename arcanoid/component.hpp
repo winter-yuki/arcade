@@ -16,4 +16,4 @@ public:
 };
 
 
-#define GET_ID(component) Component::Id(typeid (component))
+#define GET_ID(componentType) Component::Id(typeid (componentType))

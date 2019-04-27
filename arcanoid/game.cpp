@@ -9,8 +9,12 @@ Game::Game(QWidget * parent)
     , scene_(new QGraphicsScene)
 {
     setScene(scene_);
-    scene_->setSceneRect(0, 0, DEF_SIZE.width(), DEF_SIZE.height());
+    scene_->setSceneRect({{0, 0}, DEF_SIZE});
     setFixedSize(DEF_SIZE + QSize(5, 5));
+
+    auto backgroundImage = QPixmap(":/images/hydra.jpg").scaledToHeight(height());
+    setBackgroundBrush(QBrush(backgroundImage));
+
 
     double borderWidth = 5;
 
@@ -25,14 +29,9 @@ Game::Game(QWidget * parent)
     auto borders = makeBorders(borderWidth);
     std::move(borders.begin(), borders.end(), std::back_inserter(entities_));
 
-
-
-    // TODO create ball
-    //    // Create ball TODO
-    //    auto ball = new Ball;
-    //    ball->setPos(player_->pos() - QPointF(25, 45));
-    //    ball->setRect({0, 0, 50, 50});
-    //    scene_->addItem(ball);
+    // Create ball TODO
+    auto ball = makeBall();
+    entities_.push_back(ball);
 }
 
 
@@ -58,6 +57,21 @@ EntityP Game::makePlayer()
     auto player = makeEntity(scene_);
     player->addForm(platform);
     return player;
+}
+
+
+EntityP Game::makeBall()
+{
+    QColor ballColor(QRgb(0x00AADD));
+
+    auto * ball = new QGraphicsEllipseItem;
+    ball->setRect({100, 100, 50, 50});
+    ball->setBrush(QBrush(ballColor));
+    ball->setPen(QPen(ballColor));
+
+    auto entity = makeEntity(scene_);
+    entity->addForm(ball);
+    return entity;
 }
 
 

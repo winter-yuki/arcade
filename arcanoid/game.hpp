@@ -12,10 +12,11 @@ public:
 
 private:
     EntityP makePlayer();
-    std::vector<EntityP> makeBorders(double width = 20);
+    EntityP makeBall();
+    std::vector<EntityP> makeBorders(double width = 10);
 
 private:
-    constexpr static const QSize DEF_SIZE = { 1280, 720 };
+    constexpr static const QSize DEF_SIZE = { 720, 720 };
 
     QGraphicsScene * scene_;
     std::vector<EntityP> entities_;

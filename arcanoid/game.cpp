@@ -1,6 +1,7 @@
 #include "game.hpp"
 
 #include "entity.hpp"
+#include "ecarrowkeys.hpp"
 
 
 Game::Game(QWidget * parent)
@@ -11,12 +12,17 @@ Game::Game(QWidget * parent)
     scene_->setSceneRect(0, 0, DEF_SIZE.width(), DEF_SIZE.height());
     setFixedSize(DEF_SIZE + QSize(5, 5));
 
+    double borderWidth = 5;
+
     // Create player
-    entities_.push_back(makePlayer());
-    // TODO player controller
+    auto player = makePlayer();
+    auto * keyController = new ECArrowKeys(scene_, player);
+    keyController->setLBorder(borderWidth);
+    keyController->setRBorder(borderWidth);
+    entities_.push_back(player);
 
     // Add bounds
-    auto borders = makeBorders();
+    auto borders = makeBorders(borderWidth);
     std::move(borders.begin(), borders.end(), std::back_inserter(entities_));
 
 
@@ -44,10 +50,10 @@ EntityP Game::makePlayer()
 
     auto * platform = new QGraphicsPixmapItem;
     platform->setPixmap(QPixmap(":/images/player.png"));
-    double playerScale = 5;
-    platform->setScale(playerScale);
-    platform->setPos(scene_->width() / 2 - playerScale * platform->boundingRect().width() / 2,
-                     scene_->height() - playerScale * platform->boundingRect().height());
+    double scale = 5;
+    platform->setScale(scale);
+    platform->setPos(scene_->width() / 2 - scale * platform->boundingRect().width() / 2,
+                     scene_->height() - scale * platform->boundingRect().height());
 
     auto player = makeEntity(scene_);
     player->addForm(platform);
@@ -55,15 +61,14 @@ EntityP Game::makePlayer()
 }
 
 
-std::vector<EntityP> Game::makeBorders()
+std::vector<EntityP> Game::makeBorders(double width)
 {
     QColor borderColor(QRgb(0x00AA00));
-    double borderWidth = 5;
     std::array rects = {
-        new QGraphicsRectItem(QRectF{0, 0, borderWidth, scene_->height()}),
-        new QGraphicsRectItem(QRectF{0, 0, scene_->width(), borderWidth}),
-        new QGraphicsRectItem(QRectF{scene_->width() - borderWidth, 0,
-                                     borderWidth, scene_->height()})
+        new QGraphicsRectItem(QRectF{0, 0, width, scene_->height()}),
+        new QGraphicsRectItem(QRectF{0, 0, scene_->width(), width}),
+        new QGraphicsRectItem(QRectF{scene_->width() - width, 0,
+                                     width, scene_->height()})
     };
 
     for (auto rect : rects) {

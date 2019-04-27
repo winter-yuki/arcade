@@ -12,7 +12,7 @@ public:
 
 private:
     EntityP makePlayer();
-    std::vector<EntityP> makeBorders();
+    std::vector<EntityP> makeBorders(double width = 20);
 
 private:
     constexpr static const QSize DEF_SIZE = { 1280, 720 };

@@ -1,6 +1,27 @@
 #include "entity.hpp"
 
 
+Entity::Entity(QGraphicsScene * scene)
+    : scene_(scene)
+{
+    assert(scene);
+}
+
+
+void Entity::addForm(QGraphicsItem * form)
+{
+    assert(form);
+    form_ = form;
+    scene_->addItem(form_);
+}
+
+
+QGraphicsItem * Entity::form()
+{
+    return form_;
+}
+
+
 void Entity::addComponent(Component * component)
 {
     components_.insert({component->getId(), component});

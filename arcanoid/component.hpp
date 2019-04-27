@@ -3,6 +3,7 @@
 #include "stdafx.hpp"
 
 
+// TODO form of component
 class Component
         : boost::noncopyable {
 public:
@@ -15,4 +16,4 @@ public:
 };
 
 
-
+#define GET_ID(component) Component::Id(typeid (component))

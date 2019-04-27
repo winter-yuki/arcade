@@ -2,18 +2,21 @@
 
 #include "stdafx.hpp"
 #include "entity.hpp"
-#include "platform.hpp"
 
 
 class Game
-        : QGraphicsView {
+        : private QGraphicsView {
 public:
     explicit Game(QWidget * parent = nullptr);
     void launch();
 
 private:
+    EntityP makePlayer();
+    std::vector<EntityP> makeBorders();
+
+private:
     constexpr static const QSize DEF_SIZE = { 1280, 720 };
 
     QGraphicsScene * scene_;
-    Platform         * player_;
+    std::vector<EntityP> entities_;
 };

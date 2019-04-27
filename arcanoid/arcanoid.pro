@@ -9,15 +9,16 @@ SOURCES += \
     game.cpp \
     entity.cpp \
     component.cpp \
-    platform.cpp
+    field.cpp \
+    ecarrowkeys.cpp
 
 HEADERS += \
     stdafx.hpp \
     game.hpp \
     entity.hpp \
     component.hpp \
-    platform.hpp \
-    border.hpp
+    field.hpp \
+    ecarrowkeys.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
 

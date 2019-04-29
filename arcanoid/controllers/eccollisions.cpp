@@ -10,7 +10,7 @@ ECCollisions::ECCollisions(QGraphicsScene * scene, EntityW entity,
     assert(scene);
     assert(timer);
 
-    // It should be return after emitting "entityDeleted"
+    // WARNING: It should be return after emitting "entityDeleted"
     connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);
     connect(timer, &Timer::timeout, this, &ECCollisions::checkCollisions);
 }

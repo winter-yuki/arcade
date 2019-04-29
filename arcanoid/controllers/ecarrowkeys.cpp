@@ -9,7 +9,7 @@ ECArrowKeys::ECArrowKeys(QGraphicsScene * scene, EntityW entity)
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
 
-    // It should be return statement after emitting "entityDeleted"
+    // WARNING: It should be return statement after emitting "entityDeleted"
     connect(this, &ECArrowKeys::entityDeleted, this, &ECArrowKeys::harakiri);
 }
 

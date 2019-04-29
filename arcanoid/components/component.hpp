@@ -9,6 +9,8 @@ class Component
 public:
     using Id = std::type_index;
 
+    // WARNING: Do not delete component manually
+    // if it is already added to entity
     virtual ~Component() = default;
     Id getId() const;
     Entity * entity();

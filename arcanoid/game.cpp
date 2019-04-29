@@ -41,7 +41,7 @@ Game::Game(QWidget * parent)
     field_->addEntity(ball);
 
     auto move = new Move(timer_);
-    move->setV({2.f, 1.f});
+    move->setV({.2f, .1f});
     ball->addComponent(ComponentU(move));
 
     auto collisions = new ECCollisions(scene_, ball, field_, timer_);

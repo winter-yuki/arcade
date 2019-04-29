@@ -30,6 +30,7 @@ void basicCollisionHandler(EntityS & a, EntityS & b)
         assert(!n.value().isNull());
         assert(std::abs(n.value().length() - 1) < 1e-8f);
 
+        // Count speed vector after bounce
         auto newV = v - 2 * (v * n.value()) * n.value();
         assert(abs(newV.length() - v.length()) < 1e-8f);
 
@@ -37,7 +38,7 @@ void basicCollisionHandler(EntityS & a, EntityS & b)
 
     } else {
         qDebug() << "Collision detection isn't in time,"
-                    "object is already is figure";
+                    "object is already in figure";
         move->setV(-v);
     }
 }

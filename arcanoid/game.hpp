@@ -6,7 +6,7 @@
 #include "timer.hpp"
 
 
-class Game
+class Game final
         : private QGraphicsView {
 public:
     explicit Game(QWidget * parent = nullptr);
@@ -14,9 +14,9 @@ public:
     void launch();
 
 private:
-    EntityP makePlayer();
-    EntityP makeBall();
-    std::vector<EntityP> makeBorders(double width = 10);
+    EntityS makePlayer();
+    EntityS makeBall();
+    std::vector<EntityS> makeBorders(double width = 10);
 
 private:
     constexpr static const QSize DEF_SIZE = { 720, 720 };
@@ -24,6 +24,6 @@ private:
 
     QGraphicsScene * scene_;
     Timer * timer_;
-    std::vector<EntityP> entities_;
-    FieldP field_;
+    FieldP  field_;
+    std::vector<EntityS> entities_;
 };

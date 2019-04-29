@@ -26,7 +26,8 @@ HEADERS += \
     timer.hpp \
     move.hpp \
     controller.hpp \
-    eccollisions.hpp
+    eccollisions.hpp \
+    entityptrs.hpp
 
 PRECOMPILED_HEADER = stdafx.hpp
 

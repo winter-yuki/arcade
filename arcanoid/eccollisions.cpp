@@ -1,7 +1,7 @@
 #include "eccollisions.hpp"
 
 
-ECCollisions::ECCollisions(QGraphicsScene * scene, EntityP entity,
+ECCollisions::ECCollisions(QGraphicsScene * scene, EntityW entity,
                            const FieldP field, Timer const * timer)
     : Controller(scene, entity)
     , field_(field)
@@ -10,6 +10,8 @@ ECCollisions::ECCollisions(QGraphicsScene * scene, EntityP entity,
     assert(scene);
     assert(timer);
 
+    // It should be return after emitting "entityDeleted"
+    connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);
     connect(timer, &Timer::timeout, this, &ECCollisions::checkCollisions);
 }
 
@@ -22,16 +24,27 @@ ECCollisions::~ECCollisions()
 
 void ECCollisions::checkCollisions()
 {
+    auto e = entity().lock();
+    if (!e) {
+        emit entityDeleted();
+        return;
+    }
+
+    field_->filter();
     for (auto item : field_->entities()) {
-        if (entity()->form() != item->form() &&
-                entity()->form()->collidesWithItem(item->form())) {
-            processCollision(item);
+        auto i = item.lock();
+        if (!i) {
+            assert(false);
+        }
+
+        if (e->form() != i->form() && e->form()->collidesWithItem(i->form())) {
+            processCollision(i);
         }
     }
 }
 
 
-void ECCollisions::processCollision(EntityP e)
+void ECCollisions::processCollision(EntityS e)
 {
     // TODO
 }

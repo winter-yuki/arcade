@@ -9,24 +9,20 @@
 Game::Game(QWidget * parent)
     : QGraphicsView(parent)
     , scene_(new QGraphicsScene)
+    , timer_(new Timer(this))
+    , field_(makeField()) // Create registry with tangible items
 {
     setScene(scene_);
     scene_->setSceneRect({{0, 0}, DEF_SIZE});
-    setFixedSize(DEF_SIZE + QSize(5, 5));
-
+    setFixedSize(DEF_SIZE + QSize(5, 5)); // To see whole scene
     setBackgroundBrush(QBrush(QPixmap(":/images/hydra.jpg").scaled(size())));
 
-
     // Set game update timer
-    timer_ = new Timer(this);
-    timer_->start(15);
-
-    // Create registry with tangible items
-    field_ = makeField();
+    timer_->start(int(1.0 / FRAME_RATE * 1000));
 
     // Create player
     auto player = makePlayer();
-    auto * keyController = new ECArrowKeys(scene_, player);
+    auto keyController = new ECArrowKeys(scene_, player);
     double borderWidth = 5;
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
@@ -43,9 +39,9 @@ Game::Game(QWidget * parent)
     entities_.push_back(ball);
     field_->addEntity(ball);
 
-    auto move = new Move(ball.get(), timer_);
-    move->setV({0.2f, 0.5f});
-    ball->addComponent(move);
+    auto move = new Move(timer_);
+    move->setV({2.f, 1.f});
+    ball->addComponent(ComponentU(move));
 
     auto collisions = new ECCollisions(scene_, ball, field_, timer_);
     Q_UNUSED(collisions)
@@ -67,7 +63,7 @@ void Game::launch()
 }
 
 
-EntityP Game::makePlayer()
+EntityS Game::makePlayer()
 {
     assert(scene_);
 
@@ -84,7 +80,7 @@ EntityP Game::makePlayer()
 }
 
 
-EntityP Game::makeBall()
+EntityS Game::makeBall()
 {
     QColor ballColor(QRgb(0x00AADD));
 
@@ -99,7 +95,7 @@ EntityP Game::makeBall()
 }
 
 
-std::vector<EntityP> Game::makeBorders(double width)
+std::vector<EntityS> Game::makeBorders(double width)
 {
     QColor borderColor(QRgb(0x00AA00));
     std::array rects = {
@@ -114,7 +110,7 @@ std::vector<EntityP> Game::makeBorders(double width)
         rect->setPen(QPen(borderColor));
     }
 
-    std::vector<EntityP> borders(rects.size());
+    std::vector<EntityS> borders(rects.size());
     for (size_t i = 0; i < borders.size(); ++i) {
         borders[i] = makeEntity(scene_);
         borders[i]->addForm(rects[i]);

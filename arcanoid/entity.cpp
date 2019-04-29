@@ -22,14 +22,9 @@ QGraphicsItem * Entity::form()
 }
 
 
-void Entity::addComponent(Component * component)
+void Entity::addComponent(ComponentU component)
 {
-    addComponent(ComponentP(component));
-}
-
-
-void Entity::addComponent(ComponentP component)
-{
+    component->setEntity(this);
     components_.insert({component->getId(), std::move(component)});
 }
 
@@ -48,3 +43,7 @@ std::optional<Component *> Entity::findComponent(Component::Id id)
     }
     return std::nullopt;
 }
+
+
+
+

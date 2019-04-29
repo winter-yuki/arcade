@@ -1,14 +1,16 @@
 #include "ecarrowkeys.hpp"
 
 
-ECArrowKeys::ECArrowKeys(QGraphicsScene * scene, EntityP entity)
+ECArrowKeys::ECArrowKeys(QGraphicsScene * scene, EntityW entity)
     : Controller(scene, entity)
 {
     assert(scene);
-    assert(entity->form());
 
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
+
+    // It should be return statement after emitting "entityDeleted"
+    connect(this, &ECArrowKeys::entityDeleted, this, &ECArrowKeys::harakiri);
 }
 
 
@@ -50,33 +52,33 @@ double ECArrowKeys::lborder() const
 
 void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 {
-    auto pos = entity()->form()->pos();
+    auto e = entity().lock();
+    if (!e) {
+        emit entityDeleted();
+        return;
+    }
+
+    auto pos = e->form()->pos();
     switch (event->key()) {
     case Qt::Key_Left:
         if (pos.x() - dx_ >= lborder_) {
-            entity()->form()->setX(pos.x() - dx_);
+            e->form()->setX(pos.x() - dx_);
         } else {
-            entity()->form()->setX(lborder_);
+            e->form()->setX(lborder_);
         }
         break;
 
     case Qt::Key_Right:
-        auto width = entity()->form()->scale() *
-                entity()->form()->boundingRect().width();
+        auto width = e->form()->scale() * e->form()->boundingRect().width();
         auto rpoint = pos.x() + width;
         if (rpoint + dx_ <= rborder_) {
-            entity()->form()->setX(pos.x() + dx_);
+            e->form()->setX(pos.x() + dx_);
         } else {
-            entity()->form()->setX(rborder_ - width);
+            e->form()->setX(rborder_ - width);
         }
         break;
     }
 }
-
-
-
-
-
 
 
 

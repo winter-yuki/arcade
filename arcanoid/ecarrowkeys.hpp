@@ -5,8 +5,10 @@
 
 class ECArrowKeys final
         : public Controller {
+    Q_OBJECT
+
 public:
-    ECArrowKeys(QGraphicsScene * scene, EntityP entity);
+    ECArrowKeys(QGraphicsScene * scene, EntityW entity);
 
     void setDx(double dx);
     double dx() const;

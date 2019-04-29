@@ -1,26 +1,28 @@
 #pragma once
 
 #include "stdafx.hpp"
+#include "entityptrs.hpp"
 
-
-class Entity;
 
 class Component
         : boost::noncopyable {
 public:
     using Id = std::type_index;
 
-    explicit Component(Entity * owner);
     virtual ~Component() = default;
-
     Id getId() const;
-
     Entity * entity();
 
+    // To provide for Entity access to entity setter
+    friend class Entity;
+
 private:
-    Entity * entity_;
+    void setEntity(Entity * e);
+
+private:
+    Entity * entity_ = nullptr;
 };
 
-using ComponentP = std::unique_ptr<Component>;
+using ComponentU = std::unique_ptr<Component>;
 
 #define GET_ID(componentType) Component::Id(typeid (componentType))

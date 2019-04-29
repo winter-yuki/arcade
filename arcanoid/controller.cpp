@@ -1,11 +1,12 @@
 #include "controller.hpp"
 
 
-Controller::Controller(QGraphicsScene * scene, EntityP entity)
+Controller::Controller(QGraphicsScene * scene, EntityW e)
     : scene_ (scene)
-    , entity_(entity)
+    , entity_(e)
 {
     assert(scene);
+    assert(!e.expired());
     scene->addItem(this);
 }
 
@@ -16,7 +17,7 @@ QGraphicsScene * Controller::scene()
 }
 
 
-EntityP Controller::entity()
+EntityW Controller::entity()
 {
     return entity_;
 }
@@ -37,7 +38,10 @@ QRectF Controller::boundingRect() const
 }
 
 
-
+void Controller::harakiri()
+{
+    delete this;
+}
 
 
 

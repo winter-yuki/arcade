@@ -6,11 +6,11 @@
 
 
 class ECCollisions final
-        : public  Controller {
+        : public Controller {
     Q_OBJECT
 
 public:
-    ECCollisions(QGraphicsScene * scene, EntityP entity,
+    ECCollisions(QGraphicsScene * scene, EntityW entity,
                  const FieldP field, Timer const * timer);
     ~ECCollisions();
 
@@ -18,7 +18,7 @@ public slots:
     void checkCollisions();
 
 private:
-    void processCollision(EntityP e);
+    void processCollision(EntityS e);
 
 private:
     FieldP field_;

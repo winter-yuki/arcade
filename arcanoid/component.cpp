@@ -1,14 +1,15 @@
 #include "component.hpp"
 
 
-Component::Component(Entity * owner)
-    : entity_(owner)
-{}
-
-
 Component::Id Component::getId() const
 {
     return { typeid (this) };
+}
+
+
+void Component::setEntity(Entity * e)
+{
+    entity_ = e;
 }
 
 

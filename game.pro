@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    arcanoid
+    arcanoid \
+    engy

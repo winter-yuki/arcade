@@ -5,6 +5,7 @@
 #include "controllers/eccollisions.hpp"
 #include "controllers/collision_handlers.hpp"
 #include "components/move.hpp"
+#include "timer.hpp"
 
 
 Game::Game(QWidget * parent)

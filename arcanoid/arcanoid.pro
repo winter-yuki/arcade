@@ -8,10 +8,10 @@ SOURCES += \
         main.cpp \
     game.cpp \
     entity.cpp \
-    field.cpp \
     timer.cpp \
     components/component.cpp \
     components/move.cpp \
+    controllers/field.cpp \
     controllers/ecarrowkeys.cpp \
     controllers/controller.cpp \
     controllers/eccollisions.cpp
@@ -19,12 +19,12 @@ SOURCES += \
 HEADERS += \
     stdafx.hpp \
     game.hpp \
-    field.hpp \
     entity.hpp \
     timer.hpp \
     entityptrs.hpp \
     components/component.hpp \
     components/move.hpp \
+    controllers/field.hpp \
     controllers/ecarrowkeys.hpp \
     controllers/controller.hpp \
     controllers/eccollisions.hpp \

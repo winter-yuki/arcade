@@ -30,11 +30,10 @@ void ECCollisions::checkCollisions()
         return;
     }
 
-    field_->filter();
     for (auto item : field_->entities()) {
         auto i = item.lock();
         if (!i) {
-            assert(false);
+            continue;
         }
 
         if (e->form() != i->form() && e->form()->collidesWithItem(i->form())) {

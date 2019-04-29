@@ -5,10 +5,8 @@
 
 
 class Controller
-        : public QObject
-        , public QGraphicsItem {
+        : public QGraphicsObject {
     Q_OBJECT
-    Q_INTERFACES(QGraphicsItem)
 
 public:
     Controller(QGraphicsScene * scene, EntityW entity);

@@ -8,7 +8,7 @@
 
 namespace
 {
-QVector2D getNormalOfBoundingRect(EntityS & a, EntityS & b);
+std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b);
 }
 
 
@@ -26,48 +26,53 @@ void basicCollisionHandler(EntityS & a, EntityS & b)
     }
     QVector2D v = move->v();
 
-    auto n = getNormalOfBoundingRect(a, b);
-    assert(!n.isNull());
-    assert(std::abs(n.length() - 1) < 1e-8f);
+    if (auto n = getNormalOfBoundingRect(a, b)) {
+        assert(!n.value().isNull());
+        assert(std::abs(n.value().length() - 1) < 1e-8f);
 
-    auto newV = v - 2 * (v * n) * n;
-    assert(abs(newV.length() - v.length()) < 1e-8f);
+        auto newV = v - 2 * (v * n.value()) * n.value();
+        assert(abs(newV.length() - v.length()) < 1e-8f);
 
-    move->setV(newV);
+        move->setV(newV);
+
+    } else {
+        qDebug() << "Collision detection isn't in time,"
+                    "object is already is figure";
+        move->setV(-v);
+    }
 }
 
 
 namespace
 {
 
-QVector2D getNormalOfBoundingRect(EntityS & a, EntityS & b)
+std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b)
 {
-    auto pos  = a->form()->pos();
-    auto aabb = b->form()->boundingRect();
+    const auto pos  = a->form()->pos();
+    const auto aabb = b->form()->boundingRect();
 
     // Determine side which a collided with
 
     // From the left
     if (pos.x() <= aabb.left()) {
-        return { -1, 0 };
+        return { QVector2D(-1, 0) };
     }
     // From the right
     if (pos.x() >= aabb.right()) {
-        return { 1, 0 };
+        return { QVector2D(1, 0) };
     }
 
     // From the top
     if (pos.y() <= aabb.top()) {
-        return { 0, -1 };
+        return { QVector2D(0, -1) };
     }
     // From the bottom
     if (pos.y() >= aabb.bottom()) {
-        return { 0, 1 };
+        return { QVector2D(0, 1) };
     }
 
     // Figure is alredy inside the box
-    // TODO
-    assert(false);
+    return std::nullopt;
 }
 
 }

@@ -8,26 +8,26 @@ SOURCES += \
         main.cpp \
     game.cpp \
     entity.cpp \
+    field.cpp \
+    timer.cpp \
     components/component.cpp \
     components/move.cpp \
-    field.cpp \
-    ecarrowkeys.cpp \
-    timer.cpp \
-    controller.cpp \
-    eccollisions.cpp
+    controllers/ecarrowkeys.cpp \
+    controllers/controller.cpp \
+    controllers/eccollisions.cpp
 
 HEADERS += \
     stdafx.hpp \
     game.hpp \
+    field.hpp \
     entity.hpp \
+    timer.hpp \
+    entityptrs.hpp \
     components/component.hpp \
     components/move.hpp \
-    field.hpp \
-    ecarrowkeys.hpp \
-    timer.hpp \
-    controller.hpp \
-    eccollisions.hpp \
-    entityptrs.hpp
+    controllers/ecarrowkeys.hpp \
+    controllers/controller.hpp \
+    controllers/eccollisions.hpp \
 
 PRECOMPILED_HEADER = stdafx.hpp
 

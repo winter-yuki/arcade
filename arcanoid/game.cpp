@@ -1,9 +1,9 @@
 #include "game.hpp"
 
 #include "entity.hpp"
-#include "ecarrowkeys.hpp"
+#include "controllers/ecarrowkeys.hpp"
+#include "controllers/eccollisions.hpp"
 #include "components/move.hpp"
-#include "eccollisions.hpp"
 
 
 Game::Game(QWidget * parent)

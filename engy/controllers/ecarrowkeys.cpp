@@ -1,6 +1,9 @@
 #include "ecarrowkeys.hpp"
 
 
+namespace Engy
+{
+
 ECArrowKeys::ECArrowKeys(QGraphicsScene * scene, EntityW entity)
     : Controller(scene, entity)
 {
@@ -80,7 +83,7 @@ void ECArrowKeys::keyPressEvent(QKeyEvent * event)
     }
 }
 
-
+}
 
 
 

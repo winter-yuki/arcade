@@ -3,6 +3,9 @@
 #include "stdafx.hpp"
 
 
+namespace Engy
+{
+
 class Timer final
         : public QTimer {
     Q_OBJECT
@@ -19,3 +22,5 @@ signals:
 private:
     int64_t prevTime_ = 0;
 };
+
+}

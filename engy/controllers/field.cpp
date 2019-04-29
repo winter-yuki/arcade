@@ -3,6 +3,9 @@
 #include "stdafx.hpp"
 
 
+namespace Engy
+{
+
 void Field::addEntity(EntityW e)
 {
     es_.push_back(e);
@@ -43,7 +46,7 @@ std::vector<EntityW> const & Field::entities() const
     return es_;
 }
 
-
+}
 
 
 

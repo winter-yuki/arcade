@@ -1,6 +1,9 @@
 #include "eccollisions.hpp"
 
 
+namespace Engy
+{
+
 ECCollisions::ECCollisions(QGraphicsScene * scene, EntityW entity,
                            const FieldP field, Timer const * timer)
     : Controller(scene, entity)
@@ -54,7 +57,7 @@ void ECCollisions::checkCollisions()
     }
 }
 
-
+}
 
 
 

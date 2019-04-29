@@ -3,6 +3,9 @@
 #include "component.hpp"
 
 
+namespace Engy
+{
+
 class Mass final
         : public Component {
 public:
@@ -16,3 +19,5 @@ public:
 private:
     double m_;
 };
+
+}

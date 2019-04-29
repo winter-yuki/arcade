@@ -1,6 +1,9 @@
 #include "entity.hpp"
 
 
+namespace Engy
+{
+
 Entity::Entity(QGraphicsScene * scene)
     : scene_(scene)
 {
@@ -44,7 +47,7 @@ std::optional<Component *> Entity::findComponent(Component::Id id)
     return std::nullopt;
 }
 
-
+}
 
 
 

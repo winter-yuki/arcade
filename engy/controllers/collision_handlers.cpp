@@ -6,6 +6,9 @@
 #include "components/move.hpp"
 
 
+namespace Engy
+{
+
 namespace
 {
 std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b);
@@ -78,7 +81,7 @@ std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b)
 
 }
 
-
+} // Engy
 
 
 

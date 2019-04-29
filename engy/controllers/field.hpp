@@ -3,6 +3,9 @@
 #include "entity.hpp"
 
 
+namespace Engy
+{
+
 class Field final {
 public:
     void addEntity(EntityW e);
@@ -22,4 +25,6 @@ private:
 using FieldP = std::shared_ptr<Field>;
 inline FieldP makeField() {
     return std::make_shared<Field>();
+}
+
 }

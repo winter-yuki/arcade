@@ -4,6 +4,9 @@
 #include "components/component.hpp"
 
 
+namespace Engy
+{
+
 class Entity final {
 public:
     explicit Entity(QGraphicsScene * scene);
@@ -44,7 +47,7 @@ inline EntityS makeEntity(QGraphicsScene * scene) {
     return std::make_shared<Entity>(scene);
 }
 
-
+}
 
 
 

@@ -1,6 +1,9 @@
 #include "component.hpp"
 
 
+namespace Engy
+{
+
 void Component::setEntity(Entity * e)
 {
     entity_ = e;
@@ -10,4 +13,6 @@ void Component::setEntity(Entity * e)
 Entity * Component::entity()
 {
     return entity_;
+}
+
 }

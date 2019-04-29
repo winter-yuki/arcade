@@ -5,6 +5,9 @@
 #include "field.hpp"
 
 
+namespace Engy
+{
+
 class ECCollisions final
         : public Controller {
     Q_OBJECT
@@ -28,3 +31,5 @@ private:
     Timer const * timer_;
     Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
 };
+
+}

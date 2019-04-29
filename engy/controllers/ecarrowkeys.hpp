@@ -3,6 +3,9 @@
 #include "controller.hpp"
 
 
+namespace Engy
+{
+
 class ECArrowKeys final
         : public Controller {
     Q_OBJECT
@@ -25,3 +28,5 @@ private:
     double lborder_ = 0;
     double rborder_ = 0;
 };
+
+}

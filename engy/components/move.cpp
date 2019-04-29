@@ -3,6 +3,9 @@
 #include "entity.hpp"
 
 
+namespace Engy
+{
+
 Move::Move(Timer const * timer)
     : timer_(timer)
 {
@@ -34,7 +37,7 @@ void Move::update(int64_t dt)
     entity()->form()->moveBy(double(v_.x()) * dt, double(v_.y()) * dt);
 }
 
-
+}
 
 
 

@@ -4,6 +4,9 @@
 #include "entityptrs.hpp"
 
 
+namespace Engy
+{
+
 class Component
         : boost::noncopyable {
 public:
@@ -31,4 +34,4 @@ private:
 
 using ComponentU = std::unique_ptr<Component>;
 
-
+}

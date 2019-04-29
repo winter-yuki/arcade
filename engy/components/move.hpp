@@ -5,6 +5,9 @@
 #include "timer.hpp"
 
 
+namespace Engy
+{
+
 class Move final
         : public QObject
         , public Component {
@@ -27,7 +30,7 @@ private:
     QVector2D v_;
 };
 
-
+}
 
 
 

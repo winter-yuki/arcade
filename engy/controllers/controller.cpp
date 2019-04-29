@@ -1,6 +1,9 @@
 #include "controller.hpp"
 
 
+namespace Engy
+{
+
 Controller::Controller(QGraphicsScene * scene, EntityW e)
     : scene_ (scene)
     , entity_(e)
@@ -43,7 +46,7 @@ void Controller::harakiri()
     delete this;
 }
 
-
+}
 
 
 

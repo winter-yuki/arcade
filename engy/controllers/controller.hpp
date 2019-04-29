@@ -4,6 +4,9 @@
 #include "entity.hpp"
 
 
+namespace Engy
+{
+
 class Controller
         : public QGraphicsObject {
     Q_OBJECT
@@ -29,3 +32,5 @@ private:
     QGraphicsScene * scene_;
     EntityW entity_;
 };
+
+}

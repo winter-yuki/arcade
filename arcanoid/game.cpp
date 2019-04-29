@@ -11,8 +11,8 @@
 Game::Game(QWidget * parent)
     : QGraphicsView(parent)
     , scene_(new QGraphicsScene)
-    , timer_(new Timer(this))
-    , field_(makeField()) // Create registry with tangible items
+    , timer_(new Engy::Timer(this))
+    , field_(Engy::makeField()) // Create registry with tangible items
 {
     setScene(scene_);
     scene_->setSceneRect({{0, 0}, DEF_SIZE});
@@ -24,7 +24,7 @@ Game::Game(QWidget * parent)
 
     // Create player
     auto player = makePlayer();
-    auto keyController = new ECArrowKeys(scene_, player);
+    auto keyController = new Engy::ECArrowKeys(scene_, player);
     double borderWidth = 5;
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
@@ -41,12 +41,12 @@ Game::Game(QWidget * parent)
     entities_.push_back(ball);
     field_->addEntity(ball);
 
-    auto move = new Move(timer_);
+    auto move = new Engy::Move(timer_);
     move->setV({.2f, .1f});
-    ball->addComponent(ComponentU(move));
+    ball->addComponent(Engy::ComponentU(move));
 
-    auto collisions = new ECCollisions(scene_, ball, field_, timer_);
-    collisions->setHandler(basicCollisionHandler);
+    auto collisions = new Engy::ECCollisions(scene_, ball, field_, timer_);
+    collisions->setHandler(Engy::basicCollisionHandler);
 }
 
 
@@ -65,7 +65,7 @@ void Game::launch()
 }
 
 
-EntityS Game::makePlayer()
+Engy::EntityS Game::makePlayer()
 {
     assert(scene_);
 
@@ -76,13 +76,13 @@ EntityS Game::makePlayer()
     platform->setPen({color});
     platform->setBrush({color});
 
-    auto player = makeEntity(scene_);
+    auto player = Engy::makeEntity(scene_);
     player->addForm(platform);
     return player;
 }
 
 
-EntityS Game::makeBall()
+Engy::EntityS Game::makeBall()
 {
     QColor ballColor(QRgb(0x00AADD));
 
@@ -91,13 +91,13 @@ EntityS Game::makeBall()
     ball->setBrush(QBrush(ballColor));
     ball->setPen(QPen(ballColor));
 
-    auto entity = makeEntity(scene_);
+    auto entity = Engy::makeEntity(scene_);
     entity->addForm(ball);
     return entity;
 }
 
 
-std::vector<EntityS> Game::makeBorders(double width)
+std::vector<Engy::EntityS> Game::makeBorders(double width)
 {
     QColor borderColor(QRgb(0x00AA00));
     std::array rects = {
@@ -112,9 +112,9 @@ std::vector<EntityS> Game::makeBorders(double width)
         rect->setPen(QPen(borderColor));
     }
 
-    std::vector<EntityS> borders(rects.size());
+    std::vector<Engy::EntityS> borders(rects.size());
     for (size_t i = 0; i < borders.size(); ++i) {
-        borders[i] = makeEntity(scene_);
+        borders[i] = Engy::makeEntity(scene_);
         borders[i]->addForm(rects[i]);
     }
     return borders;

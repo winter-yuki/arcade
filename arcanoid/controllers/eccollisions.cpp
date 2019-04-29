@@ -22,6 +22,12 @@ ECCollisions::~ECCollisions()
 }
 
 
+void ECCollisions::setHandler(Handler h)
+{
+    h_ = std::move(h);
+}
+
+
 void ECCollisions::checkCollisions()
 {
     auto e = entity().lock();
@@ -37,18 +43,11 @@ void ECCollisions::checkCollisions()
         }
 
         if (e->form() != i->form() && e->form()->collidesWithItem(i->form())) {
-            processCollision(i);
+            assert(h_);
+            h_(e, i);
         }
     }
 }
-
-
-void ECCollisions::processCollision(EntityS e)
-{
-    // TODO
-}
-
-
 
 
 

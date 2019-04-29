@@ -7,7 +7,10 @@ class Field final {
 public:
     void addEntity(EntityW e);
     void rmEntity (EntityW e);
+
+    // Removes all deleted entities
     void filter();
+
     std::vector<EntityW> & entities();
     std::vector<EntityW> const & entities() const;
 

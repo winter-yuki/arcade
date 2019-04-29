@@ -1,7 +1,7 @@
 #pragma once
 
 #include "stdafx.hpp"
-#include "component.hpp"
+#include "components/component.hpp"
 
 
 class Entity final {

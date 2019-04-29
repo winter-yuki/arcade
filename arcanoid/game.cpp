@@ -2,7 +2,7 @@
 
 #include "entity.hpp"
 #include "ecarrowkeys.hpp"
-#include "move.hpp"
+#include "components/move.hpp"
 #include "eccollisions.hpp"
 
 

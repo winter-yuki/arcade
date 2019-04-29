@@ -8,11 +8,11 @@ SOURCES += \
         main.cpp \
     game.cpp \
     entity.cpp \
-    component.cpp \
+    components/component.cpp \
+    components/move.cpp \
     field.cpp \
     ecarrowkeys.cpp \
     timer.cpp \
-    move.cpp \
     controller.cpp \
     eccollisions.cpp
 
@@ -20,11 +20,11 @@ HEADERS += \
     stdafx.hpp \
     game.hpp \
     entity.hpp \
-    component.hpp \
+    components/component.hpp \
+    components/move.hpp \
     field.hpp \
     ecarrowkeys.hpp \
     timer.hpp \
-    move.hpp \
     controller.hpp \
     eccollisions.hpp \
     entityptrs.hpp

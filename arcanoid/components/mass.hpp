@@ -11,6 +11,8 @@ public:
     void setM(double m);
     double m() const;
 
+    Id id() const override { return Component::id<Mass>(); }
+
 private:
     double m_;
 };

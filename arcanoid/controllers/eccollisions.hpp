@@ -12,7 +12,7 @@ class ECCollisions final
 public:
     // 1st: given entity, 2nd: other entity from field.
     // Shared poiners are guaranted not to be empty.
-    using Handler = std::function<void (EntityS, EntityS)>;
+    using Handler = std::function<void (EntityS &, EntityS &)>;
 
     ECCollisions(QGraphicsScene * scene, EntityW entity,
                  const FieldP field, Timer const * timer);
@@ -26,5 +26,5 @@ public slots:
 private:
     FieldP field_;
     Timer const * timer_;
-    Handler h_ = [](EntityS /*a*/, EntityS /*b*/) {};
+    Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
 };

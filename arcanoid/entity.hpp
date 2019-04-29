@@ -17,11 +17,25 @@ public:
     void removeComponent(Component::Id id);
     std::optional<Component *> findComponent(Component::Id id);
 
+    // Returnes pointer to component if exists, nullptr otherwise.
+    template <class C> C * findComponent();
+
 private:
     QGraphicsScene * scene_;
     QGraphicsItem  * form_ = nullptr;
     std::unordered_map<Component::Id, ComponentU> components_;
 };
+
+
+template <class C>
+C * Entity::findComponent() {
+    if (auto search = findComponent(Component::id<C>())) {
+        auto component = dynamic_cast<C *>(search.value());
+        assert(component);
+        return component;
+    }
+    return nullptr;
+}
 
 
 #include "entityptrs.hpp"

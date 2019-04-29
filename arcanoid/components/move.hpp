@@ -12,10 +12,12 @@ class Move final
 
 public:
     explicit Move(Timer const * timer);
-    ~Move();
+    ~Move() override;
 
     void setV(QVector2D v); // Pixel per second
     QVector2D v() const;
+
+    Id id() const override { return Component::id<Move>(); }
 
 public slots:
     void update(int64_t dt);

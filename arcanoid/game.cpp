@@ -3,6 +3,7 @@
 #include "entity.hpp"
 #include "controllers/ecarrowkeys.hpp"
 #include "controllers/eccollisions.hpp"
+#include "controllers/collision_handlers.hpp"
 #include "components/move.hpp"
 
 
@@ -44,7 +45,7 @@ Game::Game(QWidget * parent)
     ball->addComponent(ComponentU(move));
 
     auto collisions = new ECCollisions(scene_, ball, field_, timer_);
-    Q_UNUSED(collisions)
+    collisions->setHandler(basicCollisionHandler);
 }
 
 

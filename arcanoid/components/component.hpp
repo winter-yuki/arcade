@@ -12,8 +12,11 @@ public:
     // WARNING: Do not delete component manually
     // if it is already added to entity
     virtual ~Component() = default;
-    Id getId() const;
+    virtual Id id() const = 0;
     Entity * entity();
+
+    template <class T>
+    static Id id() { return Id(typeid (typename std::remove_pointer<T>::type)); }
 
     // To provide for Entity access to entity setter
     friend class Entity;
@@ -25,6 +28,7 @@ private:
     Entity * entity_ = nullptr;
 };
 
+
 using ComponentU = std::unique_ptr<Component>;
 
-#define GET_ID(componentType) Component::Id(typeid (componentType))
+

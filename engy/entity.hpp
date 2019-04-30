@@ -1,17 +1,20 @@
-#ifndef QQQ
-#define QQQ
-//#pragma once
+#pragma once
 
 #include "stdafx.hpp"
 #include "components/component.hpp"
+#include "entityptrs.hpp"
 
 
 namespace Engy
 {
 
+class Game;
+
 class Entity final {
 public:
-    explicit Entity(QGraphicsScene * scene);
+    // Factory
+    static EntityS create(Game * game);
+    explicit Entity(Game * game); // Do not use it manually
 
     // Also adds item to the scene
     void addForm(QGraphicsItem * form);
@@ -26,8 +29,8 @@ public:
     template <class C> C * findComponent();
 
 private:
-    QGraphicsScene * scene_;
-    QGraphicsItem  * form_ = nullptr;
+    QGraphicsScene * scene_ = nullptr;
+    QGraphicsItem  * form_  = nullptr;
     std::unordered_map<Component::Id, ComponentU> components_;
 };
 
@@ -42,19 +45,7 @@ C * Entity::findComponent() {
     return nullptr;
 }
 
-
-using EntityS = std::shared_ptr<Entity>;
-using EntityW = std::weak_ptr  <Entity>;
-
-
-inline EntityS makeEntity(QGraphicsScene * scene) {
-    return std::make_shared<Entity>(scene);
-}
-
 } // Engy
 
-#endif
-
-
-
+#include "entityptrs.hpp"
 

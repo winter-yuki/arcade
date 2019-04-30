@@ -4,16 +4,16 @@
 namespace Engy
 {
 
-ECCollisions::ECCollisions(QGraphicsScene * scene, EntityW entity,
+ECCollisions::ECCollisions(Game * game, EntityW entity,
                            const FieldP field, Timer const * timer)
-    : Controller(scene, entity)
+    : Controller(game, entity)
     , field_(field)
     , timer_(timer)
 {
     assert(!entity.expired());
     // If entity has form
     assert([&entity]() -> bool { auto l = entity.lock(); return l->form(); }());
-    assert(scene);
+    assert(game);
     assert(field);
     assert(timer);
 
@@ -57,7 +57,7 @@ void ECCollisions::checkCollisions()
     }
 }
 
-}
+} // Engy
 
 
 

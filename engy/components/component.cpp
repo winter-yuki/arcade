@@ -15,4 +15,4 @@ Entity * Component::entity()
     return entity_;
 }
 
-}
+} // Engy

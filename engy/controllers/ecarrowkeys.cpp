@@ -4,10 +4,11 @@
 namespace Engy
 {
 
-ECArrowKeys::ECArrowKeys(QGraphicsScene * scene, EntityW entity)
-    : Controller(scene, entity)
+ECArrowKeys::ECArrowKeys(Game * game, EntityW entity)
+    : Controller(game, entity)
 {
-    assert(scene);
+    assert(game);
+    assert(!entity.expired());
 
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
@@ -83,7 +84,7 @@ void ECArrowKeys::keyPressEvent(QKeyEvent * event)
     }
 }
 
-}
+} // Engy
 
 
 

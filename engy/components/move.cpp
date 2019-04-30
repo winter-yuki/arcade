@@ -37,7 +37,7 @@ void Move::update(int64_t dt)
     entity()->form()->moveBy(double(v_.x()) * dt, double(v_.y()) * dt);
 }
 
-}
+} // Engy
 
 
 

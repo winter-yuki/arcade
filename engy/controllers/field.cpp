@@ -46,7 +46,7 @@ std::vector<EntityW> const & Field::entities() const
     return es_;
 }
 
-}
+} // Engy
 
 
 

@@ -17,8 +17,6 @@ std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b);
 
 void basicCollisionHandler(EntityS & a, EntityS & b)
 {
-//    static_assert (std::is_same<std::function<decltype(basicCollisionHandler)>,
-//                   ECCollisions::Handler>::value);
     assert(a && b);
     assert(a->form() && b->form());
 
@@ -79,7 +77,7 @@ std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b)
     return std::nullopt;
 }
 
-}
+} // namespace
 
 } // Engy
 

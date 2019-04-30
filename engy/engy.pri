@@ -5,6 +5,7 @@ CONFIG += c++17
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+    $$PWD/game.cpp \
     $$PWD/entity.cpp \
     $$PWD/timer.cpp \
     $$PWD/components/component.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/stdafx.hpp \
+    $$PWD/game.hpp \
     $$PWD/timer.hpp \
     $$PWD/entity.hpp \
     $$PWD/components/component.hpp \
@@ -27,7 +29,8 @@ HEADERS += \
     $$PWD/controllers/ecarrowkeys.hpp \
     $$PWD/controllers/controller.hpp \
     $$PWD/controllers/eccollisions.hpp \
-    $$PWD/controllers/collision_handlers.hpp
+    $$PWD/controllers/collision_handlers.hpp \
+    $$PWD/entityptrs.hpp
 
 PRECOMPILED_HEADER = $$PWD/stdafx.hpp
 

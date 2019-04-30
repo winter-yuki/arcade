@@ -10,10 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    game.cpp \
 
 HEADERS += \
-    game.hpp \
 
 RESOURCES += \
     arcanoid.qrc

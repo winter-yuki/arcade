@@ -17,7 +17,7 @@ public:
     // Shared poiners are guaranted not to be empty.
     using Handler = std::function<void (EntityS &, EntityS &)>;
 
-    ECCollisions(QGraphicsScene * scene, EntityW entity,
+    ECCollisions(Game * game, EntityW entity,
                  const FieldP field, Timer const * timer);
     ~ECCollisions();
 

@@ -17,4 +17,4 @@ void Timer::timeUpdate()
     emit tick(prevTime_);
 }
 
-}
+} // Engy

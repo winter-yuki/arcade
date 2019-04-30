@@ -1,22 +1,23 @@
 #include "controller.hpp"
+#include "game.hpp"
 
 
 namespace Engy
 {
 
-Controller::Controller(QGraphicsScene * scene, EntityW e)
-    : scene_ (scene)
+Controller::Controller(Game * game, EntityW e)
+    : game_  (game)
     , entity_(e)
 {
-    assert(scene);
+    assert(game);
     assert(!e.expired());
-    scene->addItem(this);
+    game->scene()->addItem(this);
 }
 
 
-QGraphicsScene * Controller::scene()
+Game * Controller::game()
 {
-    return scene_;
+    return game_;
 }
 
 
@@ -46,7 +47,7 @@ void Controller::harakiri()
     delete this;
 }
 
-}
+} // Engy
 
 
 

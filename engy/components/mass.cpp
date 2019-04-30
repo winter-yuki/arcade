@@ -20,4 +20,4 @@ double Mass::m() const
     return m_;
 }
 
-}
+} // Engy

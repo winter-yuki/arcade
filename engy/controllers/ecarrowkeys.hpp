@@ -11,7 +11,7 @@ class ECArrowKeys final
     Q_OBJECT
 
 public:
-    ECArrowKeys(QGraphicsScene * scene, EntityW entity);
+    ECArrowKeys(Game * game, EntityW entity);
 
     void setDx(double dx);
     double dx() const;

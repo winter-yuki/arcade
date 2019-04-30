@@ -1,19 +1,27 @@
 #include "entity.hpp"
+#include "game.hpp"
 
 
 namespace Engy
 {
 
-Entity::Entity(QGraphicsScene * scene)
-    : scene_(scene)
-{
-    assert(scene);
+EntityS Entity::create(Game * game) {
+    assert(game);
+    auto entity = std::make_shared<Entity>(game);
+    game->addEntity(entity);
+    return entity;
 }
+
+
+Entity::Entity(Game * game)
+    : scene_([game]() { assert(game); return game->scene(); } ())
+{}
 
 
 void Entity::addForm(QGraphicsItem * form)
 {
     assert(form);
+    assert(scene_);
     form_ = form;
     scene_->addItem(form_);
 }
@@ -47,7 +55,7 @@ std::optional<Component *> Entity::findComponent(Component::Id id)
     return std::nullopt;
 }
 
-}
+} // Engy
 
 
 

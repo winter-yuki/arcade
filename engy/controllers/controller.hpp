@@ -7,14 +7,16 @@
 namespace Engy
 {
 
+class Game;
+
 class Controller
-        : public QGraphicsObject {
+        : public QGraphicsObject { // Provides key events for derived classes
     Q_OBJECT
 
 public:
-    Controller(QGraphicsScene * scene, EntityW entity);
+    Controller(Game * game, EntityW entity);
 
-    QGraphicsScene * scene();
+    Game * game();
     EntityW entity();
 
     // Unused
@@ -29,7 +31,7 @@ signals:
     void entityDeleted();
 
 private:
-    QGraphicsScene * scene_;
+    Game *  game_;
     EntityW entity_;
 };
 

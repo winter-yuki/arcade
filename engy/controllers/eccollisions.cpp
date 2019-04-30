@@ -52,7 +52,7 @@ void ECCollisions::checkCollisions()
             continue;
         }
 
-        assert(e->form() && i->form());
+        assert(e->form() && i->form()); // TODO if Field is needed
         if (e->form() != i->form() && e->form()->collidesWithItem(i->form())) {
             assert(h_);
             h_(e, i);

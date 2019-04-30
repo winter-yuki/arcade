@@ -22,6 +22,7 @@ int main(int argc, char * argv[])
     double borderWidth = 5;
     auto player = makePlayer(game);
     auto keyController = new Engy::ECArrowKeys(&game, player);
+    keyController->setDy(std::nullopt);
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
     game.addToField(player);

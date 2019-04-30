@@ -11,22 +11,40 @@ class ECArrowKeys final
     Q_OBJECT
 
 public:
+    using OptD = std::optional<double>;
+
     ECArrowKeys(Game * game, EntityW entity);
 
-    void setDx(double dx);
-    double dx() const;
+    void setDx(OptD dx);
+    OptD dx() const;
+    void setDy(OptD dy);
+    OptD dy() const;
 
-    void setRBorder(double rborder);
-    double rborder() const;
-    void setLBorder(double lborder);
-    double lborder() const;
+    void setRBorder(OptD x);
+    OptD rborder() const;
+    void setLBorder(OptD x);
+    OptD lborder() const;
+    void setTBorder(OptD x);
+    OptD tborder() const;
+    void setBBorder(OptD x);
+    OptD bborder() const;
 
     void keyPressEvent(QKeyEvent * event) override;
 
 private:
-    double dx_ = 20;
-    double lborder_ = 0;
-    double rborder_ = 0;
+    std::optional<QPointF> left (EntityS e) const;
+    std::optional<QPointF> right(EntityS e) const;
+    std::optional<QPointF> up   (EntityS e) const;
+    std::optional<QPointF> down (EntityS e) const;
+
+private:
+    OptD dx_ = 20;
+    OptD dy_ = 20;
+
+    OptD lborder_ = std::nullopt;
+    OptD rborder_ = std::nullopt;
+    OptD tborder_ = std::nullopt;
+    OptD bborder_ = std::nullopt;
 };
 
 } // Engy

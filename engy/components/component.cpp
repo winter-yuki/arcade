@@ -7,6 +7,7 @@ namespace Engy
 void Component::setEntity(Entity * e)
 {
     entity_ = e;
+    emit entitySetted();
 }
 
 

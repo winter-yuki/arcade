@@ -6,16 +6,12 @@
 namespace Engy
 {
 
-Move::Move(Timer const * timer)
-    : timer_(timer)
+Move::Move(int64_t fps)
+    : interval_([fps]() { assert(fps > 0); return int64_t(1.0 / fps * 1000); } ())
 {
-    connect(timer, &Timer::tick, this, &Move::update);
-}
-
-
-Move::~Move()
-{
-    disconnect(timer_, &Timer::tick, this, &Move::update);
+    connect(this, &Move::entitySetted, [this]() {
+        startTimer(int(interval_));
+    });
 }
 
 
@@ -31,9 +27,15 @@ QVector2D Move::v() const
 }
 
 
+void Move::timerEvent(QTimerEvent * event)
+{
+    Q_UNUSED(event)
+    update(interval_);
+}
+
+
 void Move::update(int64_t dt)
 {
-    dt /= 1000; // to seconds
     entity()->form()->moveBy(double(v_.x()) * dt, double(v_.y()) * dt);
 }
 

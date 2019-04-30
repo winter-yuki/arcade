@@ -9,7 +9,10 @@ namespace Engy
 class Entity;
 
 class Component
-        : boost::noncopyable {
+        : public QObject
+        , boost::noncopyable {
+    Q_OBJECT
+
 public:
     using Id = std::type_index;
 
@@ -25,13 +28,15 @@ public:
     // To provide for Entity access to entity setter
     friend class Entity;
 
+signals:
+    void entitySetted();
+
 private:
     void setEntity(Entity * e);
 
 private:
     Entity * entity_ = nullptr;
 };
-
 
 using ComponentU = std::unique_ptr<Component>;
 

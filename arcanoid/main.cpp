@@ -70,7 +70,8 @@ Engy::EntityS makeBall(Engy::Game & game)
     QColor ballColor(QRgb(0x00AADD));
 
     auto * ball = new QGraphicsEllipseItem;
-    ball->setRect({100, 100, 50, 50});
+    ball->setRect({0, 0, 50, 50});
+    ball->moveBy(10, 10);
     ball->setBrush(QBrush(ballColor));
     ball->setPen(QPen(ballColor));
 

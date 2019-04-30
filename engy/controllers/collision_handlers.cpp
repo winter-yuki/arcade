@@ -17,7 +17,6 @@ std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b);
 
 void basicCollisionHandler(EntityS & a, EntityS & b)
 {
-    /// @bug Sometimes doesn't work properly
     assert(a && b);
     assert(a->form() && b->form());
 
@@ -42,6 +41,7 @@ void basicCollisionHandler(EntityS & a, EntityS & b)
         qDebug() << "Collision detection isn't in time,"
                     "object is already in figure";
         move->setV(-v);
+        move->update(100); // Move entity back slightly
     }
 }
 
@@ -51,8 +51,14 @@ namespace
 
 std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b)
 {
-    const auto pos  = a->form()->pos();
-    const auto aabb = b->form()->boundingRect();
+    const auto abr = a->form()->boundingRect();
+    const auto pos = a->form()->pos() + QPointF(abr.width(), abr.height()) / 2;
+
+    const auto aabb = [&b]() -> QRectF {
+            const auto bpos = b->form()->pos();
+            auto rect = b->form()->boundingRect();
+            rect.moveTo(bpos.x(), bpos.y());
+            return rect; } ();
 
     // Determine side which a collided with
 

@@ -17,6 +17,7 @@ std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b);
 
 void basicCollisionHandler(EntityS & a, EntityS & b)
 {
+    /// @bug Sometimes doesn't work properly
     assert(a && b);
     assert(a->form() && b->form());
 

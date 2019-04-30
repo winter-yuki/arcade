@@ -6,6 +6,12 @@
 namespace Engy
 {
 
+/**
+ * @brief Registry of tangible items.
+ *
+ * It is needed because we want to get whole entity which our entity
+ * collided with, so we cannot use QGraphicsScene::collidingItems.
+ */
 class Field final {
 public:
     void addEntity(EntityW e);

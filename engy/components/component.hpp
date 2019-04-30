@@ -8,6 +8,9 @@ namespace Engy
 
 class Entity;
 
+/**
+ * @brief Base class for all components in game.
+ */
 class Component
         : public QObject
         , boost::noncopyable {
@@ -16,8 +19,8 @@ class Component
 public:
     using Id = std::type_index;
 
-    // WARNING: Do not delete component manually
-    // if it is already added to entity
+    /// @warning: Do not delete component manually
+    /// if it is already added to an entity.
     virtual ~Component() = default;
     virtual Id id() const = 0;
     Entity * entity();
@@ -25,7 +28,7 @@ public:
     template <class T>
     static Id id() { return Id(typeid (typename std::remove_pointer<T>::type)); }
 
-    // To provide for Entity access to entity setter
+    // Provide for Entity access to setEntity
     friend class Entity;
 
 signals:

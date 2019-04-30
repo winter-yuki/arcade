@@ -20,7 +20,7 @@ ECArrowKeys::ECArrowKeys(Game * game, EntityW entity)
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
 
-    // WARNING: It should be return statement after emitting "entityDeleted"
+    /// @warning It should be return statement after emitting "entityDeleted".
     connect(this, &ECArrowKeys::entityDeleted, this, &ECArrowKeys::harakiri);
 }
 
@@ -107,7 +107,6 @@ ECArrowKeys::OptD ECArrowKeys::bborder() const
 
 void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 {
-    // TODO
     auto e = entity().lock();
     if (!e) {
         emit entityDeleted();

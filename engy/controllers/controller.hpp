@@ -9,6 +9,9 @@ namespace Engy
 
 class Game;
 
+/**
+ * @brief Base class for any controller in game.
+ */
 class Controller
         : public QGraphicsObject { // Provides key events for derived classes
     Q_OBJECT

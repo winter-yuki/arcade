@@ -20,7 +20,7 @@ ECCollisions::ECCollisions(Game * game, EntityW entity)
                return l->form(); }
            ());
 
-    // WARNING: It should be return after emitting "entityDeleted"
+    /// @warning It should be return after emitting "entityDeleted"
     connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);
     connect(timer_, &Timer::timeout, this, &ECCollisions::checkCollisions);
 }

@@ -6,7 +6,8 @@
 #include "controllers/field.hpp"
 
 
-namespace Engy {
+namespace Engy
+{
 
 class Game final
         : private QGraphicsView {

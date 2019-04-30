@@ -7,7 +7,9 @@ namespace Engy
 
 EntityS Entity::create(Game * game) {
     assert(game);
-    auto entity = std::make_shared<Entity>(game);
+    // TODO: Do this via std::make_shared
+    // (it should be marked "friend" for the Entity)
+    std::shared_ptr<Entity> entity(new Entity(game));
     game->addEntity(entity);
     return entity;
 }

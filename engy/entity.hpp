@@ -3,6 +3,7 @@
 #include "stdafx.hpp"
 #include "components/component.hpp"
 #include "entityptrs.hpp"
+#include "entityptrs.hpp"
 
 
 namespace Engy
@@ -14,7 +15,6 @@ class Entity final {
 public:
     // Factory
     static EntityS create(Game * game);
-    explicit Entity(Game * game); // Do not use it manually
 
     // Also adds item to the scene
     void addForm(QGraphicsItem * form);
@@ -27,6 +27,9 @@ public:
 
     // Returnes pointer to component if exists, nullptr otherwise.
     template <class C> C * findComponent();
+
+private:
+    explicit Entity(Game * game);
 
 private:
     QGraphicsScene * scene_ = nullptr;
@@ -47,5 +50,5 @@ C * Entity::findComponent() {
 
 } // Engy
 
-#include "entityptrs.hpp"
+
 

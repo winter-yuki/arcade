@@ -24,6 +24,8 @@ public:
     void setBg(QBrush b);
 
     QGraphicsScene * scene();
+    Timer *          timer();
+    FieldP           field();
 
     void addToField(EntityW entity);
     template <class FIt> void addToField(FIt begin, FIt end);

@@ -14,6 +14,7 @@
 #include <boost/noncopyable.hpp>
 
 #include <QHash>
+#include <QTimerEvent>
 
 #include <QApplication>
 #include <QMainWindow>

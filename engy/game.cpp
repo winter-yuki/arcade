@@ -76,6 +76,18 @@ QGraphicsScene * Game::scene()
 }
 
 
+Timer * Game::timer()
+{
+    return timer_;
+}
+
+
+FieldP Game::field()
+{
+    return field_;
+}
+
+
 void Game::addToField(EntityW entity)
 {
     field_->addEntity(entity);

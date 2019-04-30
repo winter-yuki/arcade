@@ -1,25 +1,24 @@
 #include "eccollisions.hpp"
 
+#include "game.hpp"
+
 
 namespace Engy
 {
 
-ECCollisions::ECCollisions(Game * game, EntityW entity,
-                           const FieldP field, Timer const * timer)
+ECCollisions::ECCollisions(Game * game, EntityW entity)
     : Controller(game, entity)
-    , field_(field)
-    , timer_(timer)
+    , timer_(game->timer())
+    , field_(game->field())
 {
+    assert(game);
     assert(!entity.expired());
     // If entity has form
     assert([&entity]() -> bool { auto l = entity.lock(); return l->form(); }());
-    assert(game);
-    assert(field);
-    assert(timer);
 
     // WARNING: It should be return after emitting "entityDeleted"
     connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);
-    connect(timer, &Timer::timeout, this, &ECCollisions::checkCollisions);
+    connect(timer_, &Timer::timeout, this, &ECCollisions::checkCollisions);
 }
 
 

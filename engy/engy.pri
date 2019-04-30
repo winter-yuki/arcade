@@ -20,8 +20,8 @@ SOURCES += \
 HEADERS += \
     $$PWD/stdafx.hpp \
     $$PWD/game.hpp \
-    $$PWD/timer.hpp \
     $$PWD/entity.hpp \
+    $$PWD/timer.hpp \
     $$PWD/components/component.hpp \
     $$PWD/components/move.hpp \
     $$PWD/components/mass.hpp \

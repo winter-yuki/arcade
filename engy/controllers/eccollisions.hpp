@@ -17,8 +17,7 @@ public:
     // Shared poiners are guaranted not to be empty.
     using Handler = std::function<void (EntityS &, EntityS &)>;
 
-    ECCollisions(Game * game, EntityW entity,
-                 const FieldP field, Timer const * timer);
+    ECCollisions(Game * game, EntityW entity);
     ~ECCollisions();
 
     void setHandler(Handler h);
@@ -27,8 +26,8 @@ public slots:
     void checkCollisions();
 
 private:
+    Timer * timer_;
     FieldP field_;
-    Timer const * timer_;
     Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
 };
 

@@ -1,6 +1,8 @@
 #include "engy/game.hpp"
 #include "engy/controllers/ecarrowkeys.hpp"
 #include "engy/components/move.hpp"
+#include "engy/controllers/eccollisions.hpp"
+#include "engy/controllers/collision_handlers.hpp"
 
 
 Engy::EntityS makePlayer(Engy::Game & game);
@@ -32,12 +34,12 @@ int main(int argc, char * argv[])
     auto ball = makeBall(game);
     game.addToField(ball);
 
-//    auto move = new Engy::Move(timer_);
-//    move->setV({.2f, .1f});
-//    ball->addComponent(Engy::ComponentU(move));
+    auto move = new Engy::Move;
+    move->setV({.1f, .3f});
+    ball->addComponent(Engy::ComponentU(move));
 
-//    auto collisions = new Engy::ECCollisions(scene_, ball, field_, timer_);
-//    collisions->setHandler(Engy::basicCollisionHandler);
+    auto collisions = new Engy::ECCollisions(&game, ball);
+    collisions->setHandler(Engy::basicCollisionHandler);
 
     game.launch();
 

@@ -13,14 +13,17 @@ class Timer final
 public:
     explicit Timer(QObject * parent = nullptr);
 
+    int64_t time() const;
+
 private slots:
     void timeUpdate();
 
 signals:
-    void tick(int64_t dt);
+    void tickdt  (int64_t dt);
+    void tickTime(int64_t time);
 
 private:
-    int64_t prevTime_ = 0;
+    int64_t time_ = 0;
 };
 
 }

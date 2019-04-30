@@ -1,9 +1,9 @@
 #pragma once
 
 #include "stdafx.hpp"
-#include "entity.hpp"
-#include "timer.hpp"
-#include "controllers/field.hpp"
+#include "engy/entity.hpp"
+#include "engy/timer.hpp"
+#include "engy/controllers/field.hpp"
 
 
 class Game final

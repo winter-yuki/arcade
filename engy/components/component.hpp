@@ -1,11 +1,12 @@
 #pragma once
 
-#include "stdafx.hpp"
-#include "entityptrs.hpp"
+#include "../stdafx.hpp"
 
 
 namespace Engy
 {
+
+class Entity;
 
 class Component
         : boost::noncopyable {
@@ -34,4 +35,4 @@ private:
 
 using ComponentU = std::unique_ptr<Component>;
 
-}
+} // Engy

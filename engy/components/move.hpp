@@ -30,7 +30,7 @@ private:
     QVector2D v_;
 };
 
-}
+} // Engy
 
 
 

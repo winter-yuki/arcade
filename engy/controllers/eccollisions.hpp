@@ -32,4 +32,4 @@ private:
     Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
 };
 
-}
+} // Engy

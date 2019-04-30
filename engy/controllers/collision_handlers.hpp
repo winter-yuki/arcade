@@ -1,6 +1,9 @@
 #pragma once
 
-#include "entityptrs.hpp"
+#include "stdafx.hpp"
+class Entity;
+using EntityS = std::shared_ptr<Entity>;
+using EntityW = std::weak_ptr  <Entity>;
 
 
 namespace Engy
@@ -8,4 +11,4 @@ namespace Engy
 
 void basicCollisionHandler(EntityS & a, EntityS & b);
 
-}
+} // Engy

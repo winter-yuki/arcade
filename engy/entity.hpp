@@ -1,4 +1,6 @@
-#pragma once
+#ifndef QQQ
+#define QQQ
+//#pragma once
 
 #include "stdafx.hpp"
 #include "components/component.hpp"
@@ -41,14 +43,17 @@ C * Entity::findComponent() {
 }
 
 
-#include "entityptrs.hpp"
+using EntityS = std::shared_ptr<Entity>;
+using EntityW = std::weak_ptr  <Entity>;
+
 
 inline EntityS makeEntity(QGraphicsScene * scene) {
     return std::make_shared<Entity>(scene);
 }
 
-}
+} // Engy
 
+#endif
 
 
 

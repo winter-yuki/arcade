@@ -1,11 +1,11 @@
 #include "game.hpp"
 
-#include "entity.hpp"
-#include "controllers/ecarrowkeys.hpp"
-#include "controllers/eccollisions.hpp"
-#include "controllers/collision_handlers.hpp"
-#include "components/move.hpp"
-#include "timer.hpp"
+#include "engy/entity.hpp"
+#include "engy/controllers/ecarrowkeys.hpp"
+#include "engy/controllers/eccollisions.hpp"
+#include "engy/controllers/collision_handlers.hpp"
+#include "engy/components/move.hpp"
+#include "engy/timer.hpp"
 
 
 Game::Game(QWidget * parent)

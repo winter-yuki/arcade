@@ -14,7 +14,11 @@ ECCollisions::ECCollisions(Game * game, EntityW entity)
     assert(game);
     assert(!entity.expired());
     // If entity has form
-    assert([&entity]() -> bool { auto l = entity.lock(); return l->form(); }());
+    assert([&entity]() -> bool {
+               auto l = entity.lock();
+               assert(l);
+               return l->form(); }
+           ());
 
     // WARNING: It should be return after emitting "entityDeleted"
     connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);

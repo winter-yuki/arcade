@@ -20,6 +20,12 @@ Entity::Entity(Game * game)
 {}
 
 
+Entity::~Entity()
+{
+    scene_->removeItem(form_);
+}
+
+
 void Entity::addForm(QGraphicsItem * form)
 {
     assert(form);

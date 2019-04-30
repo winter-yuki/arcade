@@ -15,6 +15,7 @@ class Entity final {
 public:
     // Factory
     static EntityS create(Game * game);
+    ~Entity();
 
     // Also adds item to the scene
     void addForm(QGraphicsItem * form);

@@ -28,8 +28,8 @@ private:
 };
 
 
-using FieldP = std::shared_ptr<Field>;
-inline FieldP makeField() {
+using FieldS = std::shared_ptr<Field>;
+inline FieldS makeField() {
     return std::make_shared<Field>();
 }
 

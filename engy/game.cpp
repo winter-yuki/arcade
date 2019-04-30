@@ -82,7 +82,7 @@ Timer * Game::timer()
 }
 
 
-FieldP Game::field()
+FieldS Game::field()
 {
     return field_;
 }
@@ -97,6 +97,13 @@ void Game::addToField(EntityW entity)
 void Game::addEntity(EntityS entity)
 {
     entities_.push_back(entity);
+}
+
+
+void Game::removeEntity(EntityS entity)
+{
+    entities_.erase(remove(entities_.begin(),
+                           entities_.end(), entity), entities_.end());
 }
 
 } // Engy

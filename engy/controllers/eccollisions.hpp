@@ -27,7 +27,7 @@ public slots:
 
 private:
     Timer * timer_;
-    FieldP field_;
+    FieldS field_;
     Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
 };
 

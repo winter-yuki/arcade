@@ -11,6 +11,8 @@ namespace Engy
 
 class Game final
         : private QGraphicsView {
+    Q_OBJECT
+
 public:
     explicit Game(QWidget * parent = nullptr);
     ~Game();
@@ -29,10 +31,13 @@ public:
 
     QGraphicsScene * scene();
     Timer *          timer();
-    FieldP           field();
+    FieldS           field();
 
     // To admit entity adding to entity list on construction
     friend EntityS Entity::create(Game * game);
+
+public slots:
+    void removeEntity(EntityS entity);
 
 private:
     void addEntity(EntityS entity);
@@ -43,7 +48,7 @@ private:
 
     QGraphicsScene * scene_;
     Timer * timer_;
-    FieldP  field_;
+    FieldS  field_;
     std::vector<EntityS> entities_;
 };
 

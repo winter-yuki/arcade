@@ -36,7 +36,7 @@ int main(int argc, char * argv[])
     game.addToField(ball);
 
     auto move = new Engy::Move;
-    move->setV({.1f, .3f});
+    move->setV({.2f, .3f});
     ball->addComponent(Engy::ComponentU(move));
 
     auto collisions = new Engy::ECCollisions(&game, ball);

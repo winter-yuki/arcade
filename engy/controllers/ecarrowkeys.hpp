@@ -11,6 +11,7 @@ namespace Engy
 {
 
 /**
+ * @ingroup controllers
  * @brief The ECArrowKeys class
  * Controller that handles arrow keys events.
  */

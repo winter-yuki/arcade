@@ -10,6 +10,10 @@
 namespace Engy
 {
 
+/**
+ * @ingroup component
+ * @brief The Mass class
+ */
 class Mass final
         : public Component {
 public:

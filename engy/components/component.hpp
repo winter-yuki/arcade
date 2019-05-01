@@ -3,6 +3,14 @@
   * @brief Component base class.
   */
 
+/**
+  * @defgroup component Components
+  * @brief Contains components.
+  *
+  * Components add specific bahaviour to entities.
+  * They contain come date, and refence to parent entity to work with.
+  */
+
 #pragma once
 
 #include "stdafx.hpp"
@@ -14,6 +22,7 @@ namespace Engy
 class Entity;
 
 /**
+ * @ingroup component
  * @brief Base class for all components in game.
  */
 class Component

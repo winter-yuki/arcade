@@ -2,6 +2,11 @@
   * @file
   */
 
+/**
+  * @defgroup controllers
+  * @brief Overseers of entities that can add some interactive to the game.
+  */
+
 #pragma once
 
 #include "stdafx.hpp"
@@ -14,6 +19,7 @@ namespace Engy
 class Game;
 
 /**
+ * @ingroup controllers
  * @brief Base class for any controller in game.
  *
  * By default deletes itself if entity deleted and if game deleted.

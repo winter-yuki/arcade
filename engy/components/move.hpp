@@ -12,6 +12,10 @@
 namespace Engy
 {
 
+/**
+ * @ingroup component
+ * @brief The Move class
+ */
 class Move final
         : public Component {
     Q_OBJECT

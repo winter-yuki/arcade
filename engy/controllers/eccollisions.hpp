@@ -13,6 +13,7 @@ namespace Engy
 {
 
 /**
+ * @ingroup controllers
  * @brief The ECCollisions class
  */
 class ECCollisions final

@@ -13,12 +13,13 @@ class ECCollisions final
     Q_OBJECT
 
 public:
-    // 1st: given entity, 2nd: other entity from field.
-    // Shared poiners are guaranted not to be empty.
+    /**
+     * 1st: given entity, 2nd: other entity from field.
+     * Shared poiners are guaranted not to be empty.
+     */
     using Handler = std::function<void (EntityS &, EntityS &)>;
 
     ECCollisions(Game * game, EntityW entity);
-    ~ECCollisions();
 
     void setHandler(Handler h);
 

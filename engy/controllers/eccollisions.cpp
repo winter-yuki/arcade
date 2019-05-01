@@ -16,15 +16,7 @@ ECCollisions::ECCollisions(Game * game, EntityW entity)
     assert(!entity.expired());
     assert(ifHasForm(entity));
 
-    /// @warning It should be return after emitting "entityDeleted"
-    connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);
     connect(timer_, &Timer::timeout, this, &ECCollisions::checkCollisions);
-}
-
-
-ECCollisions::~ECCollisions()
-{
-    disconnect(timer_, &Timer::timeout, this, &ECCollisions::checkCollisions);
 }
 
 

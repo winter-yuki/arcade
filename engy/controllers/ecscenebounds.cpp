@@ -14,15 +14,7 @@ ECSceneBounds::ECSceneBounds(Game * game, EntityW entity)
     assert(!entity.expired());
     assert(ifHasForm(entity));
 
-    /// @warning Place "return" after emitting "entityDeleted"
-    connect(this, &ECSceneBounds::entityDeleted, this, &ECSceneBounds::harakiri);
     connect(timer_, &Timer::timeout, this, &ECSceneBounds::check);
-}
-
-
-ECSceneBounds::~ECSceneBounds()
-{
-    disconnect(timer_, &Timer::timeout, this, &ECSceneBounds::check);
 }
 
 

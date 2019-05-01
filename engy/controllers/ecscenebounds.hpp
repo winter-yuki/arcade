@@ -16,7 +16,6 @@ class ECSceneBounds final
 
 public:
     ECSceneBounds(Game * game, EntityW entity);
-    ~ECSceneBounds() override;
 
 public slots:
     void check();

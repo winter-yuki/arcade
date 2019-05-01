@@ -10,7 +10,7 @@ namespace Engy
 {
 
 class Game final
-        : private QGraphicsView {
+        : public QGraphicsView { ///< TODO: make inheritance private
     Q_OBJECT
 
 public:
@@ -38,6 +38,9 @@ public:
 
 public slots:
     void removeEntity(EntityS entity);
+
+signals:
+    void sceneResized();
 
 private:
     void addEntity(EntityS entity);

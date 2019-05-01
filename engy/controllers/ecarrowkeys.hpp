@@ -6,6 +6,10 @@
 namespace Engy
 {
 
+/**
+ * @brief The ECArrowKeys class
+ * Controller that handles arrow keys events.
+ */
 class ECArrowKeys final
         : public Controller {
     Q_OBJECT
@@ -31,11 +35,14 @@ public:
 
     void keyPressEvent(QKeyEvent * event) override;
 
+private slots:
+    void sceneResized();
+
 private:
-    std::optional<QPointF> left (EntityS & e) const;
-    std::optional<QPointF> right(EntityS & e) const;
-    std::optional<QPointF> up   (EntityS & e) const;
-    std::optional<QPointF> down (EntityS & e) const;
+    QPointF left (EntityS & e) const;
+    QPointF right(EntityS & e) const;
+    QPointF up   (EntityS & e) const;
+    QPointF down (EntityS & e) const;
 
 private:
     OptD dx_ = 20;

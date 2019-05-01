@@ -32,10 +32,10 @@ public:
     void keyPressEvent(QKeyEvent * event) override;
 
 private:
-    std::optional<QPointF> left (EntityS e) const;
-    std::optional<QPointF> right(EntityS e) const;
-    std::optional<QPointF> up   (EntityS e) const;
-    std::optional<QPointF> down (EntityS e) const;
+    std::optional<QPointF> left (EntityS & e) const;
+    std::optional<QPointF> right(EntityS & e) const;
+    std::optional<QPointF> up   (EntityS & e) const;
+    std::optional<QPointF> down (EntityS & e) const;
 
 private:
     OptD dx_ = 20;

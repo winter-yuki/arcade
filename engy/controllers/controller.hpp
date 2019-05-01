@@ -20,7 +20,12 @@ public:
     Controller(Game * game, EntityW entity);
 
     Game * game();
-    EntityW entity();
+    /**
+     * @brief entuty
+     * @return Shared pointer to entity.
+     * If pointer is empty, emits "entityDeleted" and returnes empty sharded.
+     */
+    EntityS entity();
 
     // Unused
     void paint(QPainter * painter, QStyleOptionGraphicsItem const * option,
@@ -28,9 +33,15 @@ public:
     QRectF boundingRect() const override;
 
 public slots:
+    /**
+     * @brief harakiri Controller deletes itself.
+     */
     void harakiri();
 
 signals:
+    /**
+     * @brief entityDeleted
+     */
     void entityDeleted();
 
 private:

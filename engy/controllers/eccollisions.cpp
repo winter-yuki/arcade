@@ -36,9 +36,8 @@ void ECCollisions::setHandler(Handler h)
 
 void ECCollisions::checkCollisions()
 {
-    auto e = entity().lock();
+    auto e = entity();
     if (!e) {
-        emit entityDeleted();
         return;
     }
 

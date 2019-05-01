@@ -22,7 +22,7 @@ Entity::Entity(Game * game)
 
 Entity::~Entity()
 {
-    scene_->removeItem(form_);
+//    scene_->removeItem(form_); /// @bug
     for (auto it = components_.begin(); it != components_.end(); ++it) {
         assert(it->second->entity());
         it->second->delEntity();

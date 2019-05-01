@@ -103,9 +103,8 @@ ECArrowKeys::OptD ECArrowKeys::bborder() const
 
 void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 {
-    auto e = entity().lock();
+    auto e = entity();
     if (!e) {
-        emit entityDeleted();
         return;
     }
 
@@ -137,7 +136,7 @@ void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 }
 
 
-std::optional<QPointF> ECArrowKeys::left(EntityS e) const
+std::optional<QPointF> ECArrowKeys::left(EntityS & e) const
 {
     if (dx_.has_value() == false) {
         return e->form()->pos();
@@ -152,7 +151,7 @@ std::optional<QPointF> ECArrowKeys::left(EntityS e) const
 }
 
 
-std::optional<QPointF> ECArrowKeys::right(EntityS e) const
+std::optional<QPointF> ECArrowKeys::right(EntityS & e) const
 {
     if (dx_.has_value() == false) {
         return e->form()->pos();
@@ -168,7 +167,7 @@ std::optional<QPointF> ECArrowKeys::right(EntityS e) const
 }
 
 
-std::optional<QPointF> ECArrowKeys::up(EntityS e) const
+std::optional<QPointF> ECArrowKeys::up(EntityS & e) const
 {
     if (dy_.has_value() == false) {
         return e->form()->pos();
@@ -183,7 +182,7 @@ std::optional<QPointF> ECArrowKeys::up(EntityS e) const
 }
 
 
-std::optional<QPointF> ECArrowKeys::down(EntityS e) const
+std::optional<QPointF> ECArrowKeys::down(EntityS & e) const
 {
     if (dy_.has_value() == false) {
         return e->form()->pos();

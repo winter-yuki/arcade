@@ -41,7 +41,7 @@ void basicCollisionHandler(EntityS & a, EntityS & b)
         qDebug() << "Collision detection isn't in time,"
                     "object is already in figure";
         move->setV(-v);
-        move->update(100); // Move entity back slightly
+        move->update(300); // Move entity back slightly
     }
 }
 

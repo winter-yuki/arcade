@@ -28,9 +28,8 @@ ECSceneBounds::~ECSceneBounds()
 
 void ECSceneBounds::check()
 {
-    auto e = entity().lock();
+    auto e = entity();
     if (!e) {
-        emit entityDeleted();
         return;
     }
 

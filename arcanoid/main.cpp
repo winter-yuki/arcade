@@ -45,8 +45,12 @@ int main(int argc, char * argv[])
     collisions->setHandler(Engy::basicCollisionHandler);
 
     auto outOfScene = new Engy::ECSceneBounds(&game, ball);
-    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
-                     QApplication::instance(), &QApplication::quit);
+    //    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
+    //                     QApplication::instance(), &QApplication::quit);
+//    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [ball, &game]() {
+//        qDebug() << "Delete ball";
+//        game.removeEntity(ball);
+//    });
     /// @bug QGraphicsScene::removeItem: item 0x55cdfb6f5f80's
     /// scene is different from this scene
 

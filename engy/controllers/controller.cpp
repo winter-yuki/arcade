@@ -21,9 +21,13 @@ Game * Controller::game()
 }
 
 
-EntityW Controller::entity()
+EntityS Controller::entity()
 {
-    return entity_;
+    auto l = entity_.lock();
+    if (!l) {
+        emit entityDeleted();
+    }
+    return l;
 }
 
 

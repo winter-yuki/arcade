@@ -35,12 +35,12 @@ signals:
     void entitySetted();
 
 private:
-    void setEntity(Entity * e);
-    void delEntity(); ///< Removes reference to entity
+    void setEntity(Entity * e); ///< Sets reference to entity
+    void delEntity();           ///< Removes reference to entity
 
 private:
     Id id_;
-    Entity * entity_ = nullptr;
+    Entity * entity_ = nullptr; ///< Parent
 };
 
 using ComponentU = std::unique_ptr<Component>;

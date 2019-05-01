@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "collision_handlers.hpp"
 
 #include "stdafx.hpp"

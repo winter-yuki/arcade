@@ -1,3 +1,8 @@
+/**
+  * @file
+  * @brief Component base class.
+  */
+
 #pragma once
 
 #include "stdafx.hpp"

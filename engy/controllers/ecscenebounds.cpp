@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "ecscenebounds.hpp"
 
 #include "stdafx.hpp"

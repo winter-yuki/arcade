@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "eccollisions.hpp"
 
 #include "game.hpp"

@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "field.hpp"
 
 #include "stdafx.hpp"

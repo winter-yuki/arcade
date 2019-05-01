@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "ecarrowkeys.hpp"
 
 #include "game.hpp"

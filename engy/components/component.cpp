@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "component.hpp"
 
 #include "entity.hpp"

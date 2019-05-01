@@ -1,4 +1,9 @@
+/**
+  * @file
+  */
+
 #include "entity.hpp"
+
 #include "game.hpp"
 
 

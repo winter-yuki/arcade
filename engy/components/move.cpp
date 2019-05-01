@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "move.hpp"
 
 #include "entity.hpp"

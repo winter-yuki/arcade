@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "controller.hpp"
 #include "game.hpp"
 

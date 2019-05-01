@@ -1,3 +1,7 @@
+/**
+  * @file
+  */
+
 #include "mass.hpp"
 
 

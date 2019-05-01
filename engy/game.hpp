@@ -36,7 +36,7 @@ public:
     Timer *          timer();
     FieldS           field();
 
-    // To admit entity adding to entity list on construction
+    /// To admit entity adding to entity list on construction
     friend EntityS Entity::create(Game * game);
 
 public slots:

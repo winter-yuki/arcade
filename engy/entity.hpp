@@ -29,6 +29,9 @@ public:
     /**
      * @brief Removes component from entity
      * @return true if element removed, false otherwise
+     *
+     * Previously makes component forget about parent to break cycle,
+     * where component tries delete itself from entity in Component::~Component
      */
     bool removeComponent(Component::Id id);
     std::optional<Component *> findComponent(Component::Id id);
@@ -39,7 +42,7 @@ public:
 private:
     explicit Entity(Game * game);
 
-    /// Provides access to void forgetComponent()
+    /// Provides access to forgetComponent()
     friend class Component;
     /**
      * @brief Removes componet without deletion
@@ -54,8 +57,7 @@ private:
 
 
 template <class C>
-C * Entity::findComponent()
-{
+C * Entity::findComponent() {
     if (auto search = findComponent(Component::id<C>())) {
         auto component = dynamic_cast<C *>(search.value());
         assert(component);

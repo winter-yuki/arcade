@@ -71,7 +71,8 @@ std::optional<Component *> Entity::findComponent(Component::Id id)
 void Entity::forgetComponent(Component::Id id)
 {
     auto node = components_.extract(id);
-    assert(!node.empty());
+    assert("Entity should be parent if component knows about it" &&
+           !node.empty());
     node.mapped().release();
 }
 

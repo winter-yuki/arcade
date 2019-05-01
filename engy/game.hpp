@@ -2,6 +2,10 @@
   * @file
   */
 
+/**
+  * @defgroup core Core
+  */
+
 #pragma once
 
 #include "stdafx.hpp"
@@ -14,6 +18,7 @@ namespace Engy
 {
 
 /**
+ * @ingroup core
  * @brief The Game class
  * @todo Is possible to have private inheratance from QObject?
  */

@@ -11,6 +11,7 @@ namespace Engy
 {
 
 /**
+ * @ingroup core
  * @brief The Timer class
  */
 class Timer final

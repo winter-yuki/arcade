@@ -16,6 +16,7 @@ namespace Engy
 class Game;
 
 /**
+ * @ingroup core
  * @brief The Entity class
  */
 class Entity final {

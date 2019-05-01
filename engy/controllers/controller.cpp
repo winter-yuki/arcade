@@ -85,11 +85,11 @@ void Controller::deleteControllerIfGameDeleted(bool val)
 {
     if (val == true && deleteControllerIfGameDeleted_ == false) {
         deleteControllerIfGameDeleted_ = true;
-        connect(game_, &Game::deleted, this, &Controller::harakiri);
+        connect(game_, &Game::destroyed, this, &Controller::harakiri);
     }
     if (val == false && deleteControllerIfGameDeleted_ == true) {
         deleteControllerIfGameDeleted_ = false;
-        disconnect(game_, &Game::deleted, this, &Controller::harakiri);
+        disconnect(game_, &Game::destroyed, this, &Controller::harakiri);
     }
 }
 

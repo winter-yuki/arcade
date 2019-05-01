@@ -29,9 +29,8 @@ Game::Game(QWidget * parent)
 
 Game::~Game()
 {
-    // QGraphicsView doesn't take ownership of scene.
+    /// QGraphicsView doesn't take ownership of scene.
     delete scene_;
-    emit deleted();
 }
 
 

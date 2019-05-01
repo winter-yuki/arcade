@@ -15,9 +15,10 @@ namespace Engy
 
 /**
  * @brief The Game class
+ * @todo Is possible to have private inheratance from QObject?
  */
 class Game final
-        : private QGraphicsView {
+        : public QGraphicsView {
     Q_OBJECT
 
 public:
@@ -48,7 +49,6 @@ public slots:
 
 signals:
     void sceneResized();
-    void deleted();
 
 private:
     void addEntity(EntityS entity);

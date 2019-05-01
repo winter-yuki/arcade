@@ -7,8 +7,8 @@ namespace Engy
 
 EntityS Entity::create(Game * game) {
     assert(game);
-    // TODO: Do this via std::make_shared
-    // (it should be marked "friend" for the Entity)
+    /// @todo Do this via std::make_shared
+    /// (it should be marked "friend" for the Entity)
     std::shared_ptr<Entity> entity(new Entity(game));
     game->addEntity(entity);
     return entity;
@@ -23,6 +23,10 @@ Entity::Entity(Game * game)
 Entity::~Entity()
 {
     scene_->removeItem(form_);
+    for (auto it = components_.begin(); it != components_.end(); ++it) {
+        assert(it->second->entity());
+        it->second->delEntity();
+    }
 }
 
 
@@ -41,16 +45,16 @@ QGraphicsItem * Entity::form()
 }
 
 
-void Entity::addComponent(ComponentU component)
+void Entity::addComponent(Component * component)
 {
     component->setEntity(this);
-    components_.insert({component->id(), std::move(component)});
+    components_.insert({component->id(), ComponentU(component)});
 }
 
 
-void Entity::removeComponent(Component::Id id)
+bool Entity::removeComponent(Component::Id id)
 {
-    components_.erase(id);
+    return components_.erase(id);
 }
 
 
@@ -61,6 +65,14 @@ std::optional<Component *> Entity::findComponent(Component::Id id)
         return { it->second.get() };
     }
     return std::nullopt;
+}
+
+
+void Entity::forgetComponent(Component::Id id)
+{
+    auto node = components_.extract(id);
+    assert(!node.empty());
+    node.mapped().release();
 }
 
 } // Engy

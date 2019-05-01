@@ -37,7 +37,8 @@ int main(int argc, char * argv[])
 
     auto move = new Engy::Move;
     move->setV({.2f, .3f});
-    ball->addComponent(Engy::ComponentU(move));
+    ball->addComponent(move);
+    delete move;
 
     auto collisions = new Engy::ECCollisions(&game, ball);
     collisions->setHandler(Engy::basicCollisionHandler);

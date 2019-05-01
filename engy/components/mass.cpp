@@ -5,7 +5,8 @@ namespace Engy
 {
 
 Mass::Mass(double m)
-    : m_(m)
+    : Component(id<Mass>())
+    , m_(m)
 {}
 
 

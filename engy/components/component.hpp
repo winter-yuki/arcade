@@ -19,10 +19,10 @@ class Component
 public:
     using Id = std::type_index;
 
-    /// @warning: Do not delete component manually
-    /// if it is already added to an entity.
-    virtual ~Component() = default;
-    virtual Id id() const = 0;
+    explicit Component(Id id);
+    virtual ~Component(); ///< Deletes itself from parent manually
+
+    Id id() const;
     Entity * entity();
 
     template <class T>
@@ -36,8 +36,10 @@ signals:
 
 private:
     void setEntity(Entity * e);
+    void delEntity(); ///< Removes reference to entity
 
 private:
+    Id id_;
     Entity * entity_ = nullptr;
 };
 

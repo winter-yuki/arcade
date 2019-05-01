@@ -21,9 +21,13 @@ public:
     void addForm(QGraphicsItem * form);
     QGraphicsItem * form();
 
-    // Gets ownership of component
-    void addComponent(ComponentU component);
-    void removeComponent(Component::Id id);
+    /// Gets ownership of component
+    void addComponent(Component * component);
+    /**
+     * @brief Removes component from entity
+     * @return true if element removed, false otherwise
+     */
+    bool removeComponent(Component::Id id);
     std::optional<Component *> findComponent(Component::Id id);
 
     // Returnes pointer to component if exists, nullptr otherwise.
@@ -31,6 +35,13 @@ public:
 
 private:
     explicit Entity(Game * game);
+
+    /// Provides access to void forgetComponent()
+    friend class Component;
+    /**
+     * @brief Removes componet without deletion
+     */
+    void forgetComponent(Component::Id id);
 
 private:
     QGraphicsScene * scene_ = nullptr;

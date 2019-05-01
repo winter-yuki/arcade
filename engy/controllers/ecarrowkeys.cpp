@@ -16,8 +16,7 @@ ECArrowKeys::ECArrowKeys(Game * game, EntityW entity)
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
 
-    /// @warning It should be return statement after emitting "entityDeleted".
-    connect(this, &ECArrowKeys::entityDeleted, this, &ECArrowKeys::harakiri);
+    connect(game, &Game::sceneResized, this, &ECArrowKeys::sceneResized);
 }
 
 
@@ -110,33 +109,32 @@ void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 
     switch (event->key()) {
     case Qt::Key_Left:
-        if (auto pnew = left(e)) {
-            e->form()->setPos(pnew.value());
-        }
+        e->form()->setPos(left(e));
         break;
 
     case Qt::Key_Right:
-        if (auto pnew = right(e)) {
-            e->form()->setPos(pnew.value());
-        }
+        e->form()->setPos(right(e));
         break;
 
     case Qt::Key_Up:
-        if (auto pnew = up(e)) {
-            e->form()->setPos(pnew.value());
-        }
+        e->form()->setPos(up(e));
         break;
 
     case Qt::Key_Down:
-        if (auto pnew = down(e)) {
-            e->form()->setPos(pnew.value());
-        }
+        e->form()->setPos(down(e));
         break;
     }
 }
 
 
-std::optional<QPointF> ECArrowKeys::left(EntityS & e) const
+void ECArrowKeys::sceneResized()
+{
+    setRBorder(rborder_);
+    setBBorder(bborder_);
+}
+
+
+QPointF ECArrowKeys::left(EntityS & e) const
 {
     if (dx_.has_value() == false) {
         return e->form()->pos();
@@ -145,29 +143,29 @@ std::optional<QPointF> ECArrowKeys::left(EntityS & e) const
     auto npos = e->form()->pos() - QPointF(dx_.value(), 0);
 
     if (lborder_.has_value() && npos.x() < lborder_) {
-        return { QPointF(lborder_.value(), npos.y()) };
+        return QPointF(lborder_.value(), npos.y());
     }
     return npos;
 }
 
 
-std::optional<QPointF> ECArrowKeys::right(EntityS & e) const
+QPointF ECArrowKeys::right(EntityS & e) const
 {
     if (dx_.has_value() == false) {
         return e->form()->pos();
     }
 
-    auto npos = e->form()->pos() + QPointF(dx_.value(), 0);
+    auto npos = e->form()->scenePos() + QPointF(dx_.value(), 0);
     auto width = e->form()->boundingRect().width();
 
     if (rborder_.has_value() && npos.x() + width > rborder_) {
-        return { QPointF(rborder_.value() - width, npos.y()) };
+        return QPointF(rborder_.value() - width, npos.y());
     }
     return npos;
 }
 
 
-std::optional<QPointF> ECArrowKeys::up(EntityS & e) const
+QPointF ECArrowKeys::up(EntityS & e) const
 {
     if (dy_.has_value() == false) {
         return e->form()->pos();
@@ -176,13 +174,13 @@ std::optional<QPointF> ECArrowKeys::up(EntityS & e) const
     auto npos = e->form()->pos() - QPointF(0, dy_.value());
 
     if (tborder_.has_value() && npos.y() < tborder_) {
-        return { QPointF(npos.x(), tborder_.value()) };
+        return QPointF(npos.x(), tborder_.value());
     }
     return npos;
 }
 
 
-std::optional<QPointF> ECArrowKeys::down(EntityS & e) const
+QPointF ECArrowKeys::down(EntityS & e) const
 {
     if (dy_.has_value() == false) {
         return e->form()->pos();
@@ -192,7 +190,7 @@ std::optional<QPointF> ECArrowKeys::down(EntityS & e) const
     auto height = e->form()->boundingRect().height();
 
     if (bborder_.has_value() && npos.y() + height > bborder_) {
-        return { QPointF(npos.x(), bborder_.value() - height) };
+        return QPointF(npos.x(), bborder_.value() - height);
     }
     return npos;
 }

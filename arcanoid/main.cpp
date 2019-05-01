@@ -23,6 +23,7 @@ int main(int argc, char * argv[])
     double borderWidth = 5;
     auto player = makePlayer(game);
     auto keyController = new Engy::ECArrowKeys(&game, player);
+    keyController->setDx(25);
     keyController->setDy(std::nullopt);
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
@@ -47,10 +48,10 @@ int main(int argc, char * argv[])
     auto outOfScene = new Engy::ECSceneBounds(&game, ball);
     //    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
     //                     QApplication::instance(), &QApplication::quit);
-//    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [ball, &game]() {
-//        qDebug() << "Delete ball";
-//        game.removeEntity(ball);
-//    });
+    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [ball, &game]() {
+        qDebug() << "Delete ball";
+//        game.removeEntity(ball); TODO
+    });
     /// @bug QGraphicsScene::removeItem: item 0x55cdfb6f5f80's
     /// scene is different from this scene
 
@@ -84,7 +85,7 @@ Engy::EntityS makeBall(Engy::Game & game)
 
     auto * ball = new QGraphicsEllipseItem;
     ball->setRect({0, 0, 50, 50});
-    ball->moveBy(10, 10);
+    ball->moveBy(10, 10); // Experiment TODO
     ball->setBrush(QBrush(ballColor));
     ball->setPen(QPen(ballColor));
 

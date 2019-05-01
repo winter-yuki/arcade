@@ -11,7 +11,17 @@ Controller::Controller(Game * game, EntityW e)
 {
     assert(game);
     assert(!e.expired());
+
     game->scene()->addItem(this);
+    deleteControllerIfEntityDeleted(true);
+    deleteControllerIfGameDeleted(true);
+}
+
+
+Controller::~Controller()
+{
+    // Disconnect everything from this object
+    disconnect(nullptr, nullptr, this, nullptr);
 }
 
 
@@ -49,6 +59,32 @@ QRectF Controller::boundingRect() const
 void Controller::harakiri()
 {
     delete this;
+}
+
+
+void Controller::deleteControllerIfEntityDeleted(bool val)
+{
+    if (val == true && deleteControllerIfEntityDeleted_ == false) {
+        deleteControllerIfEntityDeleted_ = true;
+        connect(this, &Controller::entityDeleted, this, &Controller::harakiri);
+    }
+    if (val == false && deleteControllerIfEntityDeleted_ == true) {
+        deleteControllerIfEntityDeleted_ = false;
+        disconnect(this, &Controller::entityDeleted, this, &Controller::harakiri);
+    }
+}
+
+
+void Controller::deleteControllerIfGameDeleted(bool val)
+{
+    if (val == true && deleteControllerIfGameDeleted_ == false) {
+        deleteControllerIfGameDeleted_ = true;
+        connect(game_, &Game::destroyed, this, &Controller::harakiri);
+    }
+    if (val == false && deleteControllerIfGameDeleted_ == true) {
+        deleteControllerIfGameDeleted_ = false;
+        disconnect(game_, &Game::destroyed, this, &Controller::harakiri);
+    }
 }
 
 } // Engy

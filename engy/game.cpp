@@ -18,8 +18,8 @@ Game::Game(QWidget * parent)
     , field_(makeField()) // Create registry with tangible items
 {
     setScene(scene_);
-    scene_->setSceneRect({{0, 0}, sceneSize_});
-    setFixedSize(sceneSize_ + QSize(5, 5)); // To see whole scene
+    setSceneSize(sceneSize_);
+    qDebug() << "Engy::Game creaated";
 }
 
 
@@ -27,6 +27,7 @@ Game::~Game()
 {
     // QGraphicsView doesn't take ownership of scene.
     delete scene_;
+    qDebug() << "Engy::Game deleted";
 }
 
 
@@ -34,9 +35,11 @@ void Game::launch()
 {
     // Set game update timer
     timer_->start(int(1.0 / frameRate_ * 1000));
+
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy  (Qt::ScrollBarAlwaysOff);
     show();
+    qDebug() << "Engy::Game launched";
 }
 
 
@@ -55,6 +58,10 @@ int64_t Game::frameRate() const
 void Game::setSceneSize(QSize size)
 {
     sceneSize_ = size;
+    assert(scene_);
+    scene_->setSceneRect({{0, 0}, sceneSize_});
+    setFixedSize(sceneSize_ + QSize(5, 5)); // To see whole scene
+    emit sceneResized();
 }
 
 

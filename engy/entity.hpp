@@ -16,11 +16,19 @@ class Game;
  */
 class Entity final {
 public:
-    // Factory
+    /// Factory
+    /**
+     * @brief Factory of entityes.
+     * @param game Takes ownership of entity.
+     * @return Created entity.
+     */
     static EntityS create(Game * game);
     ~Entity();
 
-    // Also adds item to the scene
+    /**
+     * @brief Adds @p form to the scene
+     * @param form
+     */
     void addForm(QGraphicsItem * form);
     QGraphicsItem * form();
 
@@ -36,10 +44,17 @@ public:
     bool removeComponent(Component::Id id);
     std::optional<Component *> findComponent(Component::Id id);
 
-    // Returnes pointer to component if exists, nullptr otherwise.
+    /**
+     * @brief Finds component of specific type.
+     * @return Pointer to component if exists, nullptr otherwise.
+     */
     template <class C> C * findComponent();
 
 private:
+    /**
+     * @brief Entity instance can only be created via factory.
+     * @param game Takes ownership of entity.
+     */
     explicit Entity(Game * game);
 
     /// Provides access to forgetComponent()

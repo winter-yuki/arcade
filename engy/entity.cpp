@@ -7,7 +7,7 @@ namespace Engy
 
 EntityS Entity::create(Game * game) {
     assert(game);
-    /// @todo Do this via std::make_shared
+    /// @todo Create via std::make_shared
     /// (it should be marked "friend" for the Entity)
     std::shared_ptr<Entity> entity(new Entity(game));
     game->addEntity(entity);
@@ -22,7 +22,12 @@ Entity::Entity(Game * game)
 
 Entity::~Entity()
 {
-//    scene_->removeItem(form_); /// @bug
+    /// @bug
+    if (form_) {
+        scene_->removeItem(form_);
+    }
+
+    // Make all components forget about parent to avoid cycle.
     for (auto it = components_.begin(); it != components_.end(); ++it) {
         assert(it->second->entity());
         it->second->delEntity();
@@ -32,8 +37,10 @@ Entity::~Entity()
 
 void Entity::addForm(QGraphicsItem * form)
 {
-    assert(form);
     assert(scene_);
+    if (form_) {
+        scene_->removeItem(form_);
+    }
     form_ = form;
     scene_->addItem(form_);
 }

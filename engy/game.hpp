@@ -11,9 +11,11 @@ namespace Engy
 
 /**
  * @brief The Game class
+ * @todo Make inheritance private, but QObject::destroyed signal
+ * sould be still emitted (or other one with the same purpose).
  */
 class Game final
-        : public QGraphicsView { ///< TODO: make inheritance private
+        : public QGraphicsView {
     Q_OBJECT
 
 public:

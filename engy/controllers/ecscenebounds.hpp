@@ -10,6 +10,9 @@ namespace Engy
 
 class Game;
 
+/**
+ * @brief The ECSceneBounds class
+ */
 class ECSceneBounds final
         : public Controller {
     Q_OBJECT

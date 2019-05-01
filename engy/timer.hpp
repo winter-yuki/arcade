@@ -6,6 +6,9 @@
 namespace Engy
 {
 
+/**
+ * @brief The Timer class
+ */
 class Timer final
         : public QTimer {
     Q_OBJECT

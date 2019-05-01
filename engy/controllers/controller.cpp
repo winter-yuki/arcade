@@ -20,7 +20,8 @@ Controller::Controller(Game * game, EntityW e)
 
 Controller::~Controller()
 {
-    // Disconnect everything from this object
+    /// Disconnect everything from this object
+    /// @warning cppcheck red warning: null pointer dereference.
     disconnect(nullptr, nullptr, this, nullptr);
 }
 

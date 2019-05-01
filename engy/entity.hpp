@@ -11,6 +11,9 @@ namespace Engy
 
 class Game;
 
+/**
+ * @brief The Entity class
+ */
 class Entity final {
 public:
     // Factory

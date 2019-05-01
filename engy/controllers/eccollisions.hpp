@@ -8,6 +8,9 @@
 namespace Engy
 {
 
+/**
+ * @brief The ECCollisions class
+ */
 class ECCollisions final
         : public Controller {
     Q_OBJECT

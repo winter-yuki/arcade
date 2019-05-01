@@ -9,6 +9,9 @@
 namespace Engy
 {
 
+/**
+ * @brief The Game class
+ */
 class Game final
         : public QGraphicsView { ///< TODO: make inheritance private
     Q_OBJECT

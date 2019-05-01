@@ -1,6 +1,7 @@
 #include "eccollisions.hpp"
 
 #include "game.hpp"
+#include "entity.hpp"
 
 
 namespace Engy
@@ -13,12 +14,7 @@ ECCollisions::ECCollisions(Game * game, EntityW entity)
 {
     assert(game);
     assert(!entity.expired());
-    // If entity has form
-    assert([&entity]() -> bool {
-               auto l = entity.lock();
-               assert(l);
-               return l->form(); }
-           ());
+    assert(ifHasForm(entity));
 
     /// @warning It should be return after emitting "entityDeleted"
     connect(this, &ECCollisions::entityDeleted, this, &ECCollisions::harakiri);

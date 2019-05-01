@@ -11,11 +11,7 @@ ECArrowKeys::ECArrowKeys(Game * game, EntityW entity)
 {
     assert(game);
     assert(!entity.expired());
-    assert([&entity]() {
-        auto l = entity.lock();
-        assert(l);
-        return l->form();
-    } ());
+    assert(ifHasForm(entity));
 
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();

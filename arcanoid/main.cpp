@@ -3,6 +3,7 @@
 #include "engy/components/move.hpp"
 #include "engy/controllers/eccollisions.hpp"
 #include "engy/controllers/collision_handlers.hpp"
+#include "engy/controllers/ecscenebounds.hpp"
 
 
 Engy::EntityS makePlayer(Engy::Game & game);
@@ -42,6 +43,13 @@ int main(int argc, char * argv[])
 
     auto collisions = new Engy::ECCollisions(&game, ball);
     collisions->setHandler(Engy::basicCollisionHandler);
+
+    auto outOfScene = new Engy::ECSceneBounds(&game, ball);
+    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
+                     QApplication::instance(), &QApplication::quit);
+    /// @bug QGraphicsScene::removeItem: item 0x55cdfb6f5f80's
+    /// scene is different from this scene
+
 
     game.launch();
 

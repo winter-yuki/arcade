@@ -60,6 +60,13 @@ C * Entity::findComponent() {
     return nullptr;
 }
 
+
+inline bool ifHasForm(EntityW const & entity) {
+    auto l = entity.lock();
+    assert(l);
+    return l->form();
+}
+
 } // Engy
 
 

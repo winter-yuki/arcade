@@ -5,6 +5,7 @@ CONFIG += c++17
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+    $$PWD/controllers/ecscenebounds.cpp \
     $$PWD/game.cpp \
     $$PWD/entity.cpp \
     $$PWD/timer.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     $$PWD/controllers/collision_handlers.cpp
 
 HEADERS += \
+    $$PWD/controllers/ecscenebounds.hpp \
     $$PWD/stdafx.hpp \
     $$PWD/game.hpp \
     $$PWD/entity.hpp \

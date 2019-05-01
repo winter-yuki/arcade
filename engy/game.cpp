@@ -27,7 +27,7 @@ Game::~Game()
 {
     // QGraphicsView doesn't take ownership of scene.
     delete scene_;
-    qDebug() << "Engy::Game deleted";
+    emit deleted();
 }
 
 

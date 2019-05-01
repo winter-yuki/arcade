@@ -22,6 +22,7 @@ Controller::~Controller()
 {
     /// Disconnect everything from this object
     /// @warning cppcheck red warning: null pointer dereference.
+    /// @todo remove
     disconnect(nullptr, nullptr, this, nullptr);
 }
 
@@ -80,11 +81,11 @@ void Controller::deleteControllerIfGameDeleted(bool val)
 {
     if (val == true && deleteControllerIfGameDeleted_ == false) {
         deleteControllerIfGameDeleted_ = true;
-        connect(game_, &Game::destroyed, this, &Controller::harakiri);
+        connect(game_, &Game::deleted, this, &Controller::harakiri);
     }
     if (val == false && deleteControllerIfGameDeleted_ == true) {
         deleteControllerIfGameDeleted_ = false;
-        disconnect(game_, &Game::destroyed, this, &Controller::harakiri);
+        disconnect(game_, &Game::deleted, this, &Controller::harakiri);
     }
 }
 

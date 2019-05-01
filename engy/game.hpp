@@ -11,11 +11,9 @@ namespace Engy
 
 /**
  * @brief The Game class
- * @todo Make inheritance private, but QObject::destroyed signal
- * sould be still emitted (or other one with the same purpose).
  */
 class Game final
-        : public QGraphicsView {
+        : private QGraphicsView {
     Q_OBJECT
 
 public:
@@ -46,6 +44,7 @@ public slots:
 
 signals:
     void sceneResized();
+    void deleted();
 
 private:
     void addEntity(EntityS entity);

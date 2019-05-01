@@ -9,10 +9,10 @@ SOURCES += \
     $$PWD/game.cpp \
     $$PWD/entity.cpp \
     $$PWD/timer.cpp \
+    $$PWD/field.cpp \
     $$PWD/components/component.cpp \
     $$PWD/components/move.cpp \
     $$PWD/components/mass.cpp \
-    $$PWD/controllers/field.cpp \
     $$PWD/controllers/ecarrowkeys.cpp \
     $$PWD/controllers/controller.cpp \
     $$PWD/controllers/eccollisions.cpp \
@@ -24,10 +24,10 @@ HEADERS += \
     $$PWD/game.hpp \
     $$PWD/entity.hpp \
     $$PWD/timer.hpp \
+    $$PWD/field.hpp \
     $$PWD/components/component.hpp \
     $$PWD/components/move.hpp \
     $$PWD/components/mass.hpp \
-    $$PWD/controllers/field.hpp \
     $$PWD/controllers/ecarrowkeys.hpp \
     $$PWD/controllers/controller.hpp \
     $$PWD/controllers/eccollisions.hpp \

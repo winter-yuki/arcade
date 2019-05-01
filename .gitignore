@@ -3,5 +3,4 @@ Debug
 *.user*
 
 # Doxygen
-html
-latex
+doc_html

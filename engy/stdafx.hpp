@@ -11,8 +11,6 @@
 #include <memory>
 #include <cmath>
 
-#include <boost/noncopyable.hpp>
-
 #include <QHash>
 #include <QTimerEvent>
 

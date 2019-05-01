@@ -12,8 +12,7 @@ class Entity;
  * @brief Base class for all components in game.
  */
 class Component
-        : public QObject
-        , boost::noncopyable {
+        : public QObject {
     Q_OBJECT
 
 public:

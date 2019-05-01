@@ -37,7 +37,8 @@ int main(int argc, char * argv[])
 
     auto move = new Engy::Move;
     move->setV({.2f, .3f});
-    ball->addComponent(Engy::ComponentU(move));
+    ball->addComponent(move);
+    // delete move; // Component can be deleted outside.
 
     auto collisions = new Engy::ECCollisions(&game, ball);
     collisions->setHandler(Engy::basicCollisionHandler);
@@ -54,7 +55,7 @@ Engy::EntityS makePlayer(Engy::Game & game)
     const auto gsh = game.sceneSize().height();
     auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 20});
     platform->setPos({gsw / 2 - platform->boundingRect().width() / 2,
-                     gsh - platform->boundingRect().height()});
+                      gsh - platform->boundingRect().height()});
     QColor color(0xAA00BB);
     platform->setPen({color});
     platform->setBrush({color});

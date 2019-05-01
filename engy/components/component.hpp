@@ -24,10 +24,14 @@ public:
     Id id() const;
     Entity * entity();
 
+    /**
+     * @param T Can be component type or pointer.
+     * @return Id of component.
+     */
     template <class T>
-    static Id id() { return Id(typeid (typename std::remove_pointer<T>::type)); }
+    static Id id();
 
-    // Provide for Entity access to setEntity
+    /// Provide for Entity access to setEntity
     friend class Entity;
 
 signals:
@@ -43,5 +47,13 @@ private:
 };
 
 using ComponentU = std::unique_ptr<Component>;
+
+
+template <class T>
+Component::Id Component::id() {
+    static_assert (std::is_base_of_v<Component, T>,
+                   "class T should be component");
+    return Id(typeid (typename std::remove_pointer<T>::type));
+}
 
 } // Engy

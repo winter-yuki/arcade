@@ -54,7 +54,8 @@ private:
 
 
 template <class C>
-C * Entity::findComponent() {
+C * Entity::findComponent()
+{
     if (auto search = findComponent(Component::id<C>())) {
         auto component = dynamic_cast<C *>(search.value());
         assert(component);

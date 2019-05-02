@@ -5,7 +5,6 @@
 #pragma once
 
 #include "controller.hpp"
-#include "entityptrs.hpp"
 #include "timer.hpp"
 
 
@@ -23,7 +22,7 @@ class ECSceneBounds final
     ENGY_CREATABLE_CONTROLLER
 
     engy_controller_ctor:
-        explicit ECSceneBounds(EntityW entity);
+        explicit ECSceneBounds(Entity * entity);
 
 public slots:
     /**

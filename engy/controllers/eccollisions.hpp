@@ -6,7 +6,6 @@
 
 #include "controller.hpp"
 #include "timer.hpp"
-#include "field.hpp"
 
 
 namespace Engy
@@ -22,14 +21,14 @@ class ECCollisions final
     ENGY_CREATABLE_CONTROLLER
 
     engy_controller_ctor:
-        explicit ECCollisions(EntityW entity);
+        explicit ECCollisions(Entity * entity);
 
 public:
     /**
      * 1st: given entity, 2nd: other entity from field.
      * Shared poiners are guaranted not to be empty.
      */
-    using Handler = std::function<void (EntityS &, EntityS &)>;
+    using Handler = std::function<void (Entity *, Entity const *)>;
 
     void setHandler(Handler h);
 
@@ -38,8 +37,7 @@ public slots:
 
 private:
     Timer * timer_ = nullptr; ///< nullptr to avoid cppcheck warning.
-    FieldS field_;
-    Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
+    Handler h_ = [](Entity * /*a*/, Entity const * /*b*/) {};
 };
 
 } // Engy

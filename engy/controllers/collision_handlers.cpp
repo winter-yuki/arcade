@@ -15,11 +15,11 @@ namespace Engy
 
 namespace
 {
-std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b);
+std::optional<QVector2D> getNormalOfBoundingRect(Entity * a, Entity const * b);
 }
 
 
-void basicCollisionHandler(EntityS & a, EntityS & b)
+void basicCollisionHandler(Entity * a, Entity const * b)
 {
     assert(a && b);
     assert(a->form() && b->form());
@@ -53,7 +53,7 @@ void basicCollisionHandler(EntityS & a, EntityS & b)
 namespace
 {
 
-std::optional<QVector2D> getNormalOfBoundingRect(EntityS & a, EntityS & b)
+std::optional<QVector2D> getNormalOfBoundingRect(Entity * a, Entity const * b)
 {
     const auto abr = a->form()->boundingRect();
     const auto pos = a->form()->pos() + QPointF(abr.width(), abr.height()) / 2;

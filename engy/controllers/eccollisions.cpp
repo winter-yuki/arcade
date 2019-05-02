@@ -11,13 +11,11 @@
 namespace Engy
 {
 
-ECCollisions::ECCollisions(EntityW entity)
+ECCollisions::ECCollisions(Entity * entity)
     : Controller(entity)
     , timer_(game()->timer())
-    , field_(game()->field())
 {
-    assert(ifHasForm(entity));
-
+    assert(entity->form());
     connect(timer_, &Timer::timeout, this, &ECCollisions::checkCollisions);
 }
 
@@ -30,21 +28,13 @@ void ECCollisions::setHandler(Handler h)
 
 void ECCollisions::checkCollisions()
 {
-    auto e = entity();
-    if (!e) {
-        return;
-    }
-
-    for (auto item : field_->entities()) {
-        auto i = item.lock();
-        if (!i) {
-            continue;
-        }
-
-        assert(e->form() && i->form());
-        if (e->form() != i->form() && e->form()->collidesWithItem(i->form())) {
+    for (Entity const * other : game()->entities()) {
+        assert(other);
+        assert(other->form());
+        if (entity()->form() != other->form() &&
+                entity()->form()->collidesWithItem(other->form())) {
             assert(h_);
-            h_(e, i);
+            h_(entity(), other);
         }
     }
 }

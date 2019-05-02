@@ -11,11 +11,11 @@
 namespace Engy
 {
 
-ECSceneBounds::ECSceneBounds(EntityW entity)
+ECSceneBounds::ECSceneBounds(Entity * entity)
     : Controller(entity)
-    , timer_([game = game()]() { return game->timer(); } ())
+    , timer_(game()->timer())
 {
-    assert(ifHasForm(entity));
+    assert(timer_);
 
     connect(timer_, &Timer::timeout, this, &ECSceneBounds::check);
 }
@@ -23,14 +23,9 @@ ECSceneBounds::ECSceneBounds(EntityW entity)
 
 void ECSceneBounds::check()
 {
-    auto e = entity();
-    if (!e) {
-        return;
-    }
-
-    const auto pos = [&e]() -> QPointF {
-        const auto rect = e->form()->boundingRect();
-        const auto epos = e->form()->pos();
+    const auto pos = [this]() -> QPointF {
+        const auto rect = entity()->form()->boundingRect();
+        const auto epos = entity()->form()->pos();
         return epos + QPointF(rect.width(), rect.height()) / 2;
     } ();
 

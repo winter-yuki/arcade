@@ -10,8 +10,8 @@
 namespace Engy
 {
 
-Controller::Controller(EntityW e)
-    : game_  ([e]() { auto l = e.lock(); assert(l); return l->game(); } ())
+Controller::Controller(Entity * e)
+    : game_  ([e]() { assert(e); return e->game(); } ())
     , entity_(e)
 {
     assert(game_);
@@ -22,25 +22,15 @@ Controller::Controller(EntityW e)
 }
 
 
-Controller::~Controller()
-{
-    emit deleted();
-}
-
-
 Game * Controller::game()
 {
     return game_;
 }
 
 
-EntityS Controller::entity()
+Entity * Controller::entity()
 {
-    auto l = entity_.lock();
-    if (!l) {
-        emit entityDeleted();
-    }
-    return l;
+    return entity_;
 }
 
 
@@ -69,11 +59,11 @@ void Controller::deleteControllerIfEntityDeleted(bool val)
 {
     if (val == true && deleteControllerIfEntityDeleted_ == false) {
         deleteControllerIfEntityDeleted_ = true;
-        connect(this, &Controller::entityDeleted, this, &Controller::harakiri);
+        connect(entity_, &Entity::destroyed, this, &Controller::harakiri);
     }
     if (val == false && deleteControllerIfEntityDeleted_ == true) {
         deleteControllerIfEntityDeleted_ = false;
-        disconnect(this, &Controller::entityDeleted, this, &Controller::harakiri);
+        disconnect(entity_, &Entity::destroyed, this, &Controller::harakiri);
     }
 }
 

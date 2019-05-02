@@ -21,7 +21,7 @@ class ECArrowKeys final
     ENGY_CREATABLE_CONTROLLER
 
     engy_controller_ctor:
-        explicit ECArrowKeys(EntityW entity);
+        explicit ECArrowKeys(Entity * entity);
 
 public:
     using OptD = std::optional<double>;
@@ -46,10 +46,10 @@ private slots:
     void sceneResized();
 
 private:
-    QPointF left (EntityS & e) const;
-    QPointF right(EntityS & e) const;
-    QPointF up   (EntityS & e) const;
-    QPointF down (EntityS & e) const;
+    QPointF left () const;
+    QPointF right() const;
+    QPointF up   () const;
+    QPointF down () const;
 
 private:
     OptD dx_ = 20;

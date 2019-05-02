@@ -10,10 +10,11 @@
 namespace Engy
 {
 
-ECArrowKeys::ECArrowKeys(EntityW entity)
+ECArrowKeys::ECArrowKeys(Entity * entity)
     : Controller(entity)
 {
-    assert(ifHasForm(entity));
+    assert(entity);
+    assert(entity->form());
 
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
@@ -104,26 +105,21 @@ ECArrowKeys::OptD ECArrowKeys::bborder() const
 
 void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 {
-    auto e = entity();
-    if (!e) {
-        return;
-    }
-
     switch (event->key()) {
     case Qt::Key_Left:
-        e->form()->setPos(left(e));
+        entity()->form()->setPos(left());
         break;
 
     case Qt::Key_Right:
-        e->form()->setPos(right(e));
+        entity()->form()->setPos(right());
         break;
 
     case Qt::Key_Up:
-        e->form()->setPos(up(e));
+        entity()->form()->setPos(up());
         break;
 
     case Qt::Key_Down:
-        e->form()->setPos(down(e));
+        entity()->form()->setPos(down());
         break;
     }
 }
@@ -136,13 +132,13 @@ void ECArrowKeys::sceneResized()
 }
 
 
-QPointF ECArrowKeys::left(EntityS & e) const
+QPointF ECArrowKeys::left() const
 {
     if (dx_.has_value() == false) {
-        return e->form()->pos();
+        return entity()->form()->pos();
     }
 
-    auto npos = e->form()->pos() - QPointF(dx_.value(), 0);
+    auto npos = entity()->form()->pos() - QPointF(dx_.value(), 0);
 
     if (lborder_.has_value() && npos.x() < lborder_) {
         return QPointF(lborder_.value(), npos.y());
@@ -151,14 +147,14 @@ QPointF ECArrowKeys::left(EntityS & e) const
 }
 
 
-QPointF ECArrowKeys::right(EntityS & e) const
+QPointF ECArrowKeys::right() const
 {
     if (dx_.has_value() == false) {
-        return e->form()->pos();
+        return entity()->form()->pos();
     }
 
-    auto npos = e->form()->scenePos() + QPointF(dx_.value(), 0);
-    auto width = e->form()->boundingRect().width();
+    auto npos = entity()->form()->scenePos() + QPointF(dx_.value(), 0);
+    auto width = entity()->form()->boundingRect().width();
 
     if (rborder_.has_value() && npos.x() + width > rborder_) {
         return QPointF(rborder_.value() - width, npos.y());
@@ -167,13 +163,13 @@ QPointF ECArrowKeys::right(EntityS & e) const
 }
 
 
-QPointF ECArrowKeys::up(EntityS & e) const
+QPointF ECArrowKeys::up() const
 {
     if (dy_.has_value() == false) {
-        return e->form()->pos();
+        return entity()->form()->pos();
     }
 
-    auto npos = e->form()->pos() - QPointF(0, dy_.value());
+    auto npos = entity()->form()->pos() - QPointF(0, dy_.value());
 
     if (tborder_.has_value() && npos.y() < tborder_) {
         return QPointF(npos.x(), tborder_.value());
@@ -182,14 +178,14 @@ QPointF ECArrowKeys::up(EntityS & e) const
 }
 
 
-QPointF ECArrowKeys::down(EntityS & e) const
+QPointF ECArrowKeys::down() const
 {
     if (dy_.has_value() == false) {
-        return e->form()->pos();
+        return entity()->form()->pos();
     }
 
-    auto npos = e->form()->pos() + QPointF(0, dy_.value());
-    auto height = e->form()->boundingRect().height();
+    auto npos = entity()->form()->pos() + QPointF(0, dy_.value());
+    auto height = entity()->form()->boundingRect().height();
 
     if (bborder_.has_value() && npos.y() + height > bborder_) {
         return QPointF(npos.x(), bborder_.value() - height);

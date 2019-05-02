@@ -56,23 +56,20 @@ public:
      */
     template <class C, class... Args>
     static C * create(Args && ...args);
-    /**
-      * @brief Emits "deleted" signal.
-      */
-    ~Controller() override;
 
     /**
      * @brief game
      * @return Pointer to game, controller binded with.
      */
     Game * game();
+    Game const * game() const;
     /**
      * @brief entuty
      * @return Shared pointer to entity.
      * If pointer is empty, emits "entityDeleted" and returnes empty sharded.
      */
-    EntityS entity();
-
+    Entity * entity();
+    Entity const * entity() const;
 
     /**
      * @brief paint Unused
@@ -91,23 +88,13 @@ protected slots:
      */
     void harakiri();
 
-signals:
-    /**
-     * @brief entityDeleted
-     */
-    void entityDeleted();
-    /**
-     * @brief Is emitted on dying.
-     */
-    void deleted();
-
 protected:
     /**
      * @brief Controller
      * @param game
      * @param entity
      */
-    explicit Controller(EntityW entity);
+    explicit Controller(Entity * entity);
 
     /**
      * @brief deleteControllerOnEntityDeleted
@@ -123,8 +110,8 @@ protected:
     void deleteControllerIfGameDeleted(bool val = true);
 
 private:
-    Game *  game_;
-    EntityW entity_;
+    Game   * game_;
+    Entity * entity_;
 
     bool deleteControllerIfEntityDeleted_ = false;
     bool deleteControllerIfGameDeleted_   = false;

@@ -4,6 +4,7 @@
 
 #include "controller.hpp"
 #include "game.hpp"
+#include "entity.hpp"
 
 
 namespace Engy

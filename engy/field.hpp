@@ -11,6 +11,7 @@ namespace Engy
 {
 
 /**
+ * @ingroup core
  * @brief Registry of tangible items.
  *
  * It is needed because we want to get whole entity which our entity

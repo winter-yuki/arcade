@@ -7,7 +7,6 @@
 #include "stdafx.hpp"
 #include "components/component.hpp"
 #include "entityptrs.hpp"
-#include "entityptrs.hpp"
 
 
 namespace Engy
@@ -30,17 +29,17 @@ public:
     ~Entity();
 
     /**
+     * @brief game
+     * @return Pointer to parent game.
+     */
+    Game * game();
+
+    /**
      * @brief Adds form to the scene
      * @param form
      */
     void addForm(QGraphicsItem * form);
     QGraphicsItem * form();
-
-    /**
-     * @brief game
-     * @return Pointer to parent game.
-     */
-    Game * game();
 
     /// Gets ownership of component
     void addComponent(Component * component);

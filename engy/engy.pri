@@ -20,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/controllers/ecscenebounds.hpp \
+    $$PWD/defs.hpp \
     $$PWD/stdafx.hpp \
     $$PWD/game.hpp \
     $$PWD/entity.hpp \

@@ -20,9 +20,10 @@ class Game;
 class ECSceneBounds final
         : public Controller {
     Q_OBJECT
+    ENGY_CREATABLE_CONTROLLER
 
-public:
-    explicit ECSceneBounds(EntityW entity);
+    engy_controller_ctor:
+        explicit ECSceneBounds(EntityW entity);
 
 public slots:
     /**

@@ -18,11 +18,13 @@ namespace Engy
 class ECArrowKeys final
         : public Controller {
     Q_OBJECT
+    ENGY_CREATABLE_CONTROLLER
+
+    engy_controller_ctor:
+        explicit ECArrowKeys(EntityW entity);
 
 public:
     using OptD = std::optional<double>;
-
-    explicit ECArrowKeys(EntityW entity);
 
     void setDx(OptD dx);
     OptD dx() const;

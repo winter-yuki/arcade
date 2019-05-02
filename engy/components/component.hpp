@@ -14,6 +14,7 @@
 #pragma once
 
 #include "stdafx.hpp"
+#include "defs.hpp"
 
 
 namespace Engy
@@ -24,6 +25,28 @@ class Entity;
 /**
  * @ingroup component
  * @brief Base class for all components in game.
+ * @warning  as private,
+ * because components are expected to be allocated on heap.
+ * So they won't delete in the end of the scope (end delete themselves from
+ * parent entities).
+ *
+ * Define constructors of derived classes like this:
+ * @code
+ * class DerivedComponent
+ *        : public Component {
+ *     Q_OBJECT // Mb if is needed
+ *     ENGY_CREATABLE_COMPONENT
+ *
+ * engy_component_ctor:
+ *     DerivedComponent(...);
+ *
+ * ...
+ *
+ * };
+ * @endcode
+ * to avoid component creatoin on stack. It lead to unexpected behaviour:
+ * component will be deleted at the end of scope and it'll remove itself
+ * from parent components list.
  */
 class Component
         : public QObject {
@@ -81,8 +104,8 @@ using ComponentU = std::unique_ptr<Component>;
 template <class C, class... Args>
 C * Component::create(Args && ...args) {
     static_assert (std::is_base_of_v<Component, C>,
-                   "class T should be component");
-    return new C(std::forward(args)...);
+                   "class should be component");
+    return new C(std::forward<Args>(args)...);
 }
 
 
@@ -94,9 +117,11 @@ Component::Id Component::id() {
 }
 
 
-#define ENGY_CREARABLE_COMPONENT \
+#define ENGY_CREATABLE_COMPONENT \
     template <class C, class... Args> \
     friend C * Component::create(Args && ...args);
+
+#define engy_component_ctor ENGY_HEAP_ONLY_CONSTRUCTIBLE
 
 } // Engy
 

@@ -11,6 +11,7 @@
 
 #include "stdafx.hpp"
 #include "entity.hpp"
+#include "defs.hpp"
 
 
 namespace Engy
@@ -25,6 +26,23 @@ class Game;
  * By default deletes itself if entity deleted and if game deleted.
  *
  * QGraphicsItem provides key events for derived classes.
+ *
+ * Define constructors of derived classes like this:
+ * @code
+ * class DerivedController
+ *        : public Controller {
+ *     Q_OBJECT // Mb if is needed
+ *     ENGY_CREATABLE_CONTROLLER
+ *
+ * engy_controller_ctor:
+ *     DerivedController(...);
+ *
+ * ...
+ *
+ * };
+ * @endcode
+ * to avoid controller creatoin on stack. Because default behaviour is
+ * self deletion if parents (game or entity) deleted.
  */
 class Controller
         : public QGraphicsObject {
@@ -32,11 +50,12 @@ class Controller
 
 public:
     /**
-     * @brief Controller
-     * @param game
-     * @param entity
+     * @brief Creates specific derived class.
+     * @param args Class constructor arguments.
+     * @return Pointer to controller.
      */
-    explicit Controller(EntityW entity);
+    template <class C, class... Args>
+    static C * create(Args && ...args);
     /**
       * @brief Emits "deleted" signal.
       */
@@ -54,10 +73,17 @@ public:
      */
     EntityS entity();
 
-    // Unused
+
+    /**
+     * @brief paint Unused
+     */
     void paint(QPainter * painter, QStyleOptionGraphicsItem const * option,
-               QWidget * widget = nullptr) override;
-    QRectF boundingRect() const override;
+               QWidget * widget = nullptr) final;
+    /**
+     * @brief boundingRect Unused.
+     * @return Zero rect.
+     */
+    QRectF boundingRect() const final;
 
 public slots:
     /**
@@ -76,6 +102,13 @@ signals:
     void deleted();
 
 protected:
+    /**
+     * @brief Controller
+     * @param game
+     * @param entity
+     */
+    explicit Controller(EntityW entity);
+
     /**
      * @brief deleteControllerOnEntityDeleted
      * @param val If controller should delete itself if entity deleted.
@@ -96,5 +129,20 @@ private:
     bool deleteControllerIfEntityDeleted_ = false;
     bool deleteControllerIfGameDeleted_   = false;
 };
+
+
+template <class C, class... Args>
+C * Controller::create(Args && ...args) {
+    static_assert (std::is_base_of_v<Controller, C>,
+                   "class C should be controller");
+    return new C(std::forward<Args>(args)...);
+}
+
+
+#define ENGY_CREATABLE_CONTROLLER \
+    template <class C, class... Args> \
+    friend C * Controller::create(Args && ...args);
+
+#define engy_controller_ctor ENGY_HEAP_ONLY_CONSTRUCTIBLE
 
 } // Engy

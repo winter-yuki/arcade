@@ -19,6 +19,10 @@ namespace Engy
 class ECCollisions final
         : public Controller {
     Q_OBJECT
+    ENGY_CREATABLE_CONTROLLER
+
+    engy_controller_ctor:
+        explicit ECCollisions(EntityW entity);
 
 public:
     /**
@@ -26,8 +30,6 @@ public:
      * Shared poiners are guaranted not to be empty.
      */
     using Handler = std::function<void (EntityS &, EntityS &)>;
-
-    explicit ECCollisions(EntityW entity);
 
     void setHandler(Handler h);
 

@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
     auto ball = makeBall(game);
     game.addToField(ball);
 
-    auto move = new Engy::Move;
+    auto move = Engy::Component::create<Engy::Move>();
     move->setV({.2f, .3f});
     ball->addComponent(move);
     // delete move; // Component can be deleted outside.
@@ -51,10 +51,9 @@ int main(int argc, char * argv[])
     QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
                      [ball = std::move(ball), &game]() {
         qDebug() << "Delete ball";
-        game.removeEntity(ball);
+        // TODO entity deletion
+        // game.removeEntity(ball);
     });
-    /// @bug QGraphicsScene::removeItem: item 0x55cdfb6f5f80's
-    /// scene is different from this scene
 
     game.launch();
 

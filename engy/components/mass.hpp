@@ -16,11 +16,14 @@ namespace Engy
  */
 class Mass final
         : public Component {
-public:
-    explicit Mass(double m);
+    ENGY_CREARABLE_COMPONENT
 
+public:
     void setM(double m);
     double m() const;
+
+private:
+    explicit Mass(double m);
 
 private:
     double m_;

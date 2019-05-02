@@ -32,8 +32,20 @@ class Component
 public:
     using Id = std::type_index;
 
-    explicit Component(Id id);
-    virtual ~Component(); ///< Deletes itself from parent manually
+    /**
+     * @brief Component factory.
+     *
+     * Components can only be created on heap.
+     */
+    template <class C, class... Args>
+    static C * create(Args && ...args);
+
+    /**
+     * @brief ~Component
+     *
+     * Deletes itself from parent manually
+     */
+    virtual ~Component();
 
     Id id() const;
     Entity * entity();
@@ -51,6 +63,9 @@ public:
 signals:
     void entitySetted();
 
+protected:
+    explicit Component(Id id);
+
 private:
     void setEntity(Entity * e); ///< Sets reference to entity
     void delEntity();           ///< Removes reference to entity
@@ -63,6 +78,14 @@ private:
 using ComponentU = std::unique_ptr<Component>;
 
 
+template <class C, class... Args>
+C * Component::create(Args && ...args) {
+    static_assert (std::is_base_of_v<Component, C>,
+                   "class T should be component");
+    return new C(std::forward(args)...);
+}
+
+
 template <class T>
 Component::Id Component::id() {
     static_assert (std::is_base_of_v<Component, T>,
@@ -70,4 +93,19 @@ Component::Id Component::id() {
     return Id(typeid (typename std::remove_pointer<T>::type));
 }
 
+
+#define ENGY_CREARABLE_COMPONENT \
+    template <class C, class... Args> \
+    friend C * Component::create(Args && ...args);
+
 } // Engy
+
+
+
+
+
+
+
+
+
+

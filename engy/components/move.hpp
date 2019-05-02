@@ -19,10 +19,9 @@ namespace Engy
 class Move final
         : public Component {
     Q_OBJECT
+    ENGY_CREARABLE_COMPONENT
 
 public:
-    explicit Move(int64_t fps = 60);
-
     void setV(QVector2D v); ///< Pixel per second
     QVector2D v() const;
 
@@ -30,6 +29,9 @@ public:
 
 public slots:
     void update(int64_t dt);
+
+private:
+    explicit Move(int64_t fps = 60);
 
 private:
     int64_t interval_; ///< In miliseconds

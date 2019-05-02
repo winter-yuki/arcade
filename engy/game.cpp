@@ -5,11 +5,6 @@
 #include "game.hpp"
 
 #include "entity.hpp"
-#include "controllers/ecarrowkeys.hpp"
-#include "controllers/eccollisions.hpp"
-#include "controllers/collision_handlers.hpp"
-#include "components/move.hpp"
-#include "timer.hpp"
 
 
 namespace Engy
@@ -17,9 +12,8 @@ namespace Engy
 
 Game::Game(QWidget * parent)
     : QGraphicsView(parent)
-    , scene_(new QGraphicsScene)
     , timer_(new Timer(this))
-    , field_(makeField()) // Create registry with tangible items
+    , scene_(new QGraphicsScene)
 {
     setScene(scene_);
     setSceneSize(sceneSize_);
@@ -31,6 +25,10 @@ Game::~Game()
 {
     // QGraphicsView doesn't take ownership of scene.
     delete scene_;
+    for (auto e : es_) {
+        assert(e);
+        delete e;
+    }
 }
 
 
@@ -86,36 +84,46 @@ QGraphicsScene * Game::scene()
 }
 
 
+QGraphicsScene const * Game::scene() const
+{
+    return scene_;
+}
+
+
 Timer * Game::timer()
 {
     return timer_;
 }
 
 
-FieldS Game::field()
+Timer const * Game::timer() const
 {
-    return field_;
+    return timer_;
 }
 
 
-void Game::addToField(EntityW entity)
+bool Game::addEntity(Entity * entity)
 {
-    field_->addEntity(entity);
+    auto rez = es_.insert(entity);
+    return rez.second;
 }
 
 
-void Game::addEntity(EntityS entity)
+bool Game::removeEntity(Entity * entity)
 {
-    entities_.push_back(entity);
+    auto search = es_.find(entity);
+    if (search != es_.end()) {
+        es_.erase(entity);
+        delete entity;
+        return true;
+    }
+    return false;
 }
 
 
-void Game::removeEntity(EntityS entity)
+bool Game::forgetEntity(Entity * entity)
 {
-    assert("All references outside to entity should be deleted" &&
-           entity.use_count() == 2);
-    entities_.erase(remove(entities_.begin(),
-                           entities_.end(), std::move(entity)), entities_.end());
+    return es_.erase(entity);
 }
 
 } // Engy

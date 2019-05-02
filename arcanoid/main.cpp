@@ -43,6 +43,10 @@ int main(int argc, char * argv[])
     collisions->setHandler(Engy::basicCollisionHandler);
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
+    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
+                     [game = &game, outOfScene] {
+        game->removeEntity(outOfScene->entity());
+    });
 
     game.launch();
 

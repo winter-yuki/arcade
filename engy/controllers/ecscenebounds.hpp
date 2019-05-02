@@ -22,7 +22,7 @@ class ECSceneBounds final
     Q_OBJECT
 
 public:
-    ECSceneBounds(Game * game, EntityW entity);
+    explicit ECSceneBounds(EntityW entity);
 
 public slots:
     /**

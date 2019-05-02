@@ -22,7 +22,7 @@ int main(int argc, char * argv[])
     // Create player
     double borderWidth = 5;
     auto player = makePlayer(game);
-    auto keyController = new Engy::ECArrowKeys(&game, player);
+    auto keyController = new Engy::ECArrowKeys(player);
     keyController->setDx(25);
     keyController->setDy(std::nullopt);
     keyController->setLBorder(borderWidth);
@@ -42,10 +42,10 @@ int main(int argc, char * argv[])
     ball->addComponent(move);
     // delete move; // Component can be deleted outside.
 
-    auto collisions = new Engy::ECCollisions(&game, ball);
+    auto collisions = new Engy::ECCollisions(ball);
     collisions->setHandler(Engy::basicCollisionHandler);
 
-    auto outOfScene = new Engy::ECSceneBounds(&game, ball);
+    auto outOfScene = new Engy::ECSceneBounds(ball);
     //    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
     //                     QApplication::instance(), &QApplication::quit);
     QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,

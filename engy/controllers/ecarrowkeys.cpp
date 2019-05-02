@@ -10,17 +10,15 @@
 namespace Engy
 {
 
-ECArrowKeys::ECArrowKeys(Game * game, EntityW entity)
-    : Controller(game, entity)
+ECArrowKeys::ECArrowKeys(EntityW entity)
+    : Controller(entity)
 {
-    assert(game);
-    assert(!entity.expired());
     assert(ifHasForm(entity));
 
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
 
-    connect(game, &Game::sceneResized, this, &ECArrowKeys::sceneResized);
+    connect(game(), &Game::sceneResized, this, &ECArrowKeys::sceneResized);
 }
 
 

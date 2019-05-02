@@ -22,7 +22,7 @@ class ECArrowKeys final
 public:
     using OptD = std::optional<double>;
 
-    ECArrowKeys(Game * game, EntityW entity);
+    explicit ECArrowKeys(EntityW entity);
 
     void setDx(OptD dx);
     OptD dx() const;

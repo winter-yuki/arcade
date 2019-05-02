@@ -11,13 +11,11 @@
 namespace Engy
 {
 
-ECCollisions::ECCollisions(Game * game, EntityW entity)
-    : Controller(game, entity)
-    , timer_(game->timer())
-    , field_(game->field())
+ECCollisions::ECCollisions(EntityW entity)
+    : Controller(entity)
+    , timer_(game()->timer())
+    , field_(game()->field())
 {
-    assert(game);
-    assert(!entity.expired());
     assert(ifHasForm(entity));
 
     connect(timer_, &Timer::timeout, this, &ECCollisions::checkCollisions);

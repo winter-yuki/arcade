@@ -23,9 +23,11 @@ class Game;
  * @brief Base class for any controller in game.
  *
  * By default deletes itself if entity deleted and if game deleted.
+ *
+ * QGraphicsItem provides key events for derived classes.
  */
 class Controller
-        : public QGraphicsObject { // Provides key events for derived classes
+        : public QGraphicsObject {
     Q_OBJECT
 
 public:
@@ -34,7 +36,7 @@ public:
      * @param game
      * @param entity
      */
-    Controller(Game * game, EntityW entity);
+    explicit Controller(EntityW entity);
     /**
       * @brief Disconnects everything from object
       */

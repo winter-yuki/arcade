@@ -11,11 +11,10 @@
 namespace Engy
 {
 
-ECSceneBounds::ECSceneBounds(Game * game, EntityW entity)
-    : Controller(game, entity)
-    , timer_([game]() { assert(game); return game->timer(); } ())
+ECSceneBounds::ECSceneBounds(EntityW entity)
+    : Controller(entity)
+    , timer_([game = game()]() { return game->timer(); } ())
 {
-    assert(!entity.expired());
     assert(ifHasForm(entity));
 
     connect(timer_, &Timer::timeout, this, &ECSceneBounds::check);

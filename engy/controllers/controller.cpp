@@ -9,14 +9,13 @@
 namespace Engy
 {
 
-Controller::Controller(Game * game, EntityW e)
-    : game_  (game)
+Controller::Controller(EntityW e)
+    : game_  ([&e]() { auto l = e.lock(); assert(l); return l->game(); } ())
     , entity_(e)
 {
-    assert(game);
-    assert(!e.expired());
+    assert(game_);
 
-    game->scene()->addItem(this);
+    game_->scene()->addItem(this);
     deleteControllerIfEntityDeleted(true);
     deleteControllerIfGameDeleted(true);
 }

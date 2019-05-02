@@ -27,7 +27,7 @@ public:
      */
     using Handler = std::function<void (EntityS &, EntityS &)>;
 
-    ECCollisions(Game * game, EntityW entity);
+    explicit ECCollisions(EntityW entity);
 
     void setHandler(Handler h);
 

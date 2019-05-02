@@ -6,9 +6,9 @@
 #include "engy/controllers/ecscenebounds.hpp"
 
 
-Engy::EntityS makePlayer(Engy::Game & game);
-Engy::EntityS makeBall(Engy::Game & game);
-std::vector<Engy::EntityS> makeBorders(Engy::Game & game, double width = 10);
+Engy::Entity * makePlayer(Engy::Game & game);
+Engy::Entity * makeBall(Engy::Game & game);
+std::vector<Engy::Entity *> makeBorders(Engy::Game & game, double width = 10);
 
 
 int main(int argc, char * argv[])
@@ -27,15 +27,12 @@ int main(int argc, char * argv[])
     keyController->setDy(std::nullopt);
     keyController->setLBorder(borderWidth);
     keyController->setRBorder(borderWidth);
-    game.addToField(player);
 
     // Add bounds
     auto borders = makeBorders(game, borderWidth);
-    game.addToField(borders.begin(), borders.end());
 
     // Create ball
     auto ball = makeBall(game);
-    game.addToField(ball);
 
     auto move = Engy::Component::create<Engy::Move>();
     move->setV({.2f, .3f});
@@ -47,22 +44,13 @@ int main(int argc, char * argv[])
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
 
-    //    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
-    //                     QApplication::instance(), &QApplication::quit);
-    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
-                     [ball = std::move(ball), game = &game]() {
-        //        qDebug() << "Delete ball";
-        //        // TODO entity deletion
-        game->removeEntity(std::move(ball));
-    });
-
     game.launch();
 
     return QApplication::exec();
 }
 
 
-Engy::EntityS makePlayer(Engy::Game & game)
+Engy::Entity * makePlayer(Engy::Game & game)
 {
     const auto gsw = game.sceneSize().width();
     const auto gsh = game.sceneSize().height();
@@ -79,7 +67,7 @@ Engy::EntityS makePlayer(Engy::Game & game)
 }
 
 
-Engy::EntityS makeBall(Engy::Game & game)
+Engy::Entity * makeBall(Engy::Game & game)
 {
     QColor ballColor(QRgb(0x00AADD));
 
@@ -95,7 +83,7 @@ Engy::EntityS makeBall(Engy::Game & game)
 }
 
 
-std::vector<Engy::EntityS> makeBorders(Engy::Game & game, double width)
+std::vector<Engy::Entity *> makeBorders(Engy::Game & game, double width)
 {
     const qreal gsh = game.sceneSize().height();
     const qreal gsw = game.sceneSize().width();
@@ -112,7 +100,7 @@ std::vector<Engy::EntityS> makeBorders(Engy::Game & game, double width)
         rect->setPen(QPen(borderColor));
     }
 
-    std::vector<Engy::EntityS> borders(rects.size());
+    std::vector<Engy::Entity *> borders(rects.size());
     for (size_t i = 0; i < borders.size(); ++i) {
         borders[i] = Engy::Entity::create(&game);
         borders[i]->addForm(rects[i]);

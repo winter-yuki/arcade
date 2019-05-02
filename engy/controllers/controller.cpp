@@ -34,6 +34,12 @@ Entity * Controller::entity()
 }
 
 
+Entity const * Controller::entity() const
+{
+    return entity_;
+}
+
+
 void Controller::paint(QPainter * painter,
                        QStyleOptionGraphicsItem const * option, QWidget * widget)
 {

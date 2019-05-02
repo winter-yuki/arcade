@@ -59,6 +59,8 @@ public:
     QGraphicsScene       * scene();
     QGraphicsScene const * scene() const;
 
+    auto const & entities() const { return es_; }
+
 public slots:
     /**
      * @brief removeEntity Deletes entity.

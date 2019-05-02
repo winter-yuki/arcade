@@ -10,6 +10,7 @@
 #include <typeindex>
 #include <type_traits>
 #include <unordered_map>
+#include <unordered_set>
 #include <optional>
 #include <functional>
 #include <memory>

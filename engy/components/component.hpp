@@ -53,6 +53,7 @@ class Component
     Q_OBJECT
 
 public:
+    /// Unique id for any component type.
     using Id = std::type_index;
 
     /**

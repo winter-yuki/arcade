@@ -38,7 +38,7 @@ public:
      */
     explicit Controller(EntityW entity);
     /**
-      * @brief Disconnects everything from object
+      * @brief Emits "deleted" signal.
       */
     ~Controller() override;
 
@@ -70,13 +70,17 @@ signals:
      * @brief entityDeleted
      */
     void entityDeleted();
+    /**
+     * @brief Is emitted on dying.
+     */
+    void deleted();
 
 protected:
     /**
      * @brief deleteControllerOnEntityDeleted
      * @param val If controller should delete itself if entity deleted.
      * @warning It should be "return"  statement in controller method
-     * after emitting "entityDeleted" on @p val @p == true.
+     * after emitting "entityDeleted" on val == true.
      */
     void deleteControllerIfEntityDeleted(bool val = true);
     /**

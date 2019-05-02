@@ -23,10 +23,7 @@ Controller::Controller(EntityW e)
 
 Controller::~Controller()
 {
-    /// Disconnect everything from this object
-    /// @warning cppcheck red warning: null pointer dereference.
-    /// @todo remove
-    disconnect(nullptr, nullptr, this, nullptr);
+    emit deleted();
 }
 
 

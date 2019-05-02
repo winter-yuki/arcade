@@ -60,6 +60,10 @@ public:
     template <class C>
     C * findComponent();
 
+    /// @todo Provides access to game_, because Controller's methods
+    /// can't see Entity::game() function some how.
+    friend class Controller;
+
 private:
     /**
      * @brief Entity instance can only be created via factory.
@@ -74,8 +78,9 @@ private:
      */
     void forgetComponent(Component::Id id);
 
+
 private:
-    Game * game_ = nullptr;
+    Game * game_;
     QGraphicsItem  * form_  = nullptr;
     std::unordered_map<Component::Id, ComponentU> components_;
 };

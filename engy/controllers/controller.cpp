@@ -11,7 +11,7 @@ namespace Engy
 {
 
 Controller::Controller(EntityW e)
-    : game_  ([&e]() { auto l = e.lock(); assert(l); return l->game(); } ())
+    : game_  ([e]() { auto l = e.lock(); assert(l); return l->game_; } ())
     , entity_(e)
 {
     assert(game_);

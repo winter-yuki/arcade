@@ -10,11 +10,9 @@
 namespace Engy
 {
 
-EntityS Entity::create(Game * game) {
+Entity * Entity::create(Game * game) {
     assert(game);
-    /// @todo Create via std::make_shared
-    /// (it should be marked "friend" for the Entity)
-    std::shared_ptr<Entity> entity(new Entity(game));
+    auto entity = new Entity(game);
     game->addEntity(entity);
     return entity;
 }
@@ -24,14 +22,13 @@ Entity::Entity(Game * game)
     : game_(game)
 {
     assert(game);
+    connect(game_, &Game::destroyed, this, &Entity::gameDeleted);
 }
 
 
 Entity::~Entity()
 {
-    if (form_ && form_->scene()) {
-        game_->scene()->removeItem(form_);
-    }
+    delForm();
 
     // Make all components forget about parent to avoid cycle.
     for (auto it = components_.begin(); it != components_.end(); ++it) {
@@ -49,9 +46,16 @@ Game * Entity::game()
 }
 
 
+Game const * Entity::game() const
+{
+    return game_;
+}
+
+
 void Entity::addForm(QGraphicsItem * form)
 {
-    if (form_) {
+    assert(game_);
+    if (form_ && form_->scene()) {
         game_->scene()->removeItem(form_);
     }
     form_ = form;
@@ -59,9 +63,32 @@ void Entity::addForm(QGraphicsItem * form)
 }
 
 
+void Entity::delForm()
+{
+    if (game_ && form_ && form_->scene()) {
+        game_->scene()->removeItem(form_);
+        form_ = nullptr;
+    }
+}
+
+
 QGraphicsItem * Entity::form()
 {
     return form_;
+}
+
+
+QGraphicsItem const * Entity::form() const
+{
+    return form_;
+}
+
+
+void Entity::gameDeleted()
+{
+    game_ = nullptr;
+    form_ = nullptr;
+    delete this;
 }
 
 

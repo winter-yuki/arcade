@@ -6,7 +6,6 @@
 
 #include "stdafx.hpp"
 #include "components/component.hpp"
-#include "entityptrs.hpp"
 
 
 namespace Engy
@@ -17,15 +16,22 @@ class Game;
 /**
  * @ingroup core
  * @brief Entity, container of componens.
+ *
+ * Entity should always have game parent.
+ * Deletes itself if game deleted and removes itself from game child list
+ * on deletion.
  */
-class Entity final {
+class Entity final
+        : public QObject {
+    Q_OBJECT
+
 public:
     /**
      * @brief Factory of entityes.
      * @param game Takes ownership of entity.
      * @return Created entity.
      */
-    static EntityS create(Game * game);
+    static Entity * create(Game * game);
     ~Entity();
 
     /**
@@ -33,13 +39,16 @@ public:
      * @return Pointer to parent game.
      */
     Game * game();
+    Game const * game() const;
 
     /**
      * @brief Adds form to the scene
      * @param form
      */
     void addForm(QGraphicsItem * form);
+    void delForm();
     QGraphicsItem * form();
+    QGraphicsItem const * form() const;
 
     /**
      * @brief addComponent Gets ownership of component
@@ -62,6 +71,9 @@ public:
      */
     template <class C>
     C * findComponent();
+
+private slots:
+    void gameDeleted();
 
 private:
     /**
@@ -92,13 +104,6 @@ C * Entity::findComponent() {
         return component;
     }
     return nullptr;
-}
-
-
-inline bool ifHasForm(EntityW const & entity) {
-    auto l = entity.lock();
-    assert(l);
-    return l->form();
 }
 
 } // Engy

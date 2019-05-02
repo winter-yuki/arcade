@@ -38,7 +38,7 @@ public:
     QSize sceneSize() const;
     void setBg(QBrush b);
 
-    // Field is a registry of objects, which can collide with each other.
+    /// Field is a registry of objects, which can collide with each other.
     void addToField(EntityW entity);
     template <class FIt> void addToField(FIt begin, FIt end);
 
@@ -46,7 +46,7 @@ public:
     Timer *          timer();
     FieldS           field();
 
-    /// To admit entity adding to entity list on construction
+    /// Admit entity to add itself to entity list on construction.
     friend EntityS Entity::create(Game * game);
 
 public slots:

@@ -17,11 +17,10 @@ class Game;
 
 /**
  * @ingroup core
- * @brief The Entity class
+ * @brief Entity, container of componens.
  */
 class Entity final {
 public:
-    /// Factory
     /**
      * @brief Factory of entityes.
      * @param game Takes ownership of entity.
@@ -31,11 +30,17 @@ public:
     ~Entity();
 
     /**
-     * @brief Adds @p form to the scene
+     * @brief Adds form to the scene
      * @param form
      */
     void addForm(QGraphicsItem * form);
     QGraphicsItem * form();
+
+    /**
+     * @brief game
+     * @return Pointer to parent game.
+     */
+    Game * game();
 
     /// Gets ownership of component
     void addComponent(Component * component);
@@ -53,7 +58,8 @@ public:
      * @brief Finds component of specific type.
      * @return Pointer to component if exists, nullptr otherwise.
      */
-    template <class C> C * findComponent();
+    template <class C>
+    C * findComponent();
 
 private:
     /**
@@ -70,7 +76,7 @@ private:
     void forgetComponent(Component::Id id);
 
 private:
-    QGraphicsScene * scene_ = nullptr;
+    Game * game_ = nullptr;
     QGraphicsItem  * form_  = nullptr;
     std::unordered_map<Component::Id, ComponentU> components_;
 };

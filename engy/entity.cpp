@@ -21,15 +21,16 @@ EntityS Entity::create(Game * game) {
 
 
 Entity::Entity(Game * game)
-    : scene_([game]() { assert(game); return game->scene(); } ())
-{}
+    : game_(game)
+{
+    assert(game);
+}
 
 
 Entity::~Entity()
 {
-    /// @bug
     if (form_) {
-        scene_->removeItem(form_);
+        game_->scene()->removeItem(form_);
     }
 
     // Make all components forget about parent to avoid cycle.
@@ -42,12 +43,11 @@ Entity::~Entity()
 
 void Entity::addForm(QGraphicsItem * form)
 {
-    assert(scene_);
     if (form_) {
-        scene_->removeItem(form_);
+        game_->scene()->removeItem(form_);
     }
     form_ = form;
-    scene_->addItem(form_);
+    game_->scene()->addItem(form_);
 }
 
 

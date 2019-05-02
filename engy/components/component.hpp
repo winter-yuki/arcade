@@ -43,7 +43,7 @@ public:
     /**
      * @brief ~Component
      *
-     * Deletes itself from parent manually
+     * Deletes itself from parent.
      */
     virtual ~Component();
 

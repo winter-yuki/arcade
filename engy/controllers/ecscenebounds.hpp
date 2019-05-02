@@ -38,7 +38,7 @@ signals:
     void isOut();
 
 private:
-    Timer * timer_;
+    Timer * timer_ = nullptr; ///< To avoid cppcheck warning.
 };
 
 } // Engy

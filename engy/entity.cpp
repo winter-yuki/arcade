@@ -29,7 +29,7 @@ Entity::Entity(Game * game)
 
 Entity::~Entity()
 {
-    if (form_) {
+    if (form_ && form_->scene()) {
         game_->scene()->removeItem(form_);
     }
 
@@ -38,6 +38,14 @@ Entity::~Entity()
         assert(it->second->entity());
         it->second->delEntity();
     }
+
+    qDebug() << "Entity deleted";
+}
+
+
+Game * Entity::game()
+{
+    return game_;
 }
 
 

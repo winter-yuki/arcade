@@ -29,7 +29,7 @@ Game::Game(QWidget * parent)
 
 Game::~Game()
 {
-    /// QGraphicsView doesn't take ownership of scene.
+    // QGraphicsView doesn't take ownership of scene.
     delete scene_;
 }
 
@@ -112,8 +112,10 @@ void Game::addEntity(EntityS entity)
 
 void Game::removeEntity(EntityS entity)
 {
+    assert("All references outside to entity should be deleted" &&
+           entity.use_count() == 2);
     entities_.erase(remove(entities_.begin(),
-                           entities_.end(), entity), entities_.end());
+                           entities_.end(), std::move(entity)), entities_.end());
 }
 
 } // Engy

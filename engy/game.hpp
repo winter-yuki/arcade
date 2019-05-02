@@ -3,6 +3,10 @@
   */
 
 /**
+  * @mainpage Wow!
+  */
+
+/**
   * @defgroup core Core
   */
 

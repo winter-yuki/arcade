@@ -37,7 +37,7 @@ public slots:
     void checkCollisions();
 
 private:
-    Timer * timer_;
+    Timer * timer_ = nullptr; ///< nullptr to avoid cppcheck warning.
     FieldS field_;
     Handler h_ = [](EntityS & /*a*/, EntityS & /*b*/) {};
 };

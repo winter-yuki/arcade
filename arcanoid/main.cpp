@@ -22,7 +22,7 @@ int main(int argc, char * argv[])
     // Create player
     double borderWidth = 5;
     auto player = makePlayer(game);
-    auto keyController = new Engy::ECArrowKeys(player);
+    auto keyController = Engy::Controller::create<Engy::ECArrowKeys>(player);
     keyController->setDx(25);
     keyController->setDy(std::nullopt);
     keyController->setLBorder(borderWidth);
@@ -42,17 +42,18 @@ int main(int argc, char * argv[])
     ball->addComponent(move);
     // delete move; // Component can be deleted outside.
 
-    auto collisions = new Engy::ECCollisions(ball);
+    auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball);
     collisions->setHandler(Engy::basicCollisionHandler);
 
-    auto outOfScene = new Engy::ECSceneBounds(ball);
+    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
+
     //    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
     //                     QApplication::instance(), &QApplication::quit);
     QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
-                     [ball = std::move(ball), &game]() {
-        qDebug() << "Delete ball";
-        // TODO entity deletion
-        // game.removeEntity(ball);
+                     [ball = std::move(ball), game = &game]() {
+        //        qDebug() << "Delete ball";
+        //        // TODO entity deletion
+        game->removeEntity(std::move(ball));
     });
 
     game.launch();
@@ -84,7 +85,7 @@ Engy::EntityS makeBall(Engy::Game & game)
 
     auto * ball = new QGraphicsEllipseItem;
     ball->setRect({0, 0, 50, 50});
-    ball->moveBy(10, 10); // Experiment TODO
+    ball->moveBy(100, 100);
     ball->setBrush(QBrush(ballColor));
     ball->setPen(QPen(ballColor));
 

@@ -85,7 +85,7 @@ public:
      */
     QRectF boundingRect() const final;
 
-public slots:
+protected slots:
     /**
      * @brief harakiri Controller deletes itself.
      */

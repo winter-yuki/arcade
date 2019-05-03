@@ -98,12 +98,12 @@ private:
 using ComponentU = std::unique_ptr<Component>;
 
 
-template <class T>
-class ComponentT
+template <class C>
+class ComponentC
         : public Component {
 protected:
-    ComponentT()
-        : Component(id<T>())
+    ComponentC()
+        : Component(id<C>())
     {}
 };
 

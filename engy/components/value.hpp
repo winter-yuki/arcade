@@ -14,38 +14,37 @@ namespace Engy
  * @ingroup component
  * @brief The Mass class
  */
-template <class T>
+template <class C, class ValueType>
 class Value
-        : public Component {
+        : public ComponentC<C> {
 public:
-    using value_type = T;
+    using value_type = ValueType;
 
-    void setVal(T val);
-    T val() const;
+    void setVal(ValueType val);
+    ValueType val() const;
 
 protected:
-    Value(Id id, T val);
+    explicit Value(ValueType val);
 
 private:
-    T val_;
+    ValueType val_;
 };
 
 
-template <class T>
-Value<T>::Value(Id id, T val)
-    : Component(id)
-    , val_(std::move(val))
+template <class C, class ValueType>
+Value<C, ValueType>::Value(ValueType val)
+    : val_(std::move(val))
 {}
 
 
-template <class T>
-void Value<T>::setVal(T val) {
+template <class C, class ValueType>
+void Value<C, ValueType>::setVal(ValueType val) {
     val_ = std::move(val);
 }
 
 
-template <class T>
-T Value<T>::val() const {
+template <class C, class ValueType>
+ValueType Value<C, ValueType>::val() const {
     return val_;
 }
 

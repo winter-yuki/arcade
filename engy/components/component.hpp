@@ -98,6 +98,16 @@ private:
 using ComponentU = std::unique_ptr<Component>;
 
 
+template <class T>
+class ComponentT
+        : public Component {
+protected:
+    ComponentT()
+        : Component(id<T>())
+    {}
+};
+
+
 template <class C, class... Args>
 C * Component::create(Args && ...args) {
     static_assert (std::is_base_of_v<Component, C>,

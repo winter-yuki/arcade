@@ -17,7 +17,7 @@ namespace Engy
  * @brief The Move class
  */
 class Move final
-        : public Component {
+        : public ComponentC<Move> {
     Q_OBJECT
     ENGY_CREATABLE_COMPONENT
 

@@ -5,7 +5,7 @@ namespace Engy
 {
 
 Mass::Mass(double m)
-    : Value(id<Mass>(), m)
+    : Value(m)
 {}
 
 } // Engy

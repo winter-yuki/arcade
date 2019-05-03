@@ -22,13 +22,16 @@ Entity::Entity(Game * game)
     : game_(game)
 {
     assert(game);
-    connect(game_, &Game::destroyed, this, &Entity::gameDeleted);
 }
 
 
 Entity::~Entity()
 {
     delForm();
+    if (game_) {
+        auto rez = game()->forgetEntity(this);
+        assert(rez);
+    }
 
     // Make all components forget about parent to avoid cycle.
     for (auto it = components_.begin(); it != components_.end(); ++it) {
@@ -69,6 +72,13 @@ void Entity::delForm()
         game_->scene()->removeItem(form_);
         form_ = nullptr;
     }
+}
+
+
+void Entity::delGame()
+{
+    game_ = nullptr;
+    form_ = nullptr;
 }
 
 

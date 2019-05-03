@@ -27,6 +27,7 @@ Game::~Game()
     delete scene_;
     for (auto e : es_) {
         assert(e);
+        e->delGame();
         delete e;
     }
 }

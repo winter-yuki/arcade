@@ -32,6 +32,10 @@ public:
      * @return Created entity.
      */
     static Entity * create(Game * game);
+    /**
+      * Makes components forget about entity to avoid cycle.
+      * (components try to delete themselves from entity in dtor)
+      */
     ~Entity();
 
     /**
@@ -88,6 +92,13 @@ private:
      * @brief Removes componet without deletion
      */
     void forgetComponent(Component::Id id);
+
+    /// Access to delGame
+    friend class Game;
+    /**
+     * @brief delGame Makes entity forget about parent.
+     */
+    void delGame();
 
 private:
     Game * game_;

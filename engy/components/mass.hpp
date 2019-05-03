@@ -1,32 +1,17 @@
-/**
-  * @file
-  */
-
 #pragma once
 
-#include "component.hpp"
+#include "value.hpp"
 
 
 namespace Engy
 {
 
-/**
- * @ingroup component
- * @brief The Mass class
- */
 class Mass final
-        : public Component {
+        : public Value<double> {
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        explicit Mass(double m);
-
-public:
-    void setM(double m);
-    double m() const;
-
-private:
-    double m_;
+        explicit Mass(double m = 0);
 };
 
 } // Engy

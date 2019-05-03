@@ -34,7 +34,7 @@ public slots:
     void update(int64_t dt);
 
 private:
-    int64_t interval_; ///< In miliseconds
+    int64_t interval_ = 0; ///< In miliseconds
     QVector2D v_ = { 0, 0 };
 };
 

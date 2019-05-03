@@ -130,6 +130,7 @@ void Entity::forgetComponent(Component::Id id)
     auto node = components_.extract(id);
     assert("Entity should be parent if component knows about it" &&
            !node.empty());
+    node.mapped()->delEntity();
     node.mapped().release();
 }
 

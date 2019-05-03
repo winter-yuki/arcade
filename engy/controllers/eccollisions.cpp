@@ -28,7 +28,7 @@ void ECCollisions::setHandler(Handler h)
 
 void ECCollisions::checkCollisions()
 {
-    for (Entity const * other : game()->entities()) {
+    for (Entity * other : game()->entities()) {
         assert(other);
         assert(other->form());
         if (entity()->form() != other->form() &&

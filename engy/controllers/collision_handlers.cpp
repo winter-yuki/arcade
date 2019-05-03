@@ -6,7 +6,7 @@
 
 #include "stdafx.hpp"
 #include "eccollisions.hpp"
-#include "components/mass.hpp"
+#include "components/value.hpp"
 #include "components/move.hpp"
 
 
@@ -15,11 +15,12 @@ namespace Engy
 
 namespace
 {
-std::optional<QVector2D> getNormalOfBoundingRect(Entity * a, Entity const * b);
+std::optional<QVector2D>
+getNormalOfBoundingRect(Entity const * a, Entity const * b);
 }
 
 
-void basicCollisionHandler(Entity * a, Entity const * b)
+void basicCollisionHandler(Entity * a, Entity * b)
 {
     assert(a && b);
     assert(a->form() && b->form());
@@ -53,7 +54,8 @@ void basicCollisionHandler(Entity * a, Entity const * b)
 namespace
 {
 
-std::optional<QVector2D> getNormalOfBoundingRect(Entity * a, Entity const * b)
+std::optional<QVector2D>
+getNormalOfBoundingRect(Entity const* a, Entity const * b)
 {
     const auto abr = a->form()->boundingRect();
     const auto pos = a->form()->pos() + QPointF(abr.width(), abr.height()) / 2;

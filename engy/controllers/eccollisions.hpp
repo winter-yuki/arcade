@@ -28,7 +28,7 @@ public:
      * 1st: given entity, 2nd: other entity from field.
      * Shared poiners are guaranted not to be empty.
      */
-    using Handler = std::function<void (Entity *, Entity const *)>;
+    using Handler = std::function<void (Entity *, Entity *)>;
 
     void setHandler(Handler h);
 
@@ -37,7 +37,7 @@ public slots:
 
 private:
     Timer * timer_ = nullptr; ///< nullptr to avoid cppcheck warning.
-    Handler h_ = [](Entity * /*a*/, Entity const * /*b*/) {};
+    Handler h_ = [](Entity * /*a*/, Entity * /*b*/) {};
 };
 
 } // Engy

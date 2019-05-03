@@ -22,7 +22,7 @@ class Entity;
  * @param a considered entity
  * @param b object of the field
  */
-void basicCollisionHandler(Entity * a, Entity const * b);
+void basicCollisionHandler(Entity * a, Entity * b);
 
 /**
  * @}

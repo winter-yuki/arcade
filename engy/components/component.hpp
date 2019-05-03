@@ -25,10 +25,6 @@ class Entity;
 /**
  * @ingroup component
  * @brief Base class for all components in game.
- * @warning  as private,
- * because components are expected to be allocated on heap.
- * So they won't delete in the end of the scope (end delete themselves from
- * parent entities).
  *
  * Define constructors of derived classes like this:
  * @code

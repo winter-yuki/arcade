@@ -29,7 +29,7 @@ class Entity;
  * Define constructors of derived classes like this:
  * @code
  * class DerivedComponent
- *        : public Component {
+ *        : public ComponentC<DerivedComponent> {
  *     Q_OBJECT // Mb if is needed
  *     ENGY_CREATABLE_COMPONENT
  *
@@ -98,12 +98,12 @@ private:
 using ComponentU = std::unique_ptr<Component>;
 
 
-template <class T>
-class ComponentT
+template <class C>
+class ComponentC
         : public Component {
 protected:
-    ComponentT()
-        : Component(id<T>())
+    ComponentC()
+        : Component(id<C>())
     {}
 };
 

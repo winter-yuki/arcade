@@ -7,7 +7,7 @@ namespace Engy
 {
 
 class Mass final
-        : public Value<double> {
+        : public Value<Mass, double> {
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:

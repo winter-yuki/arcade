@@ -75,6 +75,10 @@ public:
      */
     template <class C>
     C * findComponent();
+    /**
+     * @brief Removes componet without deletion
+     */
+    void forgetComponent(Component::Id id);
 
 private slots:
     void gameDeleted();
@@ -85,13 +89,6 @@ private:
      * @param game Takes ownership of entity.
      */
     explicit Entity(Game * game);
-
-    /// Provides access to forgetComponent()
-    friend class Component;
-    /**
-     * @brief Removes componet without deletion
-     */
-    void forgetComponent(Component::Id id);
 
     /// Access to delGame
     friend class Game;

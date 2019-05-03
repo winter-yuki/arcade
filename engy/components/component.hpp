@@ -81,7 +81,7 @@ public:
     template <class T>
     static Id id();
 
-    /// Provide for Entity access to setEntity
+    /// Provide for Entity access to setEntity and delEntity
     friend class Entity;
 
 signals:

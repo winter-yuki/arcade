@@ -43,6 +43,18 @@ Entity::~Entity()
 }
 
 
+void Entity::setName(QString name)
+{
+    name_ = std::move(name);
+}
+
+
+QString Entity::name() const
+{
+    return name_;
+}
+
+
 Game * Entity::game()
 {
     return game_;

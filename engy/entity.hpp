@@ -39,6 +39,17 @@ public:
     ~Entity();
 
     /**
+     * @brief Set name to current entity instance.
+     * @param name
+     */
+    void setName(QString name);
+    /**
+     * @brief Name getter.
+     * @return
+     */
+    QString name() const;
+
+    /**
      * @brief game
      * @return Pointer to parent game.
      */
@@ -98,6 +109,8 @@ private:
     void delGame();
 
 private:
+    QString name_;
+
     Game * game_;
     QGraphicsItem  * form_ = nullptr;
     std::unordered_map<Component::Id, ComponentU> components_;

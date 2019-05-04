@@ -10,14 +10,6 @@
 namespace Engy
 {
 
-Entity * Entity::create(Game * game) {
-    assert(game);
-    auto entity = new Entity(game);
-    game->addEntity(entity);
-    return entity;
-}
-
-
 Entity::Entity(Game * game)
     : game_(game)
 {

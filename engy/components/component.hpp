@@ -99,10 +99,10 @@ using ComponentU = std::unique_ptr<Component>;
 
 
 template <class C>
-class ComponentC
+class ComponentT
         : public Component {
 protected:
-    ComponentC()
+    ComponentT()
         : Component(id<C>())
     {}
 };

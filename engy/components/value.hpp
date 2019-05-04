@@ -16,7 +16,7 @@ namespace Engy
  */
 template <class C, class ValueType>
 class Value
-        : public ComponentC<C> {
+        : public ComponentT<C> {
 public:
     using value_type = ValueType;
 

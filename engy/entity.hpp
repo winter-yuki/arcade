@@ -5,6 +5,7 @@
 #pragma once
 
 #include "stdafx.hpp"
+#include "game.hpp"
 #include "components/component.hpp"
 
 
@@ -21,7 +22,7 @@ class Game;
  * Deletes itself if game deleted and removes itself from game child list
  * on deletion.
  */
-class Entity final
+class Entity
         : public QObject {
     Q_OBJECT
 
@@ -31,12 +32,13 @@ public:
      * @param game Takes ownership of entity.
      * @return Created entity.
      */
-    static Entity * create(Game * game);
+    template <class E = Entity, class... Args>
+    static E * create(Game * game, Args && ...args);
     /**
       * Makes components forget about entity to avoid cycle.
       * (components try to delete themselves from entity in dtor)
       */
-    ~Entity();
+    virtual ~Entity();
 
     /**
      * @brief Set name to current entity instance.
@@ -91,16 +93,17 @@ public:
      */
     void forgetComponent(Component::Id id);
 
-private slots:
-    void gameDeleted();
-
-private:
+protected:
     /**
      * @brief Entity instance can only be created via factory.
      * @param game Takes ownership of entity.
      */
     explicit Entity(Game * game);
 
+private slots:
+    void gameDeleted();
+
+private:
     /// Access to delGame
     friend class Game;
     /**
@@ -117,6 +120,15 @@ private:
 };
 
 
+template <class E, class... Args>
+E * Entity::create(Game * game, Args && ...args) {
+    assert(game);
+    auto entity = new E(game, std::forward<Args>(args)...);
+    game->addEntity(entity);
+    return entity;
+}
+
+
 template <class C>
 C * Entity::findComponent() {
     if (auto search = findComponent(Component::id<C>())) {
@@ -126,6 +138,12 @@ C * Entity::findComponent() {
     }
     return nullptr;
 }
+
+
+#define ENGY_CREATABLE_ENTITY \
+    template <class E, class... Args> \
+    friend E * Entity::create(Game * game, Args && ...args);
+#define engy_entity_ctor ENGY_HEAP_ONLY_CONSTRUCTIBLE
 
 } // Engy
 

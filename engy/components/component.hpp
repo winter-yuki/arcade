@@ -29,7 +29,7 @@ class Entity;
  * Define constructors of derived classes like this:
  * @code
  * class DerivedComponent
- *        : public Component {
+ *        : public ComponentC<DerivedComponent> {
  *     Q_OBJECT // Mb if is needed
  *     ENGY_CREATABLE_COMPONENT
  *
@@ -124,10 +124,7 @@ Component::Id Component::id() {
 }
 
 
-#define ENGY_CREATABLE_COMPONENT \
-    template <class C, class... Args> \
-    friend C * Component::create(Args && ...args);
-
+#define ENGY_CREATABLE_COMPONENT ENGY_CREATABLE(Component)
 #define engy_component_ctor ENGY_HEAP_ONLY_CONSTRUCTIBLE
 
 } // Engy

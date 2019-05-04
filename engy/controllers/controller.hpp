@@ -126,10 +126,7 @@ C * Controller::create(Args && ...args) {
 }
 
 
-#define ENGY_CREATABLE_CONTROLLER \
-    template <class C, class... Args> \
-    friend C * Controller::create(Args && ...args);
-
+#define ENGY_CREATABLE_CONTROLLER ENGY_CREATABLE(Controller)
 #define engy_controller_ctor ENGY_HEAP_ONLY_CONSTRUCTIBLE
 
 } // Engy

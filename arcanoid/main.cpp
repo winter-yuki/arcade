@@ -4,11 +4,33 @@
 #include "engy/controllers/eccollisions.hpp"
 #include "engy/controllers/collision_handlers.hpp"
 #include "engy/controllers/ecscenebounds.hpp"
+#include "engy/components/mass.hpp"
 
 
-Engy::Entity * makePlayer(Engy::Game & game);
 Engy::Entity * makeBall(Engy::Game & game);
 std::vector<Engy::Entity *> makeBorders(Engy::Game & game, double width = 10);
+
+
+class Player final
+        : public Engy::Entity {
+    ENGY_CREATABLE_ENTITY
+
+    engy_entity_ctor:
+        Player(Engy::Game * game)
+    : Engy::Entity(game) {
+        const auto gsw = game->sceneSize().width();
+        const auto gsh = game->sceneSize().height();
+        auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 10});
+        platform->setPos({gsw / 2 - platform->boundingRect().width() / 2,
+                          gsh - platform->boundingRect().height()});
+        QColor color(0xAA00BB);
+        platform->setPen({color});
+        platform->setBrush({color});
+
+        addForm(platform);
+        setName("Player");
+    }
+};
 
 
 int main(int argc, char * argv[])
@@ -17,11 +39,12 @@ int main(int argc, char * argv[])
 
     Engy::Game game;
 
+    game.setSceneSize({1000, 900});
     game.setBg(QPixmap(":/images/hydra.jpg").scaled(game.sceneSize()));
 
     // Create player
     double borderWidth = 5;
-    auto player = makePlayer(game);
+    auto player = Engy::Entity::create<Player>(&game);
     auto keyController = Engy::Controller::create<Engy::ECArrowKeys>(player);
     keyController->setDx(25);
     keyController->setDy(std::nullopt);
@@ -35,7 +58,7 @@ int main(int argc, char * argv[])
     auto ball = makeBall(game);
 
     auto move = Engy::Component::create<Engy::Move>();
-    move->setV({.2f, .3f});
+    move->setV({.3f, 0.4f});
     ball->addComponent(move);
     // delete move; // Component can be deleted outside.
 
@@ -43,9 +66,8 @@ int main(int argc, char * argv[])
     collisions->setHandler(Engy::basicCollisionHandler);
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
-    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut,
-                     [game = &game, outOfScene] {
-        game->removeEntity(outOfScene->entity());
+    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene] {
+        delete outOfScene->entity();
     });
 
     game.launch();
@@ -54,29 +76,12 @@ int main(int argc, char * argv[])
 }
 
 
-Engy::Entity * makePlayer(Engy::Game & game)
-{
-    const auto gsw = game.sceneSize().width();
-    const auto gsh = game.sceneSize().height();
-    auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 20});
-    platform->setPos({gsw / 2 - platform->boundingRect().width() / 2,
-                      gsh - platform->boundingRect().height()});
-    QColor color(0xAA00BB);
-    platform->setPen({color});
-    platform->setBrush({color});
-
-    auto player = Engy::Entity::create(&game);
-    player->addForm(platform);
-    return player;
-}
-
-
 Engy::Entity * makeBall(Engy::Game & game)
 {
     QColor ballColor(QRgb(0x00AADD));
 
     auto * ball = new QGraphicsEllipseItem;
-    ball->setRect({0, 0, 50, 50});
+    ball->setRect({0, 0, 30, 30});
     ball->moveBy(100, 100);
     ball->setBrush(QBrush(ballColor));
     ball->setPen(QPen(ballColor));

@@ -34,6 +34,20 @@ Ball::Ball(Engy::Game * game)
 }
 
 
+Box::Box(Engy::Game * game, QRectF rect)
+    : Engy::Entity(game)
+{
+    auto form = new QGraphicsRectItem(rect);
+
+    QColor color(0xAA00DD);
+    form->setPen(QPen(color));
+    form->setBrush(QBrush(color));
+
+    addForm(form);
+    setName("Box");
+}
+
+
 std::vector<Engy::Entity *> makeBorders(Engy::Game * game, double width)
 {
     const qreal gsh = game->sceneSize().height();
@@ -63,7 +77,34 @@ std::vector<Engy::Entity *> makeBorders(Engy::Game * game, double width)
 
 std::vector<Engy::Entity *> makeField(Engy::Game * game)
 {
-    // TODO
+    // TODO components
+
+    const int upOffset = 100;
+    const int downOffset = 500;
+    const int leftOffset = 100;
+    const int rightOffset = 100;
+
+    const int d = 10;
+    const int hor = 8;
+    const int vert = 6;
+    const int width = (game->sceneSize().width() -
+                       (leftOffset + rightOffset) - d * hor) / hor;
+    const int height = (game->sceneSize().height() -
+                        (upOffset + downOffset) - d * vert) / vert;
+
+    std::vector<Engy::Entity *> es;
+
+    for (int h = 0; h < hor; ++h) {
+        for (int v = 0; v < vert; ++v) {
+            QRectF rect(0, 0, width, height);
+            auto entity = Engy::Entity::create<Box>(game, rect);
+            entity->form()->setPos(leftOffset + width * h + d * h,
+                                   upOffset + height * v + d * v);
+            es.push_back(entity);
+        }
+    }
+
+    return es;
 }
 
 

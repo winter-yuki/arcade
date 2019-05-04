@@ -13,6 +13,7 @@ public:
 public slots:
     void restartGame();
     void updateScore(int delta);
+    void endGame();
 
 private:
     void createGame();

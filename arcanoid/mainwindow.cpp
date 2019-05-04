@@ -1,5 +1,7 @@
 #include "mainwindow.hpp"
 
+#include <QDialogButtonBox>
+
 #include "entities.hpp"
 #include "components.hpp"
 #include "engy/game.hpp"
@@ -33,6 +35,13 @@ void MainWindow::updateScore(int delta)
 }
 
 
+void MainWindow::endGame()
+{
+    // TODO QButtonsDialog with "Restart" and "Exit"
+    QApplication::exit();
+}
+
+
 void MainWindow::createGame()
 {
     assert(!game_);
@@ -57,21 +66,25 @@ void MainWindow::createGame()
     // Add bounds
     auto borders = makeBorders(game_, borderWidth);
 
+    // Create field
+    auto field = makeField(game_);
+
     // Create ball
     auto ball = Engy::Entity::create<Ball>(game_);
-    ball->form()->moveBy(100, 100);
+    ball->form()->moveBy(700, 800);
 
     auto move = Engy::Component::create<Engy::Move>();
-    move->setV({.3f, 0.4f});
+    move->setV({.2f, -0.3f});
     ball->addComponent(move);
 
     auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball);
     collisions->setHandler(Engy::basicCollisionHandler);
 
-    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
-    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene] {
-        delete outOfScene->entity();
-    });
+//    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
+//    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene, this] {
+//        delete outOfScene->entity();
+//        endGame();
+//    });
 
     // Launch
     game_->launch();

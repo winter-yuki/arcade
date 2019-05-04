@@ -21,5 +21,14 @@ class Ball final
 };
 
 
+class Box final
+        : public Engy::Entity {
+    ENGY_CREATABLE_ENTITY
+
+    engy_entity_ctor:
+        Box(Engy::Game * game, QRectF rect);
+};
+
+
 std::vector<Engy::Entity *> makeBorders(Engy::Game * game, double width = 10);
 std::vector<Engy::Entity *> makeField(Engy::Game * game);

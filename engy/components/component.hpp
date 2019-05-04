@@ -124,10 +124,7 @@ Component::Id Component::id() {
 }
 
 
-#define ENGY_CREATABLE_COMPONENT \
-    template <class C, class... Args> \
-    friend C * Component::create(Args && ...args);
-
+#define ENGY_CREATABLE_COMPONENT ENGY_CREATABLE(Component)
 #define engy_component_ctor ENGY_HEAP_ONLY_CONSTRUCTIBLE
 
 } // Engy

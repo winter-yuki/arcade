@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <engy/game.hpp>
 
 
 class MainWindow final
@@ -8,4 +9,15 @@ class MainWindow final
     Q_OBJECT
 public:
     explicit MainWindow(QWidget * parent = nullptr);
+
+public slots:
+    void restartGame();
+    void updateScore(int delta);
+
+private:
+    void createGame();
+
+private:
+    Engy::Game * game_ = nullptr;
+    int score_ = 0;
 };

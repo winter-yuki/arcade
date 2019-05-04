@@ -122,6 +122,8 @@ private:
 
 template <class E, class... Args>
 E * Entity::create(Game * game, Args && ...args) {
+    static_assert (std::is_base_of_v<Entity, E>,
+                   "E should be derived from entity");
     assert(game);
     auto entity = new E(game, std::forward<Args>(args)...);
     game->addEntity(entity);

@@ -9,9 +9,11 @@ QT += core gui widgets
 CONFIG += c++17
 
 SOURCES += \
+    entities.cpp \
     main.cpp \
 
-HEADERS += \
+HEADERS += \ \
+    entities.hpp
 
 RESOURCES += \
     arcanoid.qrc

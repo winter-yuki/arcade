@@ -17,6 +17,7 @@ int main(int argc, char * argv[])
     QApplication app(argc, argv);
     MainWindow window;
 
+    // Create game
     auto game = new Engy::Game(&window);
     game->setSceneSize({1000, 900});
     game->setBg(QPixmap(":/images/hydra.jpg").scaled(game->sceneSize()));
@@ -36,11 +37,11 @@ int main(int argc, char * argv[])
 
     // Create ball
     auto ball = Engy::Entity::create<Ball>(game);
+    ball->form()->moveBy(100, 100);
 
     auto move = Engy::Component::create<Engy::Move>();
     move->setV({.3f, 0.4f});
     ball->addComponent(move);
-    // delete move; // Component can be deleted outside.
 
     auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball);
     collisions->setHandler(Engy::basicCollisionHandler);
@@ -50,6 +51,7 @@ int main(int argc, char * argv[])
         delete outOfScene->entity();
     });
 
+    // Launch
     game->launch();
     window.show();
     return QApplication::exec();

@@ -25,7 +25,7 @@ Ball::Ball(Engy::Game * game)
 
     auto * ball = new QGraphicsEllipseItem;
     ball->setRect({0, 0, 30, 30});
-    ball->moveBy(100, 100);
+
     ball->setBrush(QBrush(ballColor));
     ball->setPen(QPen(ballColor));
 
@@ -55,6 +55,29 @@ std::vector<Engy::Entity *> makeBorders(Engy::Game * game, double width)
     for (size_t i = 0; i < borders.size(); ++i) {
         borders[i] = Engy::Entity::create(game);
         borders[i]->addForm(rects[i]);
+        borders[i]->setName(QString("Border %1").arg(i));
     }
     return borders;
 }
+
+
+std::vector<Engy::Entity *> makeField(Engy::Game * game)
+{
+    // TODO
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

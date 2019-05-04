@@ -8,8 +8,4 @@ class MainWindow final
     Q_OBJECT
 public:
     explicit MainWindow(QWidget * parent = nullptr);
-
-signals:
-
-public slots:
 };

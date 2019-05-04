@@ -24,7 +24,7 @@ public:
     ValueType val() const;
 
 protected:
-    explicit Value(ValueType val);
+    explicit Value(ValueType val = ValueType());
 
 private:
     ValueType val_;

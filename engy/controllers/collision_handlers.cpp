@@ -38,8 +38,7 @@ void basicCollisionHandler(Entity * a, Entity * b)
 
         // Count speed vector after bounce
         auto newV = v - 2 * (v * n.value()) * n.value();
-        assert(abs(newV.length() - v.length()) < 1e-8f);
-
+        assert(std::abs(newV.length() - v.length()) < 1e-8f);
         move->setV(newV);
 
     } else {

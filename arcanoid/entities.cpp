@@ -34,10 +34,10 @@ Ball::Ball(Engy::Game * game)
 }
 
 
-std::vector<Engy::Entity *> makeBorders(Engy::Game & game, double width)
+std::vector<Engy::Entity *> makeBorders(Engy::Game * game, double width)
 {
-    const qreal gsh = game.sceneSize().height();
-    const qreal gsw = game.sceneSize().width();
+    const qreal gsh = game->sceneSize().height();
+    const qreal gsw = game->sceneSize().width();
 
     QColor borderColor(QRgb(0x00AA00));
     std::array rects = {
@@ -53,7 +53,7 @@ std::vector<Engy::Entity *> makeBorders(Engy::Game & game, double width)
 
     std::vector<Engy::Entity *> borders(rects.size());
     for (size_t i = 0; i < borders.size(); ++i) {
-        borders[i] = Engy::Entity::create(&game);
+        borders[i] = Engy::Entity::create(game);
         borders[i]->addForm(rects[i]);
     }
     return borders;

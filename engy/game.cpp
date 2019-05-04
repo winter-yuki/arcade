@@ -40,7 +40,9 @@ void Game::launch()
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy  (Qt::ScrollBarAlwaysOff);
-    show();
+    if (!parent()) {
+        show();
+    }
     qDebug() << "Engy::Game launched";
 }
 

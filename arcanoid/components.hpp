@@ -4,11 +4,17 @@
 
 
 class HP final
-        : public Engy::Value<HP, int> {
+        : public Engy::ComponentT<HP> {
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        explicit HP(int hp = 100)
-      : Engy::Value<HP, int>(hp)
-    {}
+        explicit HP(int hp = 100);
+
+public:
+    void changeHp(int dHp = -20);
+    int hp() const { return hp_; }
+
+private:
+    const int INITIAL_HP_;
+    int hp_;
 };

@@ -1,5 +1,7 @@
 #include "entities.hpp"
 
+#include "components.hpp"
+
 
 Player::Player(Engy::Game * game)
     : Engy::Entity(game)
@@ -79,14 +81,14 @@ std::vector<Engy::Entity *> makeField(Engy::Game * game)
 {
     // TODO components
 
-    const int upOffset = 100;
+    const int upOffset = 200;
     const int downOffset = 500;
-    const int leftOffset = 100;
-    const int rightOffset = 100;
+    const int leftOffset = 150;
+    const int rightOffset = 150;
 
     const int d = 10;
-    const int hor = 8;
-    const int vert = 6;
+    const int hor = 7;
+    const int vert = 5;
     const int width = (game->sceneSize().width() -
                        (leftOffset + rightOffset) - d * hor) / hor;
     const int height = (game->sceneSize().height() -
@@ -100,6 +102,10 @@ std::vector<Engy::Entity *> makeField(Engy::Game * game)
             auto entity = Engy::Entity::create<Box>(game, rect);
             entity->form()->setPos(leftOffset + width * h + d * h,
                                    upOffset + height * v + d * v);
+
+            auto hp = Engy::Component::create<HP>();
+            entity->addComponent(hp);
+
             es.push_back(entity);
         }
     }

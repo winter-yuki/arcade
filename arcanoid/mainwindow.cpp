@@ -1,7 +1,10 @@
 #include "mainwindow.hpp"
 
+#include <functional>
+
 #include <QDialogButtonBox>
 
+#include "collision_handler.hpp"
 #include "entities.hpp"
 #include "components.hpp"
 #include "engy/game.hpp"
@@ -71,20 +74,21 @@ void MainWindow::createGame()
 
     // Create ball
     auto ball = Engy::Entity::create<Ball>(game_);
-    ball->form()->moveBy(700, 800);
+    ball->form()->moveBy(800, 800);
 
     auto move = Engy::Component::create<Engy::Move>();
     move->setV({.2f, -0.3f});
     ball->addComponent(move);
 
     auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball);
-    collisions->setHandler(Engy::basicCollisionHandler);
+    using namespace std::placeholders;
+    collisions->setHandler(std::bind(collisionHandler, this, _1, _2));
 
-//    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
-//    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene, this] {
-//        delete outOfScene->entity();
-//        endGame();
-//    });
+    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
+    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene, this] {
+        delete outOfScene->entity();
+        endGame();
+    });
 
     // Launch
     game_->launch();

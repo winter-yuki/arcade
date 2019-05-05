@@ -183,7 +183,12 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     movingBlock->addComponent(hp);
 
     auto collicions = Engy::Controller::create<Engy::ECCollisions>(movingBlock);
-    collicions->setHandler(Engy::basicCollisionHandler);
+    collicions->setHandler([](Engy::Entity * a, Engy::Entity * b) {
+        if (b->name() == "Ball") {
+            return;
+        }
+        Engy::basicCollisionHandler(a, b);
+    });
 
     return es;
 }

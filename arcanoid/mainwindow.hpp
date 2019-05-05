@@ -20,7 +20,7 @@ private:
     void createGame();
 
     std::vector<Engy::Entity *> makeBorders(double width = 10);
-    std::vector<Engy::Entity *> makeSaticField();
+    std::vector<Engy::Entity *> makeField();
 
 private:
     Engy::Game * game_ = nullptr;

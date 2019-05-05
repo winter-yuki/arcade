@@ -77,7 +77,7 @@ void MainWindow::createGame()
     auto borders = makeBorders(borderWidth);
 
     // Create field
-    auto field = makeSaticField();
+    auto field = makeField();
 
     // Create ball
     auto ball = Engy::Entity::create<Ball>(game_);
@@ -135,7 +135,7 @@ std::vector<Engy::Entity *> MainWindow::makeBorders(double width)
 }
 
 
-std::vector<Engy::Entity *> MainWindow::makeSaticField()
+std::vector<Engy::Entity *> MainWindow::makeField()
 {
     assert(game_);
 
@@ -162,9 +162,28 @@ std::vector<Engy::Entity *> MainWindow::makeSaticField()
             auto entity = Engy::Entity::create<Box>(game_, rect);
             entity->form()->setPos(leftOffset + width * h + d * h,
                                    upOffset + height * v + d * v);
+            auto hp = Engy::Component::create<HP>();
+            entity->addComponent(hp);
             es.push_back(entity);
         }
     }
+
+    // Make moving block
+    QRectF rect(0, 0, width + 10, height + 10);
+    auto movingBlock = Engy::Entity::create<Box>(game_, rect);
+    movingBlock->form()->setPos(leftOffset + width,
+                           game_->sceneSize().height() - downOffset + 100);
+    es.push_back(movingBlock);
+
+    auto move = Engy::Component::create<Engy::Move>();
+    move->setV({.1f, 0});
+    movingBlock->addComponent(move);
+
+    auto hp = Engy::Component::create<HP>(500);
+    movingBlock->addComponent(hp);
+
+    auto collicions = Engy::Controller::create<Engy::ECCollisions>(movingBlock);
+    collicions->setHandler(Engy::basicCollisionHandler);
 
     return es;
 }

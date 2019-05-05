@@ -47,9 +47,6 @@ Box::Box(Engy::Game * game, QRectF rect)
 
     addForm(form);
     setName("Box");
-
-    auto hp = Engy::Component::create<HP>();
-    addComponent(hp);
 }
 
 

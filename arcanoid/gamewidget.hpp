@@ -4,11 +4,11 @@
 #include <engy/game.hpp>
 
 
-class MainWindow final
+class GameWidget final
         : public QMainWindow {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget * parent = nullptr);
+    explicit GameWidget(QWidget * parent = nullptr);
 
 public slots:
     void restartGame();

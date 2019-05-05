@@ -11,13 +11,13 @@ CONFIG += c++17
 SOURCES += \
     components.cpp \
     entities.cpp \
-    main.cpp \
-    mainwindow.cpp
+    gamewidget.cpp \
+    main.cpp
 
 HEADERS += \
     components.hpp \
     entities.hpp \
-    mainwindow.hpp
+    gamewidget.hpp
 
 RESOURCES += \
     arcanoid.qrc

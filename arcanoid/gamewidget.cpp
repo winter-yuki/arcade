@@ -1,4 +1,4 @@
-#include "mainwindow.hpp"
+#include "gamewidget.hpp"
 
 #include <functional>
 
@@ -15,14 +15,14 @@
 #include "engy/components/mass.hpp"
 
 
-MainWindow::MainWindow(QWidget * parent)
+GameWidget::GameWidget(QWidget * parent)
     : QMainWindow(parent)
 {
     createGame();
 }
 
 
-void MainWindow::restartGame()
+void GameWidget::restartGame()
 {
     assert(game_);
     delete game_;
@@ -30,21 +30,21 @@ void MainWindow::restartGame()
 }
 
 
-void MainWindow::updateScore(int delta)
+void GameWidget::updateScore(int delta)
 {
     score_ += delta;
     setWindowTitle(QString("SCORE: %1").arg(score_));
 }
 
 
-void MainWindow::endGame()
+void GameWidget::endGame()
 {
     // TODO QButtonsDialog with "Restart" and "Exit"
     QApplication::exit();
 }
 
 
-void MainWindow::scoreCounter(Engy::Entity * a, Engy::Entity * b)
+void GameWidget::scoreCounter(Engy::Entity * a, Engy::Entity * b)
 {
     if (a->name() == "Ball" && b->name() == "Player") {
         updateScore(10);
@@ -52,7 +52,7 @@ void MainWindow::scoreCounter(Engy::Entity * a, Engy::Entity * b)
 }
 
 
-void MainWindow::createGame()
+void GameWidget::createGame()
 {
     assert(!game_);
     score_ = 0;
@@ -106,7 +106,7 @@ void MainWindow::createGame()
 }
 
 
-std::vector<Engy::Entity *> MainWindow::makeBorders(double width)
+std::vector<Engy::Entity *> GameWidget::makeBorders(double width)
 {
     assert(game_);
 
@@ -135,7 +135,7 @@ std::vector<Engy::Entity *> MainWindow::makeBorders(double width)
 }
 
 
-std::vector<Engy::Entity *> MainWindow::makeField()
+std::vector<Engy::Entity *> GameWidget::makeField()
 {
     assert(game_);
 

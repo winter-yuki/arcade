@@ -16,6 +16,7 @@ public slots:
     void endGame();
 
 private:
+    void scoreCounter(Engy::Entity * a, Engy::Entity * b);
     void createGame();
 
 private:

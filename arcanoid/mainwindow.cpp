@@ -4,7 +4,6 @@
 
 #include <QDialogButtonBox>
 
-#include "collision_handler.hpp"
 #include "entities.hpp"
 #include "components.hpp"
 #include "engy/game.hpp"
@@ -45,6 +44,14 @@ void MainWindow::endGame()
 }
 
 
+void MainWindow::scoreCounter(Engy::Entity * a, Engy::Entity * b)
+{
+    if (a->name() == "Ball" && b->name() == "Player") {
+        updateScore(10);
+    }
+}
+
+
 void MainWindow::createGame()
 {
     assert(!game_);
@@ -82,7 +89,11 @@ void MainWindow::createGame()
 
     auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball);
     using namespace std::placeholders;
-    collisions->setHandler(std::bind(collisionHandler, this, _1, _2));
+    collisions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
+        Engy::basicCollisionHandler(a, b);
+        HP::hpCounter(a, b);
+        scoreCounter(a, b);
+    });
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
     QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene, this] {

@@ -14,7 +14,10 @@ public:
     void changeHp(int dHp = -20);
     int hp() const { return hp_; }
 
+    static void hpCounter(Engy::Entity * a, Engy::Entity * b);
+
 private:
     const int INITIAL_HP_;
     int hp_;
 };
+

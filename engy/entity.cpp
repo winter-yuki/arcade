@@ -62,20 +62,24 @@ Game const * Entity::game() const
 void Entity::addForm(QGraphicsItem * form)
 {
     assert(game_);
-    if (form_ && form_->scene()) {
-        game_->scene()->removeItem(form_);
-    }
+    bool deleted = delForm();
     form_ = form;
     game_->scene()->addItem(form_);
+    if (!deleted) {
+        emit formAdded();
+    }
+    emit formChanged();
 }
 
 
-void Entity::delForm()
+bool Entity::delForm()
 {
     if (game_ && form_ && form_->scene()) {
         game_->scene()->removeItem(form_);
         form_ = nullptr;
+        return true;
     }
+    return false;
 }
 
 

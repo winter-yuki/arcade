@@ -63,7 +63,11 @@ public:
      * @param form
      */
     void addForm(QGraphicsItem * form);
-    void delForm();
+    /**
+     * @brief delForm
+     * @return true if form was removed, false otherwise.
+     */
+    bool delForm();
     QGraphicsItem * form();
     QGraphicsItem const * form() const;
 
@@ -92,6 +96,10 @@ public:
      * @brief Removes componet without deletion
      */
     void forgetComponent(Component::Id id);
+
+signals:
+    void formAdded();
+    void formChanged();
 
 protected:
     /**

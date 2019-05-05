@@ -16,8 +16,12 @@ public:
 
     static void hpCounter(Engy::Entity * a, Engy::Entity * b);
 
+private slots:
+    void entityAdded();
+    void formChanged();
+
 private:
     const int INITIAL_HP_;
     int hp_;
+    QGraphicsTextItem * textItem_ = nullptr;
 };
-

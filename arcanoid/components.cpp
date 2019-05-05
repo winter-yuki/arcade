@@ -7,16 +7,15 @@ HP::HP(int hp)
     : INITIAL_HP_(hp)
     , hp_(hp)
 {
-//   auto text = new QGraphicsTextItem(entity()->form());
-//   text->setPlainText(QString("Wow"));
-//   text->setTextWidth(entity()->form()->boundingRect().width());
+    connect(this, &Component::entitySetted, this, &HP::entityAdded);
 }
 
 
 void HP::changeHp(int dHp)
 {
+    assert(textItem_);
     hp_ += dHp;
-    qDebug() << "Hp changed " << hp_;
+    textItem_->setPlainText(QString("%1/%2").arg(hp_).arg(INITIAL_HP_));
 }
 
 
@@ -32,3 +31,30 @@ void HP::hpCounter(Engy::Entity * a, Engy::Entity * b)
         }
     }
 }
+
+
+void HP::entityAdded()
+{
+    assert(entity());
+    connect(entity(), &Engy::Entity::formChanged, this, &HP::formChanged);
+    if (entity()->form()) {
+        formChanged();
+    }
+}
+
+
+void HP::formChanged()
+{
+    assert(entity());
+    assert(entity()->form());
+    textItem_ = new QGraphicsTextItem(entity()->form());
+    textItem_->setTextWidth(entity()->form()->boundingRect().width());
+    changeHp(0);
+}
+
+
+
+
+
+
+

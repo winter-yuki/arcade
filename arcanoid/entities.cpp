@@ -45,11 +45,11 @@ Box::Box(Engy::Game * game, QRectF rect)
     form->setPen(QPen(color));
     form->setBrush(QBrush(color));
 
-    auto hp = Engy::Component::create<HP>();
-    addComponent(hp);
-
     addForm(form);
     setName("Box");
+
+    auto hp = Engy::Component::create<HP>();
+    addComponent(hp);
 }
 
 

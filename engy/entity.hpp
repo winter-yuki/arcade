@@ -92,10 +92,6 @@ public:
      */
     template <class C>
     C * findComponent();
-    /**
-     * @brief Removes componet without deletion
-     */
-    void forgetComponent(Component::Id id);
 
 signals:
     void formAdded();
@@ -118,6 +114,11 @@ private:
      * @brief delGame Makes entity forget about parent.
      */
     void delGame();
+    friend class Component;
+    /**
+     * @brief Removes componet without deletion
+     */
+    void forgetComponent(Component::Id id);
 
 private:
     QString name_;

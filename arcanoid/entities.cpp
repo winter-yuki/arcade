@@ -45,6 +45,9 @@ Box::Box(Engy::Game * game, QRectF rect)
     form->setPen(QPen(color));
     form->setBrush(QBrush(color));
 
+    auto hp = Engy::Component::create<HP>();
+    addComponent(hp);
+
     addForm(form);
     setName("Box");
 }
@@ -102,10 +105,6 @@ std::vector<Engy::Entity *> makeField(Engy::Game * game)
             auto entity = Engy::Entity::create<Box>(game, rect);
             entity->form()->setPos(leftOffset + width * h + d * h,
                                    upOffset + height * v + d * v);
-
-            auto hp = Engy::Component::create<HP>();
-            entity->addComponent(hp);
-
             es.push_back(entity);
         }
     }

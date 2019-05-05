@@ -30,5 +30,4 @@ class Box final
 };
 
 
-std::vector<Engy::Entity *> makeBorders(Engy::Game * game, double width = 10);
-std::vector<Engy::Entity *> makeField(Engy::Game * game);
+

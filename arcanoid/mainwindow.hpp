@@ -19,6 +19,9 @@ private:
     void scoreCounter(Engy::Entity * a, Engy::Entity * b);
     void createGame();
 
+    std::vector<Engy::Entity *> makeBorders(double width = 10);
+    std::vector<Engy::Entity *> makeSaticField();
+
 private:
     Engy::Game * game_ = nullptr;
     int score_ = 0;

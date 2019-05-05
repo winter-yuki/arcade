@@ -59,7 +59,7 @@ void MainWindow::createGame()
     updateScore(0);
 
     // Create game
-    auto game_ = new Engy::Game(this);
+    game_ = new Engy::Game(this);
     game_->setSceneSize({1000, 900});
     game_->setBg(QPixmap(":/images/hydra.jpg").scaled(game_->sceneSize()));
     setFixedSize(game_->size());
@@ -74,10 +74,10 @@ void MainWindow::createGame()
     keyController->setRBorder(borderWidth);
 
     // Add bounds
-    auto borders = makeBorders(game_, borderWidth);
+    auto borders = makeBorders(borderWidth);
 
     // Create field
-    auto field = makeField(game_);
+    auto field = makeSaticField();
 
     // Create ball
     auto ball = Engy::Entity::create<Ball>(game_);
@@ -106,7 +106,68 @@ void MainWindow::createGame()
 }
 
 
+std::vector<Engy::Entity *> MainWindow::makeBorders(double width)
+{
+    assert(game_);
 
+    const qreal gsh = game_->sceneSize().height();
+    const qreal gsw = game_->sceneSize().width();
+
+    QColor borderColor(QRgb(0x00AA00));
+    std::array rects = {
+        new QGraphicsRectItem(QRectF{0, 0, width, gsh}),
+        new QGraphicsRectItem(QRectF{0, 0, gsw, width}),
+        new QGraphicsRectItem(QRectF{gsw - width, 0, width, gsh})
+    };
+
+    for (auto rect : rects) {
+        rect->setBrush(QBrush(borderColor));
+        rect->setPen(QPen(borderColor));
+    }
+
+    std::vector<Engy::Entity *> borders(rects.size());
+    for (size_t i = 0; i < borders.size(); ++i) {
+        borders[i] = Engy::Entity::create(game_);
+        borders[i]->addForm(rects[i]);
+        borders[i]->setName(QString("Border %1").arg(i));
+    }
+    return borders;
+}
+
+
+std::vector<Engy::Entity *> MainWindow::makeSaticField()
+{
+    assert(game_);
+
+    // TODO components
+
+    const int upOffset = 200;
+    const int downOffset = 500;
+    const int leftOffset = 150;
+    const int rightOffset = 150;
+
+    const int d = 10;
+    const int hor = 7;
+    const int vert = 5;
+    const int width = (game_->sceneSize().width() -
+                       (leftOffset + rightOffset) - d * hor) / hor;
+    const int height = (game_->sceneSize().height() -
+                        (upOffset + downOffset) - d * vert) / vert;
+
+    std::vector<Engy::Entity *> es;
+
+    for (int h = 0; h < hor; ++h) {
+        for (int v = 0; v < vert; ++v) {
+            QRectF rect(0, 0, width, height);
+            auto entity = Engy::Entity::create<Box>(game_, rect);
+            entity->form()->setPos(leftOffset + width * h + d * h,
+                                   upOffset + height * v + d * v);
+            es.push_back(entity);
+        }
+    }
+
+    return es;
+}
 
 
 

@@ -38,6 +38,9 @@ class Bonus final
     engy_entity_ctor:
         Bonus(Engy::Game * game, Engy::Entity * ancestor,
               Engy::ECCollisions::Handler applier);
+
+public:
+    static void onCollision(Engy::Entity * a, Engy::Entity * b);
 };
 
 

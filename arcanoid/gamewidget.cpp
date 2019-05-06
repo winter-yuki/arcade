@@ -94,6 +94,7 @@ void GameWidget::createGame()
         Engy::basicCollisionHandler(a, b);
         HP::hpCounter(a, b);
         scoreCounter(a, b);
+        Bonus::onCollision(a, b);
     });
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
@@ -174,6 +175,7 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     auto movingBlock = Engy::Entity::create<Box>(game_, rect);
     movingBlock->form()->setPos(leftOffset + width,
                            game_->sceneSize().height() - downOffset + 100);
+    movingBlock->setName("MovingBox");
     es.push_back(movingBlock);
 
     auto move = Engy::Component::create<Engy::Move>();
@@ -184,15 +186,16 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     movingBlock->addComponent(hp);
 
     auto collicions = Engy::Controller::create<Engy::ECCollisions>(movingBlock);
-    collicions->setHandler([](Engy::Entity * a, Engy::Entity * b) {
+    collicions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
         if (b->name() == "Ball") {
+            Engy::Entity::create<Bonus>(game_, a,
+                                        [](Engy::Entity *, Engy::Entity *) {
+                // TODO
+            });
             return;
         }
         Engy::basicCollisionHandler(a, b);
     });
-
-    Engy::Entity::create<Bonus>(game_, movingBlock,
-                                [](Engy::Entity *, Engy::Entity *) {});
 
     return es;
 }

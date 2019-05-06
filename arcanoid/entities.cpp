@@ -1,5 +1,7 @@
 #include "entities.hpp"
 
+#include <random>
+
 #include "components.hpp"
 #include "engy/components/intangible.hpp"
 #include "engy/components/move.hpp"
@@ -70,7 +72,7 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
     rect->setPen(color);
     rect->setBrush(color);
     addForm(rect);
-    form()->setPos(ancestor->form()->pos() + QPointF{awidth / 2, aheight / 2});
+    form()->setPos(ancestor->form()->pos() + QPointF{awidth / 4, aheight / 4});
 
     auto move = Engy::Component::create<Engy::Move>();
     move->setV({0, 0.2f});
@@ -94,7 +96,19 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
 }
 
 
-
+void Bonus::onCollision(Engy::Entity * a, Engy::Entity * b)
+{
+    assert("Collision controller should track ball" && a->name() == "Ball");
+    if (b->name() == "Box") {
+        assert(a->game() == b->game());
+        if (std::rand() % 3 == 0) {
+            Engy::Entity::create<Bonus>(a->game(), b,
+                                        [](Engy::Entity *, Engy::Entity *) {
+                // TODO
+            });
+        }
+    }
+}
 
 
 

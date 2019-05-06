@@ -224,7 +224,8 @@ std::vector<Engy::Entity *> GameWidget::makeField()
 
 void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
 {
-    if (a->name() == "Ball" && b->name() == "Box") {
+    if (a->name() == "Ball" &&
+            (b->name() == "Box" || b->name() == "MovingBox")) {
         if (auto hp = b->findComponent<HP>()) {
             hp->changeHp();
         }

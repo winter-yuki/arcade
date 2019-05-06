@@ -162,8 +162,6 @@ std::vector<Engy::Entity *> GameWidget::makeField()
 {
     assert(game_);
 
-    // TODO components
-
     const int upOffset = 200;
     const int downOffset = 500;
     const int leftOffset = 150;
@@ -259,11 +257,13 @@ Bonus::Applier GameWidget::getRandomBonus()
         return std::bind(&GameWidget::bonusLifes, this, _1);
     case 3:
         return std::bind(&GameWidget::trampoline, this, _1);
-    case 4: // TODO v modifier
-        break;
-    case 5: // adhesion
-        break;
+    case 4:
+        // TODO
+        // return std::bind(&GameWidget::ballVModifier, this, _1);
+    case 5:
+        return std::bind(&GameWidget::ballAdhesion, this, _1);
     }
+    qDebug() << "No such bonus to get";
     return {};
 }
 
@@ -289,8 +289,18 @@ void GameWidget::trampoline(Engy::Entity * e)
 }
 
 
+void GameWidget::ballVModifier(Engy::Entity * e)
+{
+    Q_UNUSED(e)
+    ball_->addComponent(Engy::Component::create<VMod>());
+}
 
 
+void GameWidget::ballAdhesion(Engy::Entity * e)
+{
+    Q_UNUSED(e)
+    // TODO
+}
 
 
 

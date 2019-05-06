@@ -13,6 +13,7 @@
 #include "engy/controllers/collision_handlers.hpp"
 #include "engy/controllers/ecscenebounds.hpp"
 #include "engy/components/mass.hpp"
+#include "engy/components/intangible.hpp"
 
 
 GameWidget::GameWidget(QWidget * parent)

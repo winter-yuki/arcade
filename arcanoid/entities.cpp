@@ -1,6 +1,10 @@
 #include "entities.hpp"
 
 #include "components.hpp"
+#include "engy/components/intangible.hpp"
+#include "engy/components/move.hpp"
+#include "engy/controllers/ecscenebounds.hpp"
+#include "engy/controllers/eccollisions.hpp"
 
 
 Player::Player(Engy::Game * game)
@@ -50,6 +54,41 @@ Box::Box(Engy::Game * game, QRectF rect)
 }
 
 
+Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
+             Engy::ECCollisions::Handler applier)
+    : Engy::Entity(game)
+{
+    assert(ancestor);
+    assert(applier);
+
+    setName("Bonus");
+
+    auto awidth  = ancestor->form()->boundingRect().width();
+    auto aheight = ancestor->form()->boundingRect().height();
+    auto rect = new QGraphicsRectItem(QRectF{0, 0, awidth / 2, aheight / 2});
+    addForm(rect);
+    form()->setPos(ancestor->form()->pos() + QPointF{awidth / 2, aheight / 2});
+
+    auto move = Engy::Component::create<Engy::Move>();
+    move->setV({0, 0.2f});
+    addComponent(move);
+    addComponent(Engy::Component::create<Engy::Intangible>());
+
+    auto bounds = Engy::Controller::create<Engy::ECSceneBounds>(this);
+    connect(bounds, &Engy::ECSceneBounds::isOut, [this] {
+        deleteLater();
+    });
+
+    auto collisions = Engy::Controller::create<Engy::ECCollisions>(this);
+    collisions->setHandler([&applier](Engy::Entity * a, Engy::Entity * b) {
+        assert(a->name() == "Bonus");
+        if (b->name() == "Player") {
+            assert(applier);
+            applier(a, b);
+            a->deleteLater();
+        }
+    });
+}
 
 
 

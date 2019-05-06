@@ -25,3 +25,28 @@ private:
     int hp_;
     QGraphicsTextItem * textItem_ = nullptr;
 };
+
+
+class Bonuses final
+        : public Engy::ComponentT<Bonuses> {
+    ENGY_CREATABLE_COMPONENT
+
+    engy_component_ctor:
+        Bonuses();
+
+public:
+    Engy::Entity * createBonus();
+};
+
+
+
+
+
+
+
+
+
+
+
+
+

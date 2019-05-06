@@ -30,4 +30,16 @@ class Box final
 };
 
 
+class Bonus final
+ : public Engy::Entity {
+    ENGY_CREATABLE_ENTITY
+
+    engy_entity_ctor:
+        Bonus(Engy::Game * game, Engy::Entity * ancestor);
+};
+
+
+
+
+
 

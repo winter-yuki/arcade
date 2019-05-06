@@ -8,6 +8,7 @@
 #include "eccollisions.hpp"
 #include "components/value.hpp"
 #include "components/move.hpp"
+#include "components/intangible.hpp"
 
 
 namespace Engy
@@ -24,6 +25,10 @@ void basicCollisionHandler(Entity * a, Entity * b)
 {
     assert(a && b);
     assert(a->form() && b->form());
+
+    if (a->findComponent<Intangible>() || b->findComponent<Intangible>()) {
+        return;
+    }
 
     auto move = a->findComponent<Move>();
     if (!move) {

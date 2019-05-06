@@ -18,6 +18,7 @@ SOURCES += \
     $$PWD/controllers/collision_handlers.cpp
 
 HEADERS += \
+    $$PWD/components/intangible.hpp \
     $$PWD/components/mass.hpp \
     $$PWD/components/value.hpp \
     $$PWD/controllers/ecscenebounds.hpp \

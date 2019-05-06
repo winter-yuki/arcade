@@ -3,10 +3,14 @@
 #include <random>
 
 #include "components.hpp"
+#include "gamewidget.hpp"
 #include "engy/components/intangible.hpp"
 #include "engy/components/move.hpp"
 #include "engy/controllers/ecscenebounds.hpp"
 #include "engy/controllers/eccollisions.hpp"
+
+
+using namespace std::placeholders;
 
 
 Player::Player(Engy::Game * game)
@@ -109,6 +113,39 @@ void Bonus::onCollision(Engy::Entity * a, Engy::Entity * b)
         }
     }
 }
+
+
+Engy::ECCollisions::Handler Bonus::getRandomBonus(GameWidget * gw = nullptr)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 6);
+
+    auto rnd = dis(gen);
+    switch (rnd) {
+    case 1:
+        if (gw) {
+            return std::bind(additionalPoints, gw, _1, _2);
+        }
+        break;
+    }
+
+    return [](Engy::Entity *, Engy::Entity *) {};
+}
+
+
+void Bonus::additionalPoints(GameWidget * gw, Engy::Entity * a, Engy::Entity * b)
+{
+    assert(gw && a && b);
+    gw->updateScore(100);
+}
+
+
+
+
+
+
+
 
 
 

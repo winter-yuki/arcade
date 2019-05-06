@@ -30,6 +30,7 @@ class Box final
         Box(Engy::Game * game, QRectF rect);
 };
 
+class GameWidget;
 
 class Bonus final
         : public Engy::Entity {
@@ -41,6 +42,9 @@ class Bonus final
 
 public:
     static void onCollision(Engy::Entity * a, Engy::Entity * b);
+    static Engy::ECCollisions::Handler getRandomBonus(GameWidget * gw);
+
+    static void additionalPoints(GameWidget * gw, Engy::Entity * a, Engy::Entity * b);
 };
 
 

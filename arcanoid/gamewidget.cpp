@@ -16,6 +16,9 @@
 #include "engy/components/intangible.hpp"
 
 
+using namespace std::placeholders;
+
+
 GameWidget::GameWidget(QWidget * parent)
     : QMainWindow(parent)
 {
@@ -92,9 +95,9 @@ void GameWidget::createGame()
     using namespace std::placeholders;
     collisions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
         Engy::basicCollisionHandler(a, b);
-        HP::hpCounter(a, b);
+        hpCounter(a, b);
         scoreCounter(a, b);
-        Bonus::onCollision(a, b);
+        bonusCreator(a, b);
     });
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
@@ -188,9 +191,9 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     auto collicions = Engy::Controller::create<Engy::ECCollisions>(movingBlock);
     collicions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
         if (b->name() == "Ball") {
-            Engy::Entity::create<Bonus>(game_, a,
-                                        [](Engy::Entity *, Engy::Entity *) {
-                // TODO
+            auto bonus = Engy::Entity::create<Bonus>(game_, a);
+            bonus->setApplier([this](Engy::Entity *, Engy::Entity *) {
+                updateScore(100);
             });
             return;
         }
@@ -201,10 +204,31 @@ std::vector<Engy::Entity *> GameWidget::makeField()
 }
 
 
+void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
+{
+    if (a->name() == "Ball" && b->name() == "Box") {
+        if (auto hp = b->findComponent<HP>()) {
+            hp->changeHp();
+            if (hp->hp() <= 0) {
+                b->deleteLater();
+                return;
+            }
+        }
+    }
+}
 
 
-
-
+void GameWidget::bonusCreator(Engy::Entity * a, Engy::Entity * b) const
+{
+    assert("Collision controller should track ball" && a->name() == "Ball");
+    if (b->name() == "Box") {
+        assert(a->game() == b->game());
+        if (std::rand() % 3 == 0) {
+            auto bonus = Engy::Entity::create<Bonus>(a->game(), b);
+            // TODO bonus
+        }
+    }
+}
 
 
 

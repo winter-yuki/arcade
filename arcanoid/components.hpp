@@ -14,8 +14,6 @@ public:
     void changeHp(int dHp = -20);
     int hp() const { return hp_; }
 
-    static void hpCounter(Engy::Entity * a, Engy::Entity * b);
-
 private slots:
     void entityAdded();
     void formChanged();
@@ -26,17 +24,6 @@ private:
     QGraphicsTextItem * textItem_ = nullptr;
 };
 
-
-class Bonuses final
-        : public Engy::ComponentT<Bonuses> {
-    ENGY_CREATABLE_COMPONENT
-
-    engy_component_ctor:
-        Bonuses();
-
-public:
-    Engy::Entity * createBonus();
-};
 
 
 

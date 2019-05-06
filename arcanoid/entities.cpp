@@ -60,12 +60,10 @@ Box::Box(Engy::Game * game, QRectF rect)
 }
 
 
-Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
-             Engy::ECCollisions::Handler applier)
+Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
     : Engy::Entity(game)
 {
     assert(ancestor);
-    assert(applier);
 
     setName("Bonus");
 
@@ -89,57 +87,28 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
     });
 
     auto collisions = Engy::Controller::create<Engy::ECCollisions>(this);
-    collisions->setHandler([applier](Engy::Entity * a, Engy::Entity * b) {
+    collisions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
         assert(a->name() == "Bonus");
-        if (b->name() == "Player") {
-            assert(applier);
-            applier(a, b);
+        if (b->name() == recepient_) {
+            if (applier_) {
+                applier_(a, b);
+            }
             a->deleteLater();
         }
     });
 }
 
 
-void Bonus::onCollision(Engy::Entity * a, Engy::Entity * b)
+void Bonus::setApplier(Applier a)
 {
-    assert("Collision controller should track ball" && a->name() == "Ball");
-    if (b->name() == "Box") {
-        assert(a->game() == b->game());
-        if (std::rand() % 3 == 0) {
-            Engy::Entity::create<Bonus>(a->game(), b,
-                                        [](Engy::Entity *, Engy::Entity *) {
-                // TODO
-            });
-        }
-    }
+    applier_ = a;
 }
 
 
-Engy::ECCollisions::Handler Bonus::getRandomBonus(GameWidget * gw = nullptr)
+void Bonus::setRecepient(QString name)
 {
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 6);
-
-    auto rnd = dis(gen);
-    switch (rnd) {
-    case 1:
-        if (gw) {
-            return std::bind(additionalPoints, gw, _1, _2);
-        }
-        break;
-    }
-
-    return [](Engy::Entity *, Engy::Entity *) {};
+    recepient_ = std::move(name);
 }
-
-
-void Bonus::additionalPoints(GameWidget * gw, Engy::Entity * a, Engy::Entity * b)
-{
-    assert(gw && a && b);
-    gw->updateScore(100);
-}
-
 
 
 

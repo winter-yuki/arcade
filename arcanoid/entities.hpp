@@ -37,14 +37,16 @@ class Bonus final
     ENGY_CREATABLE_ENTITY
 
     engy_entity_ctor:
-        Bonus(Engy::Game * game, Engy::Entity * ancestor,
-              Engy::ECCollisions::Handler applier);
+        Bonus(Engy::Game * game, Engy::Entity * ancestor);
 
 public:
-    static void onCollision(Engy::Entity * a, Engy::Entity * b);
-    static Engy::ECCollisions::Handler getRandomBonus(GameWidget * gw);
+    using Applier = Engy::ECCollisions::Handler;
+    void setApplier(Applier a);
+    void setRecepient(QString name);
 
-    static void additionalPoints(GameWidget * gw, Engy::Entity * a, Engy::Entity * b);
+private:
+    Applier applier_;
+    QString recepient_ = "Player";
 };
 
 

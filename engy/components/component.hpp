@@ -82,6 +82,7 @@ public:
 
 signals:
     void entitySetted();
+    void entityDeleted();
 
 protected:
     explicit Component(Id id);

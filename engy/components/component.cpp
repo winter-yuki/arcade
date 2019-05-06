@@ -46,6 +46,7 @@ void Component::setEntity(Entity * e)
 void Component::delEntity()
 {
     entity_ = nullptr;
+    emit entityDeleted();
 }
 
 } // Engy

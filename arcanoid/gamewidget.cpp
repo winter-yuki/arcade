@@ -278,7 +278,7 @@ void GameWidget::bonusPoints(Engy::Entity * e)
 void GameWidget::bonusLifes(Engy::Entity * e)
 {
     Q_UNUSED(e)
-    updateLifes(5);
+    updateLifes(1);
 }
 
 

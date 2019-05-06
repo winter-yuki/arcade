@@ -28,16 +28,31 @@ GameWidget::GameWidget(QWidget * parent)
 
 void GameWidget::restartGame()
 {
-    assert(game_);
-    delete game_;
-    createGame();
+    assert(ball_);
+    ball_->form()->setPos(INITIAL_BALL_POS_.x(), INITIAL_BALL_POS_.y());
+    if (auto move = ball_->findComponent<Engy::Move>()) {
+        move->setV(INITIAL_BALL_V_);
+    }
 }
 
 
 void GameWidget::updateScore(int delta)
 {
     score_ += delta;
-    setWindowTitle(QString("SCORE: %1").arg(score_));
+    updateTitle();
+}
+
+
+void GameWidget::updateLifes(int dl)
+{
+    lifes_ += dl;
+    updateTitle();
+}
+
+
+void GameWidget::updateTitle()
+{
+    setWindowTitle(QString("SCORE: %1 \t LIFES: %2").arg(score_).arg(lifes_));
 }
 
 
@@ -59,8 +74,7 @@ void GameWidget::scoreCounter(Engy::Entity * a, Engy::Entity * b)
 void GameWidget::createGame()
 {
     assert(!game_);
-    score_ = 0;
-    updateScore(0);
+    updateTitle();
 
     // Create game
     game_ = new Engy::Game(this);
@@ -84,15 +98,14 @@ void GameWidget::createGame()
     auto field = makeField();
 
     // Create ball
-    auto ball = Engy::Entity::create<Ball>(game_);
-    ball->form()->moveBy(800, 800);
+    ball_ = Engy::Entity::create<Ball>(game_);
+    ball_->form()->moveBy(INITIAL_BALL_POS_.x(), INITIAL_BALL_POS_.y());
 
     auto move = Engy::Component::create<Engy::Move>();
-    move->setV({.2f, -0.3f});
-    ball->addComponent(move);
+    move->setV(INITIAL_BALL_V_);
+    ball_->addComponent(move);
 
-    auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball);
-    using namespace std::placeholders;
+    auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball_);
     collisions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
         Engy::basicCollisionHandler(a, b);
         hpCounter(a, b);
@@ -100,10 +113,15 @@ void GameWidget::createGame()
         bonusCreator(a, b);
     });
 
-    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball);
-    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [outOfScene, this] {
-        delete outOfScene->entity();
-        endGame();
+    auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball_);
+    QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [this] {
+        assert(lifes_ > 0);
+        updateLifes();
+        if (lifes_) {
+            restartGame();
+        } else {
+            endGame();
+        }
     });
 
     // Launch
@@ -237,7 +255,7 @@ Bonus::Applier GameWidget::getRandomBonus()
     case 1:
         return std::bind(&GameWidget::bonusPoints, this, _1, _2);
     case 2:
-        return {};
+        return std::bind(&GameWidget::bonusLifes, this, _1, _2);
     case 3:
         return {};
     }
@@ -254,7 +272,13 @@ void GameWidget::bonusPoints(Engy::Entity * a, Engy::Entity * b)
 }
 
 
+void GameWidget::bonusLifes(Engy::Entity * a, Engy::Entity * b)
+{
+    Q_UNUSED(a)
+    Q_UNUSED(b)
 
+    updateLifes(5);
+}
 
 
 

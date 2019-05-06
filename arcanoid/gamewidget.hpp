@@ -14,6 +14,8 @@ public:
 public slots:
     void restartGame();
     void updateScore(int delta);
+    void updateLifes(int dl = -1);
+    void updateTitle();
     void endGame();
 
 private:
@@ -28,8 +30,15 @@ private:
     Bonus::Applier getRandomBonus();
 
     void bonusPoints(Engy::Entity * a, Engy::Entity * b);
+    void bonusLifes (Engy::Entity * a, Engy::Entity * b);
 
 private:
+    const QVector2D INITIAL_BALL_V_ = { 0.2f, -0.3f };
+    const QPointF INITIAL_BALL_POS_ = { 800, 800 };
+
     Engy::Game * game_ = nullptr;
     int score_ = 0;
+    int lifes_ = 5;
+
+    Engy::Entity * ball_ = nullptr;
 };

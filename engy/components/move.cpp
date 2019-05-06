@@ -22,12 +22,19 @@ Move::Move(int64_t fps)
 void Move::setV(QVector2D v)
 {
     v_ = v;
+    emit vChanged(v_);
 }
 
 
 QVector2D Move::v() const
 {
     return v_;
+}
+
+
+void Move::setBlock(bool b)
+{
+    block_ = b;
 }
 
 
@@ -40,7 +47,9 @@ void Move::timerEvent(QTimerEvent * event)
 
 void Move::update(int64_t dt)
 {
-    entity()->form()->moveBy(double(v_.x()) * dt, double(v_.y()) * dt);
+    if (!block_) {
+        entity()->form()->moveBy(double(v_.x()) * dt, double(v_.y()) * dt);
+    }
 }
 
 } // Engy

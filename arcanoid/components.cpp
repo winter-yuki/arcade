@@ -16,6 +16,9 @@ void HP::changeHp(int dHp)
     assert(textItem_);
     hp_ += dHp;
     textItem_->setPlainText(QString("%1/%2").arg(hp_).arg(INITIAL_HP_));
+    if (hp_ < 0) {
+        entity()->deleteLater();
+    }
 }
 
 

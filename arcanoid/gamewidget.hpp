@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include <engy/game.hpp>
+#include "entities.hpp"
 
 
 class GameWidget final
@@ -16,14 +17,17 @@ public slots:
     void endGame();
 
 private:
-    void scoreCounter(Engy::Entity * a, Engy::Entity * b);
     void createGame();
 
     std::vector<Engy::Entity *> makeBorders(double width = 10);
     std::vector<Engy::Entity *> makeField();
 
-    void hpCounter   (Engy::Entity * a, Engy::Entity * b) const;
-    void bonusCreator(Engy::Entity * a, Engy::Entity * b) const;
+    void scoreCounter(Engy::Entity * a, Engy::Entity * b);
+    void hpCounter(Engy::Entity * a, Engy::Entity * b) const;
+    void bonusCreator(Engy::Entity * a, Engy::Entity * b);
+    Bonus::Applier getRandomBonus();
+
+    void bonusPoints(Engy::Entity * a, Engy::Entity * b);
 
 private:
     Engy::Game * game_ = nullptr;

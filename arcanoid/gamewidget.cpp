@@ -177,7 +177,7 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     QRectF rect(0, 0, width + 10, height + 10);
     auto movingBlock = Engy::Entity::create<Box>(game_, rect);
     movingBlock->form()->setPos(leftOffset + width,
-                           game_->sceneSize().height() - downOffset + 100);
+                                game_->sceneSize().height() - downOffset + 100);
     movingBlock->setName("MovingBox");
     es.push_back(movingBlock);
 
@@ -209,26 +209,76 @@ void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
     if (a->name() == "Ball" && b->name() == "Box") {
         if (auto hp = b->findComponent<HP>()) {
             hp->changeHp();
-            if (hp->hp() <= 0) {
-                b->deleteLater();
-                return;
-            }
         }
     }
 }
 
 
-void GameWidget::bonusCreator(Engy::Entity * a, Engy::Entity * b) const
+void GameWidget::bonusCreator(Engy::Entity * a, Engy::Entity * b)
 {
     assert("Collision controller should track ball" && a->name() == "Ball");
     if (b->name() == "Box") {
         assert(a->game() == b->game());
         if (std::rand() % 3 == 0) {
             auto bonus = Engy::Entity::create<Bonus>(a->game(), b);
-            // TODO bonus
+            bonus->setApplier(getRandomBonus());
         }
     }
 }
+
+
+Bonus::Applier GameWidget::getRandomBonus()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(1, 3);
+
+    switch (dis(gen)) {
+    case 1:
+        return std::bind(&GameWidget::bonusPoints, this, _1, _2);
+    case 2:
+        return {};
+    case 3:
+        return {};
+    }
+    return {};
+}
+
+
+void GameWidget::bonusPoints(Engy::Entity * a, Engy::Entity * b)
+{
+    Q_UNUSED(a)
+    Q_UNUSED(b)
+
+    updateScore(50);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

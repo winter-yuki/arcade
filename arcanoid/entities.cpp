@@ -66,6 +66,9 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
     auto awidth  = ancestor->form()->boundingRect().width();
     auto aheight = ancestor->form()->boundingRect().height();
     auto rect = new QGraphicsRectItem(QRectF{0, 0, awidth / 2, aheight / 2});
+    QColor color(0x00FF00);
+    rect->setPen(color);
+    rect->setBrush(color);
     addForm(rect);
     form()->setPos(ancestor->form()->pos() + QPointF{awidth / 2, aheight / 2});
 
@@ -80,7 +83,7 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor,
     });
 
     auto collisions = Engy::Controller::create<Engy::ECCollisions>(this);
-    collisions->setHandler([&applier](Engy::Entity * a, Engy::Entity * b) {
+    collisions->setHandler([applier](Engy::Entity * a, Engy::Entity * b) {
         assert(a->name() == "Bonus");
         if (b->name() == "Player") {
             assert(applier);

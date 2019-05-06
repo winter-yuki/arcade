@@ -191,6 +191,9 @@ std::vector<Engy::Entity *> GameWidget::makeField()
         Engy::basicCollisionHandler(a, b);
     });
 
+    Engy::Entity::create<Bonus>(game_, movingBlock,
+                                [](Engy::Entity *, Engy::Entity *) {});
+
     return es;
 }
 

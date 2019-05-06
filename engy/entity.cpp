@@ -123,13 +123,13 @@ bool Entity::removeComponent(Component::Id id)
 }
 
 
-std::optional<Component *> Entity::findComponent(Component::Id id)
+Component * Entity::findComponent(Component::Id id)
 {
     auto it = components_.find(id);
     if (it != components_.end()) {
-        return { it->second.get() };
+        return it->second.get();
     }
-    return std::nullopt;
+    return nullptr;
 }
 
 

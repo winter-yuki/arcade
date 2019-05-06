@@ -84,14 +84,14 @@ public:
      * where component tries delete itself from entity in Component::~Component
      */
     bool removeComponent(Component::Id id);
-    std::optional<Component *> findComponent(Component::Id id);
+    Component * findComponent(Component::Id id);
 
     /**
      * @brief Finds component of specific type.
      * @return Pointer to component if exists, nullptr otherwise.
      */
-    template <class C>
-    C * findComponent();
+    template <class C> C *  findComponent();
+    template <class C> bool removeComponent();
 
 signals:
     void formAdded();
@@ -143,11 +143,17 @@ E * Entity::create(Game * game, Args && ...args) {
 template <class C>
 C * Entity::findComponent() {
     if (auto search = findComponent(Component::id<C>())) {
-        auto component = dynamic_cast<C *>(search.value());
+        auto component = dynamic_cast<C *>(search);
         assert(component);
         return component;
     }
     return nullptr;
+}
+
+
+template <class C>
+bool Entity::removeComponent() {
+    return removeComponent(Component::id<C>());
 }
 
 

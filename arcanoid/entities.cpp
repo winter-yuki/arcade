@@ -18,7 +18,7 @@ Player::Player(Engy::Game * game)
 {
     const auto gsw = game->sceneSize().width();
     const auto gsh = game->sceneSize().height();
-    auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 10});
+    auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 15});
     platform->setPos({gsw / 2 - platform->boundingRect().width() / 2,
                       gsh - platform->boundingRect().height()});
     QColor color(0xAA00BB);
@@ -111,10 +111,27 @@ void Bonus::setRecepient(QString name)
 }
 
 
+Trampoline::Trampoline(Engy::Game * game, int lifeTime)
+    : Engy::Entity(game)
+{
+    setName("Trampoline");
+    int height = 10;
+    auto rect = new QGraphicsRectItem(0, game->sceneSize().height() - height,
+                                      game->sceneSize().width(), height);
+    addForm(rect);
+    QColor color(0x0000FF);
+    rect->setBrush({color});
+    rect->setPen({color});
+
+    startTimer(lifeTime);
+}
 
 
-
-
+void Trampoline::timerEvent(QTimerEvent * event)
+{
+    Q_UNUSED(event)
+    delete this;
+}
 
 
 

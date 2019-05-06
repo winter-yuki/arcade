@@ -31,6 +31,7 @@ private:
 
     void bonusPoints(Engy::Entity * a, Engy::Entity * b);
     void bonusLifes (Engy::Entity * a, Engy::Entity * b);
+    void trampoline (Engy::Entity * a, Engy::Entity * b);
 
 private:
     const QVector2D INITIAL_BALL_V_ = { 0.2f, -0.3f };

@@ -50,6 +50,30 @@ private:
 };
 
 
+class Trampoline final
+        : public Engy::Entity {
+    ENGY_CREATABLE_ENTITY
+
+    engy_entity_ctor:
+        explicit Trampoline(Engy::Game * game, int lifeTime = 10000);
+
+private:
+    void timerEvent(QTimerEvent * event) override;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

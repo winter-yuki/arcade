@@ -257,7 +257,7 @@ Bonus::Applier GameWidget::getRandomBonus()
     case 2:
         return std::bind(&GameWidget::bonusLifes, this, _1, _2);
     case 3:
-        return {};
+        return std::bind(&GameWidget::trampoline, this, _1, _2);
     }
     return {};
 }
@@ -281,7 +281,13 @@ void GameWidget::bonusLifes(Engy::Entity * a, Engy::Entity * b)
 }
 
 
+void GameWidget::trampoline(Engy::Entity * a, Engy::Entity * b)
+{
+    Q_UNUSED(a)
+    Q_UNUSED(b)
 
+    Engy::Entity::create<Trampoline>(game_);
+}
 
 
 

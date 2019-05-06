@@ -111,6 +111,7 @@ void GameWidget::createGame()
         hpCounter(a, b);
         scoreCounter(a, b);
         bonusCreator(a, b);
+        trampolineDestroyer(a, b);
     });
 
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball_);
@@ -265,6 +266,15 @@ Bonus::Applier GameWidget::getRandomBonus()
     }
     qDebug() << "No such bonus to get";
     return {};
+}
+
+
+void GameWidget::trampolineDestroyer(Engy::Entity * a, Engy::Entity * b)
+{
+    assert(a->name() == "Ball");
+    if (b->name() == "Trampoline") {
+        b->deleteLater();
+    }
 }
 
 

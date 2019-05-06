@@ -28,6 +28,7 @@ private:
     void scoreCounter(Engy::Entity * a, Engy::Entity * b);
     void hpCounter(Engy::Entity * a, Engy::Entity * b) const;
     void bonusCreator(Engy::Entity * a, Engy::Entity * b);
+    void trampolineDestroyer(Engy::Entity * a, Engy::Entity * b);
     Bonus::Applier getRandomBonus();
 
     void bonusPoints  (Engy::Entity * e);

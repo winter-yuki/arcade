@@ -40,7 +40,7 @@ class Bonus final
         Bonus(Engy::Game * game, Engy::Entity * ancestor);
 
 public:
-    using Applier = Engy::ECCollisions::Handler;
+    using Applier = std::function<void (Engy::Entity *)>;
     void setApplier(Applier a);
     void setRecepient(QString name);
 

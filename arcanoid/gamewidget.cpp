@@ -210,7 +210,7 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     collicions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
         if (b->name() == "Ball") {
             auto bonus = Engy::Entity::create<Bonus>(game_, a);
-            bonus->setApplier([this](Engy::Entity *, Engy::Entity *) {
+            bonus->setApplier([this](Engy::Entity *) {
                 updateScore(100);
             });
             return;
@@ -249,43 +249,41 @@ Bonus::Applier GameWidget::getRandomBonus()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 3);
+    std::uniform_int_distribution<> dis(1, 5);
 
     switch (dis(gen)) {
     case 1:
-        return std::bind(&GameWidget::bonusPoints, this, _1, _2);
+        return std::bind(&GameWidget::bonusPoints, this, _1);
     case 2:
-        return std::bind(&GameWidget::bonusLifes, this, _1, _2);
+        return std::bind(&GameWidget::bonusLifes, this, _1);
     case 3:
-        return std::bind(&GameWidget::trampoline, this, _1, _2);
+        return std::bind(&GameWidget::trampoline, this, _1);
+    case 4: // TODO v modifier
+        break;
+    case 5: // adhesion
+        break;
     }
     return {};
 }
 
 
-void GameWidget::bonusPoints(Engy::Entity * a, Engy::Entity * b)
+void GameWidget::bonusPoints(Engy::Entity * e)
 {
-    Q_UNUSED(a)
-    Q_UNUSED(b)
-
+    Q_UNUSED(e)
     updateScore(50);
 }
 
 
-void GameWidget::bonusLifes(Engy::Entity * a, Engy::Entity * b)
+void GameWidget::bonusLifes(Engy::Entity * e)
 {
-    Q_UNUSED(a)
-    Q_UNUSED(b)
-
+    Q_UNUSED(e)
     updateLifes(5);
 }
 
 
-void GameWidget::trampoline(Engy::Entity * a, Engy::Entity * b)
+void GameWidget::trampoline(Engy::Entity * e)
 {
-    Q_UNUSED(a)
-    Q_UNUSED(b)
-
+    Q_UNUSED(e)
     Engy::Entity::create<Trampoline>(game_);
 }
 

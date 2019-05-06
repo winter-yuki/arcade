@@ -91,7 +91,7 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
         assert(a->name() == "Bonus");
         if (b->name() == recepient_) {
             if (applier_) {
-                applier_(a, b);
+                applier_(b);
             }
             a->deleteLater();
         }

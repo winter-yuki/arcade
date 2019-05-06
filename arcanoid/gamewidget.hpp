@@ -29,9 +29,9 @@ private:
     void bonusCreator(Engy::Entity * a, Engy::Entity * b);
     Bonus::Applier getRandomBonus();
 
-    void bonusPoints(Engy::Entity * a, Engy::Entity * b);
-    void bonusLifes (Engy::Entity * a, Engy::Entity * b);
-    void trampoline (Engy::Entity * a, Engy::Entity * b);
+    void bonusPoints(Engy::Entity * e);
+    void bonusLifes (Engy::Entity * e);
+    void trampoline (Engy::Entity * e);
 
 private:
     const QVector2D INITIAL_BALL_V_ = { 0.2f, -0.3f };

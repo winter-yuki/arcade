@@ -65,7 +65,8 @@ void GameWidget::endGame()
 
 void GameWidget::scoreCounter(Engy::Entity * a, Engy::Entity * b)
 {
-    if (a->name() == "Ball" && b->name() == "Player") {
+    if (a->name() == "Ball" && (b->name() == "Player" || b->name() == "Box" ||
+                                b->name() == "MovingBox")) {
         updateScore(10);
     }
 }

@@ -111,7 +111,7 @@ void Bonus::setRecepient(QString name)
 }
 
 
-Trampoline::Trampoline(Engy::Game * game, int lifeTime)
+Trampoline::Trampoline(Engy::Game * game)
     : Engy::Entity(game)
 {
     setName("Trampoline");
@@ -122,17 +122,7 @@ Trampoline::Trampoline(Engy::Game * game, int lifeTime)
     QColor color(0x0000FF);
     rect->setBrush({color});
     rect->setPen({color});
-
-    startTimer(lifeTime);
 }
-
-
-void Trampoline::timerEvent(QTimerEvent * event)
-{
-    Q_UNUSED(event)
-    delete this;
-}
-
 
 
 

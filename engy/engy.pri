@@ -5,6 +5,8 @@ CONFIG += c++17
 DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
+    $$PWD/components/basiccollisionhandler.cpp \
+    $$PWD/components/collisions.cpp \
     $$PWD/components/mass.cpp \
     $$PWD/controllers/ecscenebounds.cpp \
     $$PWD/game.cpp \
@@ -13,11 +15,11 @@ SOURCES += \
     $$PWD/components/component.cpp \
     $$PWD/components/move.cpp \
     $$PWD/controllers/ecarrowkeys.cpp \
-    $$PWD/controllers/controller.cpp \
-    $$PWD/controllers/eccollisions.cpp \
-    $$PWD/controllers/collision_handlers.cpp
+    $$PWD/controllers/controller.cpp
 
 HEADERS += \
+    $$PWD/components/basiccollisionhandler.hpp \
+    $$PWD/components/collisions.hpp \
     $$PWD/components/intangible.hpp \
     $$PWD/components/mass.hpp \
     $$PWD/components/value.hpp \
@@ -30,9 +32,7 @@ HEADERS += \
     $$PWD/components/component.hpp \
     $$PWD/components/move.hpp \
     $$PWD/controllers/ecarrowkeys.hpp \
-    $$PWD/controllers/controller.hpp \
-    $$PWD/controllers/eccollisions.hpp \
-    $$PWD/controllers/collision_handlers.hpp
+    $$PWD/controllers/controller.hpp
 
 PRECOMPILED_HEADER = $$PWD/stdafx.hpp
 

@@ -1,27 +1,20 @@
-/**
-  * @file
-  */
+#include "basiccollisionhandler.hpp"
 
-#include "collision_handlers.hpp"
-
-#include "stdafx.hpp"
-#include "eccollisions.hpp"
-#include "components/value.hpp"
-#include "components/move.hpp"
-#include "components/intangible.hpp"
+#include "entity.hpp"
+#include "intangible.hpp"
+#include "move.hpp"
 
 
 namespace Engy
 {
 
-namespace
+Collisions::Handler BasicCollisionHandler::handler() const
 {
-std::optional<QVector2D>
-getNormalOfBoundingRect(Entity const * a, Entity const * b);
+    return basicCollisionHandler;
 }
 
 
-void basicCollisionHandler(Entity * a, Entity * b)
+void BasicCollisionHandler::basicCollisionHandler(Entity * a, Entity * b)
 {
     assert(a && b);
     assert(a->form() && b->form());
@@ -55,11 +48,8 @@ void basicCollisionHandler(Entity * a, Entity * b)
 }
 
 
-namespace
-{
-
 std::optional<QVector2D>
-getNormalOfBoundingRect(Entity const* a, Entity const * b)
+BasicCollisionHandler::getNormalOfBoundingRect(Entity const * a, Entity const * b)
 {
     const auto abr = a->form()->boundingRect();
     const auto pos = a->form()->pos() + QPointF(abr.width(), abr.height()) / 2;
@@ -94,13 +84,4 @@ getNormalOfBoundingRect(Entity const* a, Entity const * b)
     return std::nullopt;
 }
 
-} // namespace
-
 } // Engy
-
-
-
-
-
-
-

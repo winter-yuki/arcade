@@ -25,10 +25,10 @@ Game::~Game()
 {
     // QGraphicsView doesn't take ownership of scene.
     delete scene_;
+
     for (auto e : es_) {
         assert(e);
-        e->delGame();
-        delete e;
+        deleteEntity(e);
     }
 }
 
@@ -36,24 +36,12 @@ Game::~Game()
 void Game::launch()
 {
     // Set game update timer
-    timer_->start(int(1.0 / frameRate_ * 1000));
+    timer_->start(UPDATE_INTERVAL);
 
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy  (Qt::ScrollBarAlwaysOff);
     show();
     qDebug() << "Engy::Game launched";
-}
-
-
-void Game::setFrameRate(int64_t fr)
-{
-    frameRate_ = fr;
-}
-
-
-int64_t Game::frameRate() const
-{
-    return frameRate_;
 }
 
 
@@ -115,7 +103,7 @@ bool Game::removeEntity(Entity * entity)
     auto search = es_.find(entity);
     if (search != es_.end()) {
         es_.erase(entity);
-        delete entity;
+        deleteEntity(entity);
         return true;
     }
     return false;
@@ -125,6 +113,13 @@ bool Game::removeEntity(Entity * entity)
 bool Game::forgetEntity(Entity * entity)
 {
     return es_.erase(entity);
+}
+
+
+void Game::deleteEntity(Engy::Entity * e) const
+{
+    e->delGame();
+    delete e;
 }
 
 } // Engy

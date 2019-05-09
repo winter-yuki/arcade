@@ -14,6 +14,7 @@
 
 #include "stdafx.hpp"
 #include "timer.hpp"
+#include "defs.hpp"
 
 
 namespace Engy
@@ -42,14 +43,6 @@ public:
      */
     void launch();
 
-    /**
-     * @brief setFrameRate
-     * @param fr frame rate
-     *
-     * Works until game is not lauched.
-     */
-    void setFrameRate(int64_t fr);
-    int64_t frameRate() const;
     void setSceneSize(QSize size);
     QSize sceneSize() const;
     void setBg(QBrush b);
@@ -63,7 +56,7 @@ public:
 
 public slots:
     /**
-     * @brief removeEntity Deletes entity.
+     * @brief Deletes entity.
      * @param entity Child entity to delete.
      * @return If entity was deleted.
      */
@@ -76,20 +69,22 @@ private:
     /// Admit entity to add and detach itself from the game.
     friend class Entity;
     /**
-     * @brief addEntity Game takes ownershop of entity.
+     * @brief Game takes ownershop of entity.
      * @param entity Child entity.
      * @return If entity was added.
      */
     bool addEntity(Entity * entity);
     /**
-     * @brief forgetEntity Breaks ownership without deletion of entity.
+     * @brief Breaks ownership without deletion of entity.
      * @param entity Child entity.
      * @return If entity was forgotten.
      */
     bool forgetEntity(Entity * entity);
 
+    void deleteEntity(Engy::Entity * e) const;
+
 private:
-    int64_t frameRate_ = 60;
+    int updateInterval_ = UPDATE_INTERVAL;
     QSize sceneSize_ = { 720, 720 };
 
     Timer          * timer_;

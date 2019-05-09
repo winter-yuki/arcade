@@ -22,7 +22,28 @@ void Collisions::addHandler(Component::Id handler)
 
 void Collisions::addHandler(Component * handler)
 {
+    if (entity()) {
+        entity()->addComponent(handler);
+    }
     addHandler(handler->id());
+}
+
+
+void Collisions::addHandlers(std::initializer_list<Component::Id> l)
+{
+    hs_.insert(hs_.end(), l.begin(), l.end());
+}
+
+
+void Collisions::addHandlers(std::initializer_list<Component *> l)
+{
+    transform(l.begin(), l.end(), std::back_inserter(hs_),
+              [this](Component * c) {
+        if (entity()) {
+            entity()->addComponent(c);
+        }
+        return c->id();
+    });
 }
 
 

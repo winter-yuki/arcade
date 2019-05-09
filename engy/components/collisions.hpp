@@ -20,7 +20,7 @@ class Collisions final
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        Collisions(int checkingInterval = 15 /*60 fps*/);
+        Collisions(int checkingInterval = 45 /*60 fps*/); // TODO
 
 public:
     /**
@@ -30,8 +30,20 @@ public:
     using Handler = std::function<void (Entity *, Entity *)>;
 
     void addHandler(Component::Id handler);
+    /**
+     * @brief Also adds handler to entity if Collisions
+     * is already added to entity.
+     * @param handler
+     */
     void addHandler(Component * handler);
-    void rmHandler (Component::Id id);
+    void addHandlers(std::initializer_list<Component::Id> l);
+    /**
+     * @brief Also adds handlers to entity if Collisions
+     * is already added to entity.
+     * @param l
+     */
+    void addHandlers(std::initializer_list<Component *> l);
+    void rmHandler(Component::Id id);
 
 private:
     void timerEvent(QTimerEvent * event) override;

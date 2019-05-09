@@ -79,7 +79,6 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
     auto move = Engy::Component::create<Engy::Move>();
     move->setV({0, 0.2f});
     addComponent(move);
-    addComponent(Engy::Component::create<Engy::Intangible>());
 
     auto bounds = Engy::Controller::create<Engy::ECSceneBounds>(this);
     connect(bounds, &Engy::ECSceneBounds::isOut, [this] {
@@ -88,6 +87,7 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
 
     auto collisions = Engy::Component::create<Engy::Collisions>();
     addComponent(collisions);
+    addComponent(Engy::Component::create<Engy::DisReflector>());
 
     auto applyF = [this](Engy::Entity * a, Engy::Entity * b) {
         assert(a->name() == "Bonus");

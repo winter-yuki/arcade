@@ -1,6 +1,7 @@
 #include "gamewidget.hpp"
 
 #include <functional>
+#include <iostream> // TODO
 
 #include <QDialogButtonBox>
 
@@ -216,16 +217,16 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     auto collisions = Engy::Component::create<Engy::Collisions>();
     movingBlock->addComponent(collisions);
 
-    auto basic = Engy::Component::create<Engy::BasicCollisionHandler>();
-    collisions->addHandler(basic);
-
     auto bonusF = [this](Engy::Entity * a, Engy::Entity * b) {
+        std::cout << "In bonusF!" << std::endl;
         if (b->name() == "Ball") {
             auto bonus = Engy::Entity::create<Bonus>(game_, a);
             bonus->setApplier([this](Engy::Entity *) {
                 updateScore(100);
             });
+            return;
         }
+        Engy::BasicCollisionHandler::reflectionHandler(a, b);
     };
     auto bonus = Engy::Component::create<Engy::FunctionHandler
             <decltype (bonusF)>>(bonusF);
@@ -248,7 +249,7 @@ void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
 
 void GameWidget::bonusCreator(Engy::Entity * a, Engy::Entity * b)
 {
-    assert("Collision controller should track ball" && a->name() == "Ball");
+    assert("Collision controller must track ball" && a->name() == "Ball");
     if (b->name() == "Box") {
         assert(a->game() == b->game());
         if (std::rand() % 3 == 0) {

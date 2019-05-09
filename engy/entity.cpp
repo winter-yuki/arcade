@@ -113,7 +113,10 @@ void Entity::gameDeleted()
 void Entity::addComponent(Component * component)
 {
     component->setEntity(this);
-    components_.insert({component->id(), ComponentU(component)});
+    auto rez = components_.insert({component->id(), ComponentU(component)});
+    if (!rez.second) {
+        qDebug() << name() << ": Component of this type alredy exists";
+    }
 }
 
 

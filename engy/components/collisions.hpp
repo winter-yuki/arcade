@@ -20,7 +20,7 @@ class Collisions final
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        Collisions(int checkingInterval = 45 /*60 fps*/); // TODO
+        Collisions(int checkingInterval = 15 /*60 fps*/);
 
 public:
     /**
@@ -78,6 +78,24 @@ protected:
     CollisionHandlerT()
         : CollisionHandler(id<H>())
     {}
+};
+
+
+/**
+ * @ingroup component
+ * @param H should be unique type (type of lambda for example) to
+ * identificate this component.
+ */
+template <class H>
+class FunctionHandler final
+        : public CollisionHandlerT<FunctionHandler<H>> {
+    ENGY_CREATABLE_COMPONENT
+    engy_component_ctor:
+        explicit FunctionHandler(Collisions::Handler h) : h_(std::move(h)) {}
+public:
+    Collisions::Handler handler() const override { return h_; }
+private:
+    Collisions::Handler h_;
 };
 
 } // Engy

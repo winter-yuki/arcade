@@ -19,6 +19,10 @@ void BasicCollisionHandler::reflectionHandler(Entity * a, Entity * b)
     assert(a && b);
     assert(a->form() && b->form());
 
+    if (a->findComponent<DisReflector>() || b->findComponent<DisReflector>()) {
+        return;
+    }
+
     auto move = a->findComponent<Move>();
     if (!move) {
         qDebug() << "Move component of tracked object has not found";

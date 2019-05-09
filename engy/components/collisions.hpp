@@ -60,7 +60,7 @@ private:
     void applyHandlers(Entity * a, Entity * b);
 
 private:
-    int intangibleFor_ = UPDATE_INTERVAL + 2;
+    int intangibleFor_ = 0; // TODO exception policy is needed
     std::vector<Component::Id> hs_;
 };
 

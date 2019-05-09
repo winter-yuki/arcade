@@ -24,4 +24,16 @@ public:
     getNormalOfBoundingRect(Entity const * a, Entity const * b);
 };
 
+
+/**
+ * @ingroup component
+ * @brief Disables reflection by BasicCollisionHandler.
+ */
+class DisReflector final
+        : public ComponentT<DisReflector> {
+    ENGY_CREATABLE_COMPONENT
+    engy_component_ctor:
+        DisReflector() = default;
+};
+
 } // Engy

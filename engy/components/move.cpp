@@ -10,8 +10,8 @@
 namespace Engy
 {
 
-Move::Move(int64_t fps)
-    : interval_([fps]() { assert(fps > 0); return int64_t(1.0 / fps * 1000); } ())
+Move::Move(int updateInterval)
+    : interval_(updateInterval)
 {
     connect(this, &Move::entitySetted, [this]() {
         startTimer(int(interval_));

@@ -22,7 +22,7 @@ class Move final
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        explicit Move(int64_t fps = 60);
+        explicit Move(int updateInterval = UPDATE_INTERVAL);
 
 public:
     void setV(QVector2D v); ///< Pixel per second
@@ -42,7 +42,7 @@ signals:
     void vChanged(QVector2D newV);
 
 private:
-    int64_t interval_ = 0; ///< In miliseconds
+    int64_t interval_; ///< In miliseconds
     QVector2D v_ = { 0, 0 };
     bool block_ = false;
 };

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "engy/components/component.hpp"
+#include "defs.hpp"
 
 
 namespace Engy
@@ -20,7 +21,7 @@ class Collisions final
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        Collisions(int checkingInterval = 15 /*60 fps*/);
+        Collisions(int checkingInterval = UPDATE_INTERVAL);
 
 public:
     /**
@@ -45,11 +46,21 @@ public:
     void addHandlers(std::initializer_list<Component *> l);
     void rmHandler(Component::Id id);
 
+    /**
+     * @brief After collision processing adds Intangible component
+     * to the entity.
+     * @param interval in miliseconds.
+     * If 0, Intangible component would not be created.
+     */
+    void setIntangible(int interval);
+    int  intangible() const;
+
 private:
     void timerEvent(QTimerEvent * event) override;
     void applyHandlers(Entity * a, Entity * b);
 
 private:
+    int intangibleFor_ = UPDATE_INTERVAL + 2;
     std::vector<Component::Id> hs_;
 };
 

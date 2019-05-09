@@ -19,6 +19,7 @@ Component::~Component()
 {
     if (entity_) {
         entity_->forgetComponent(id_);
+        delEntity();
     }
 }
 

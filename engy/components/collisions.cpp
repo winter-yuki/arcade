@@ -1,6 +1,7 @@
 #include "collisions.hpp"
 
 #include "entity.hpp"
+#include "intangible.hpp"
 
 
 namespace Engy
@@ -47,6 +48,19 @@ void Collisions::addHandlers(std::initializer_list<Component *> l)
 }
 
 
+void Collisions::setIntangible(int interval)
+{
+    assert(interval >= 0);
+    intangibleFor_ = interval;
+}
+
+
+int Collisions::intangible() const
+{
+    return intangibleFor_;
+}
+
+
 void Collisions::rmHandler(Component::Id id)
 {
     hs_.erase(remove(hs_.begin(), hs_.end(), id), hs_.end());
@@ -59,11 +73,20 @@ void Collisions::timerEvent(QTimerEvent * event)
 
     assert(entity());
     assert(entity()->game());
+
+    if (entity()->findComponent<Intangible>()) {
+        return;
+    }
+
     for (Entity * other : entity()->game()->entities()) {
         assert(other);
         assert(other->form());
+
         if (entity()->form() != other->form() &&
                 entity()->form()->collidesWithItem(other->form())) {
+            if (other->findComponent<Intangible>()) {
+                continue;
+            }
             applyHandlers(entity(), other);
         }
     }
@@ -86,6 +109,16 @@ void Collisions::applyHandlers(Entity * a, Entity * b)
             assert("Collision handler should be derived "
                    "from class CollisionHandler" && false);
         }
+    }
+
+    if (intangibleFor_) {
+        auto inta = Engy::Component::create<Engy::Intangible>();
+        a->addComponent(inta);
+
+        assert(intangibleFor_ > 0);
+        auto delTimer = new Engy::Timer(inta);
+        delTimer->start(intangibleFor_);
+        connect(delTimer, &Engy::Timer::timeout, [inta] { delete inta; });
     }
 }
 

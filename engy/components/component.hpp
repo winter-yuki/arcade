@@ -96,8 +96,6 @@ private:
     Entity * entity_ = nullptr; ///< Parent
 };
 
-using ComponentU = std::unique_ptr<Component>;
-
 
 template <class C>
 class ComponentT

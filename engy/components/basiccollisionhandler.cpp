@@ -1,5 +1,7 @@
 #include "basiccollisionhandler.hpp"
 
+#include <iostream> // TODO dbg
+
 #include "entity.hpp"
 #include "intangible.hpp"
 #include "move.hpp"
@@ -10,18 +12,16 @@ namespace Engy
 
 Collisions::Handler BasicCollisionHandler::handler() const
 {
-    return basicCollisionHandler;
+    return reflectionHandler;
 }
 
 
-void BasicCollisionHandler::basicCollisionHandler(Entity * a, Entity * b)
+void BasicCollisionHandler::reflectionHandler(Entity * a, Entity * b)
 {
     assert(a && b);
     assert(a->form() && b->form());
 
-    if (a->findComponent<Intangible>() || b->findComponent<Intangible>()) {
-        return;
-    }
+    std::cout << "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" << std::endl;
 
     auto move = a->findComponent<Move>();
     if (!move) {
@@ -29,13 +29,16 @@ void BasicCollisionHandler::basicCollisionHandler(Entity * a, Entity * b)
         return;
     }
     QVector2D v = move->v();
+    std::cout << "v = " << v.x() << ", " << v.y() << std::endl;
 
     if (auto n = getNormalOfBoundingRect(a, b)) {
         assert(!n.value().isNull());
         assert(std::abs(n.value().length() - 1) < 1e-8f);
+        std::cout << "n = " << n.value().x() << ", " << n.value().y() << std::endl;
 
         // Count speed vector after bounce
         auto newV = v - 2 * (v * n.value()) * n.value();
+        std::cout << "newv = " << newV.x() << ", " << newV.y() << std::endl;
         assert(std::abs(newV.length() - v.length()) < 1e-8f);
         move->setV(newV);
 

@@ -19,7 +19,7 @@ class BasicCollisionHandler final
 public:
     Collisions::Handler handler() const override;
 
-    static void basicCollisionHandler(Entity * a, Entity * b);
+    static void reflectionHandler(Entity * a, Entity * b);
     static std::optional<QVector2D>
     getNormalOfBoundingRect(Entity const * a, Entity const * b);
 };

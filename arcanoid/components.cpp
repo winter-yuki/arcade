@@ -124,39 +124,6 @@ void VMod::timerEvent(QTimerEvent * event)
 }
 
 
-ScoreCounter::ScoreCounter(GameWidget * gw)
-    : gw_(gw)
-{}
-
-
-Engy::Collisions::Handler ScoreCounter::handler() const
-{
-    return [this](Engy::Entity * a, Engy::Entity * b) {
-        if (a->name() == "Ball" && (b->name() == "Player" ||
-                                    b->name() == "Box" ||
-                                    b->name() == "MovingBox")) {
-            gw_->updateScore(10);
-        }
-    };
-}
-
-
-Engy::Collisions::Handler HpCounter::handler() const
-{
-    return [](Engy::Entity * a, Engy::Entity * b) {
-        if (a->name() == "Ball" &&
-                (b->name() == "Box" || b->name() == "MovingBox")) {
-            if (auto hp = b->findComponent<HP>()) {
-                hp->changeHp();
-            }
-        }
-    };
-}
-
-
-
-
-
 
 
 

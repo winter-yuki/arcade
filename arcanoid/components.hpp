@@ -56,50 +56,6 @@ private:
 };
 
 
-class GameWidget;
-
-class ScoreCounter final
-        : public Engy::CollisionHandlerT<ScoreCounter> {
-    ENGY_CREATABLE_COMPONENT
-
-    engy_component_ctor:
-        explicit ScoreCounter(GameWidget * gw);
-
-public:
-    Engy::Collisions::Handler handler() const override;
-
-private:
-    GameWidget * gw_;
-};
-
-
-class HpCounter final
-        : public Engy::CollisionHandlerT<HpCounter> {
-    ENGY_CREATABLE_COMPONENT
-
-    engy_component_ctor:
-        HpCounter() = default;
-
-public:
-    Engy::Collisions::Handler handler() const override;
-};
-
-
-//class BonusCreator final
-//        : public Engy::CollisionHandlerT<BonusCreator> {
-//    ENGY_CREATABLE_COMPONENT
-
-//    engy_component_ctor:
-//        BonusCreator() = default;
-
-//public:
-//    Engy::Collisions::Handler handler() const override;
-
-//    Bonus::Applier getRandomBonus();
-//};
-
-
-
 
 
 

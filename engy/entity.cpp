@@ -28,7 +28,7 @@ Entity::~Entity()
     // Make all components forget about parent to avoid cycle.
     for (auto it = components_.begin(); it != components_.end(); ++it) {
         assert(it->second->entity());
-        it->second->delEntity();
+        deleteComponent(it->second);
     }
 
     qDebug() << "Entity deleted";
@@ -112,11 +112,14 @@ void Entity::gameDeleted()
 
 void Entity::addComponent(Component * component)
 {
-    component->setEntity(this);
-    auto rez = components_.insert({component->id(), ComponentU(component)});
-    if (!rez.second) {
-        qDebug() << name() << ": Component of this type alredy exists";
+    auto search = components_.find(component->id());
+    if (search != components_.end()) {
+        deleteComponent(search->second);
+        search->second = component;
+    } else {
+        components_.insert({component->id(), component});
     }
+    component->setEntity(this);
 }
 
 
@@ -130,7 +133,7 @@ Component * Entity::findComponent(Component::Id id)
 {
     auto it = components_.find(id);
     if (it != components_.end()) {
-        return it->second.get();
+        return it->second;
     }
     return nullptr;
 }
@@ -138,11 +141,15 @@ Component * Entity::findComponent(Component::Id id)
 
 void Entity::forgetComponent(Component::Id id)
 {
-    auto node = components_.extract(id);
-    assert("Entity should be parent if component knows about it" &&
-           !node.empty());
-    node.mapped()->delEntity();
-    node.mapped().release();
+    auto rez = components_.erase(id);
+    assert("Component should be added to entity" && rez);
+}
+
+
+void Entity::deleteComponent(Component * c) const
+{
+    c->delEntity();
+    delete c;
 }
 
 } // Engy

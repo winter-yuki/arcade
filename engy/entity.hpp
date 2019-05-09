@@ -72,7 +72,9 @@ public:
     QGraphicsItem const * form() const;
 
     /**
-     * @brief addComponent Gets ownership of component
+     * @brief Entity gets ownership of component. Entity can have only one
+     * instance of a component type. If component of incoming type alredy exists,
+     * replaces old with new one.
      * @param component
      */
     void addComponent(Component * component);
@@ -120,12 +122,14 @@ private:
      */
     void forgetComponent(Component::Id id);
 
+    void deleteComponent(Component * c) const;
+
 private:
     QString name_;
 
     Game * game_;
     QGraphicsItem  * form_ = nullptr;
-    std::unordered_map<Component::Id, ComponentU> components_;
+    std::unordered_map<Component::Id, Component *> components_;
 };
 
 

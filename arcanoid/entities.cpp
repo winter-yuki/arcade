@@ -6,8 +6,8 @@
 #include "gamewidget.hpp"
 #include "engy/components/intangible.hpp"
 #include "engy/components/move.hpp"
+#include "engy/components/collisions.hpp"
 #include "engy/controllers/ecscenebounds.hpp"
-#include "engy/controllers/eccollisions.hpp"
 
 
 using namespace std::placeholders;
@@ -86,8 +86,10 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
         deleteLater();
     });
 
-    auto collisions = Engy::Controller::create<Engy::ECCollisions>(this);
-    collisions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
+    auto collisions = Engy::Component::create<Engy::Collisions>();
+    addComponent(collisions);
+
+    auto applyF = [this](Engy::Entity * a, Engy::Entity * b) {
         assert(a->name() == "Bonus");
         if (b->name() == recepient_) {
             if (applier_) {
@@ -95,7 +97,10 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
             }
             a->deleteLater();
         }
-    });
+    };
+    auto apply = Engy::Component::create<Engy::FunctionHandler
+            <decltype (applyF)>>(applyF);
+    collisions->addHandler(apply);
 }
 
 

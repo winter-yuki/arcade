@@ -36,6 +36,7 @@ private:
     void trampoline   (Engy::Entity * e);
     void ballVModifier(Engy::Entity * e);
     void ballAdhesion (Engy::Entity * e);
+    void platformSizeBonus(Engy::Entity * e);
 
 private:
     const QVector2D INITIAL_BALL_V_ = { 0.2f, -0.3f };

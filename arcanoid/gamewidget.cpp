@@ -9,8 +9,6 @@
 #include "engy/game.hpp"
 #include "engy/controllers/ecarrowkeys.hpp"
 #include "engy/components/move.hpp"
-#include "engy/controllers/eccollisions.hpp"
-#include "engy/controllers/collision_handlers.hpp"
 #include "engy/controllers/ecscenebounds.hpp"
 #include "engy/components/mass.hpp"
 #include "engy/components/intangible.hpp"
@@ -65,7 +63,8 @@ void GameWidget::endGame()
 
 void GameWidget::scoreCounter(Engy::Entity * a, Engy::Entity * b)
 {
-    if (a->name() == "Ball" && (b->name() == "Player" || b->name() == "Box" ||
+    if (a->name() == "Ball" && (b->name() == "Player" ||
+                                b->name() == "Box" ||
                                 b->name() == "MovingBox")) {
         updateScore(10);
     }
@@ -106,15 +105,23 @@ void GameWidget::createGame()
     move->setV(INITIAL_BALL_V_);
     ball_->addComponent(move);
 
-    auto collisions = Engy::Controller::create<Engy::ECCollisions>(ball_);
-    collisions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
-        Engy::basicCollisionHandler(a, b);
-        hpCounter(a, b);
+    // Collision processing
+    auto collisions = Engy::Component::create<Engy::Collisions>();
+    ball_->addComponent(collisions);
+
+    auto basic = Engy::Component::create<Engy::BasicCollisionHandler>();
+    collisions->addHandler(basic);
+
+    auto hf = [this](Engy::Entity * a, Engy::Entity * b) {
         scoreCounter(a, b);
+        hpCounter(a,b);
         bonusCreator(a, b);
         trampolineDestroyer(a, b);
-    });
+    };
+    auto h = Engy::Component::create<Engy::FunctionHandler<decltype (hf)>>(hf);
+    collisions->addHandler(h);
 
+    // End game controller
     auto outOfScene = Engy::Controller::create<Engy::ECSceneBounds>(ball_);
     QObject::connect(outOfScene, &Engy::ECSceneBounds::isOut, [this] {
         assert(lifes_ > 0);
@@ -206,17 +213,23 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     auto hp = Engy::Component::create<HP>(500);
     movingBlock->addComponent(hp);
 
-    auto collicions = Engy::Controller::create<Engy::ECCollisions>(movingBlock);
-    collicions->setHandler([this](Engy::Entity * a, Engy::Entity * b) {
+    auto collisions = Engy::Component::create<Engy::Collisions>();
+    movingBlock->addComponent(collisions);
+
+    auto basic = Engy::Component::create<Engy::BasicCollisionHandler>();
+    collisions->addHandler(basic);
+
+    auto bonusF = [this](Engy::Entity * a, Engy::Entity * b) {
         if (b->name() == "Ball") {
             auto bonus = Engy::Entity::create<Bonus>(game_, a);
             bonus->setApplier([this](Engy::Entity *) {
                 updateScore(100);
             });
-            return;
         }
-        Engy::basicCollisionHandler(a, b);
-    });
+    };
+    auto bonus = Engy::Component::create<Engy::FunctionHandler
+            <decltype (bonusF)>>(bonusF);
+    collisions->addHandler(bonus);
 
     return es;
 }
@@ -314,6 +327,10 @@ void GameWidget::ballAdhesion(Engy::Entity * e)
 }
 
 
+void platformSizeBonus(Engy::Entity * e)
+{
+    // TODO
+}
 
 
 

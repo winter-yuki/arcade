@@ -1,7 +1,6 @@
 #pragma once
 
 #include "engy/entity.hpp"
-#include "engy/controllers/eccollisions.hpp"
 
 
 class Player final
@@ -10,6 +9,9 @@ class Player final
 
     engy_entity_ctor:
         explicit Player(Engy::Game * game);
+
+public:
+    void changeSize(int coef);
 };
 
 

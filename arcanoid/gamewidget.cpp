@@ -25,7 +25,7 @@ enum BonusType {
     BONUS_END_NUM
 };
 
-//#define USE_ONLY_BONUS BonusType::POINTS
+#define DBG_USE_ONLY_BONUS BONUS_SPEED
 
 
 using namespace std::placeholders;
@@ -287,8 +287,8 @@ Bonus::Applier GameWidget::getRandomBonus()
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(BONUS_BEGIN_NUM, BONUS_END_NUM);
 
-#ifdef USE_ONLY_BONUS
-    switch (USE_ONLY_BONUS) {
+#ifdef DBG_USE_ONLY_BONUS
+    switch (DBG_USE_ONLY_BONUS) {
 #else
     switch (dis(gen)) {
 #endif
@@ -352,7 +352,9 @@ void GameWidget::ballAdhesion(Engy::Entity * e)
     Q_UNUSED(e)
     assert(e->name() == Player::NAME);
 
-    // TODO
+    auto collisions = Engy::Component::create<Engy::Collisions>();
+    e->addComponent(collisions);
+    collisions->addHandler(Engy::Component::create<BallWaiter>());
 }
 
 

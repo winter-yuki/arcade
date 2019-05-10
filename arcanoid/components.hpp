@@ -67,7 +67,7 @@ class VMod final
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        explicit VMod(float amplitude = 0.2f, int lifeTime = 10000);
+        explicit VMod(float amplitude = 0.6f, int lifeTime = 5000);
 
 public:
     ~VMod() override;
@@ -90,7 +90,20 @@ private:
 };
 
 
+class BallWaiter final
+        : public Engy::CollisionHandlerT<BallWaiter> {
+    ENGY_CREATABLE_COMPONENT
 
+    engy_component_ctor:
+        BallWaiter() = default;
+
+public:
+    Engy::Collisions::Handler handler() const override;
+
+private:
+    static void hdl(Engy::Entity * a, Engy::Entity * b);
+
+};
 
 
 

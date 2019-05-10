@@ -173,8 +173,8 @@ void VMod::entitySetted()
 
 void VMod::updateSpeed(int64_t time)
 {
-    float add = amplitude_ * float(std::sin(time / 100));
-    v_ = v0_ + QVector2D(add, add);
+    float c = 0.5f + amplitude_ + amplitude_ * float(std::sin(time / 200));
+    v_ = v0_ * c;
 }
 
 
@@ -200,9 +200,22 @@ void VMod::timerEvent(QTimerEvent * event)
 }
 
 
+Engy::Collisions::Handler BallWaiter::handler() const
+{
+    return hdl;
+}
 
 
+void BallWaiter::hdl(Engy::Entity * a, Engy::Entity * b)
+{
+    // TODO
+    assert(a->name() == Player::NAME);
+    if (b->name() != Ball::NAME) {
+        return;
+    }
 
+
+}
 
 
 

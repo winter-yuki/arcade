@@ -226,7 +226,7 @@ void BallWaiter::hdl(Engy::Entity * a, Engy::Entity * b)
             space->deleteLater();
         });
 
-        // TODO
+        // TODO BUG github issue 24
         // a->removeComponent<Engy::Collisions>();
         deleteLater();
     }

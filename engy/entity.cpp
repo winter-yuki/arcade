@@ -102,6 +102,14 @@ QGraphicsItem const * Entity::form() const
 }
 
 
+QGraphicsItem * Entity::extractForm()
+{
+    auto form = form_;
+    delForm();
+    return form;
+}
+
+
 void Entity::gameDeleted()
 {
     game_ = nullptr;

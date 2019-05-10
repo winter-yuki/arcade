@@ -70,6 +70,11 @@ public:
     bool delForm();
     QGraphicsItem * form();
     QGraphicsItem const * form() const;
+    /**
+     * @brief Makes entity forget about form.
+     * @return Entity form.
+     */
+    QGraphicsItem * extractForm();
 
     /**
      * @brief Entity gets ownership of component. Entity can have only one

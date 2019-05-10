@@ -1,7 +1,9 @@
 #include "components.hpp"
 
+#include "controllers.hpp"
 #include "engy/entity.hpp"
 #include "engy/components/move.hpp"
+#include "engy/controllers/controller.hpp"
 #include "engy/defs.hpp"
 #include "gamewidget.hpp"
 #include "entities.hpp"
@@ -214,11 +216,18 @@ void BallWaiter::hdl(Engy::Entity * a, Engy::Entity * b)
     assert(a->name() == Player::NAME);
 
     if (b->name() == Ball::NAME) {
-        b->addComponent(Engy::Component::create<BallKeeper>(a));
+        auto bk = Engy::Component::create<BallKeeper>(a);
+        b->addComponent(bk);
 
-        // TODO controller
+        auto space = Engy::Controller::create<SpaceButton>(a, [bk] {
+            bk->deleteLater();
+        });
+        connect(bk, &BallKeeper::destroyed, [space] {
+            space->deleteLater();
+        });
 
-        a->removeComponent<Engy::Collisions>();
+        // TODO
+        // a->removeComponent<Engy::Collisions>();
         deleteLater();
     }
 }
@@ -245,8 +254,6 @@ BallKeeper::BallKeeper(Engy::Entity * player)
 
         startTimer(UPDATE_INTERVAL);
     });
-
-    connect(player, &Engy::Entity::destroyed, [this] { deleteLater(); });
 }
 
 
@@ -266,6 +273,7 @@ void BallKeeper::timerEvent(QTimerEvent * event)
     Q_UNUSED(event)
     assert(entity());
     assert(player_);
+    assert(player_->form());
 
     auto dpos = player_->form()->pos() - prevPos;
     prevPos = player_->form()->pos();

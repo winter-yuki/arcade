@@ -25,7 +25,7 @@ enum BonusType {
     BONUS_END_NUM
 };
 
-#define DBG_USE_ONLY_BONUS BONUS_ADHESION
+//#define DBG_USE_ONLY_BONUS BONUS_ADHESION
 
 
 using namespace std::placeholders;

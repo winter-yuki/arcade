@@ -9,6 +9,10 @@ SpaceButton::SpaceButton(Engy::Entity * e, std::function<void (void)> handler)
 {
     assert(handler);
     connect(e, &Engy::Entity::keyPressed, this, &SpaceButton::keyPressed);
+
+    if (!e->hasFocus()) {
+        qDebug() << "SpaceButton: tracked entity doesn't have focus";
+    }
 }
 
 

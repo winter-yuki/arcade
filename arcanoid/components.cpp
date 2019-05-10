@@ -7,6 +7,9 @@
 #include "entities.hpp"
 
 
+using namespace std::placeholders;
+
+
 HP::HP(int hp)
     : INITIAL_HP_(hp)
     , hp_(hp)
@@ -200,22 +203,88 @@ void VMod::timerEvent(QTimerEvent * event)
 }
 
 
-Engy::Collisions::Handler BallWaiter::handler() const
+Engy::Collisions::Handler BallWaiter::handler()
 {
-    return hdl;
+    return std::bind(&BallWaiter::hdl, this, _1, _2);
 }
 
 
 void BallWaiter::hdl(Engy::Entity * a, Engy::Entity * b)
 {
-    // TODO
     assert(a->name() == Player::NAME);
-    if (b->name() != Ball::NAME) {
-        return;
+
+    if (b->name() == Ball::NAME) {
+        b->addComponent(Engy::Component::create<BallKeeper>(a));
+
+        // TODO controller
+
+        a->removeComponent<Engy::Collisions>();
+        deleteLater();
     }
-
-
 }
+
+
+BallKeeper::BallKeeper(Engy::Entity * player)
+    : player_([player] {
+    assert(player);
+    assert(player->name() == Player::NAME);
+    return player; } ())
+    , prevPos([player] {
+    assert(player->form());
+    return player->form()->pos();} ())
+{
+    connect(this, &Engy::Component::entitySetted, [this] {
+        assert(entity()->name() == Ball::NAME);
+
+        // To have movement control
+        entity()->removeComponent<VMod>();
+        entity()->addComponent(Engy::Component::create<Engy::DisReflector>());
+        if (auto move = entity()->findComponent<Engy::Move>()) {
+            move->setBlock(true);
+        }
+
+        startTimer(UPDATE_INTERVAL);
+    });
+
+    connect(player, &Engy::Entity::destroyed, [this] { deleteLater(); });
+}
+
+
+BallKeeper::~BallKeeper()
+{
+    if (entity()) {
+        entity()->removeComponent<Engy::DisReflector>();
+        if (auto move = entity()->findComponent<Engy::Move>()) {
+            move->setBlock(false);
+        }
+    }
+}
+
+
+void BallKeeper::timerEvent(QTimerEvent * event)
+{
+    Q_UNUSED(event)
+    assert(entity());
+    assert(player_);
+
+    auto dpos = player_->form()->pos() - prevPos;
+    prevPos = player_->form()->pos();
+    entity()->form()->moveBy(dpos.x(), dpos.y());
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

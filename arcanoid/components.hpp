@@ -98,15 +98,31 @@ class BallWaiter final
         BallWaiter() = default;
 
 public:
-    Engy::Collisions::Handler handler() const override;
+    Engy::Collisions::Handler handler() override;
 
 private:
-    static void hdl(Engy::Entity * a, Engy::Entity * b);
+    void hdl(Engy::Entity * a, Engy::Entity * b);
 
 };
 
 
+class BallKeeper final
+        : public Engy::ComponentT<BallKeeper> {
+    ENGY_CREATABLE_COMPONENT
 
+    engy_component_ctor:
+        explicit BallKeeper(Engy::Entity * player);
+
+public:
+    ~BallKeeper() override;
+
+private:
+    void timerEvent(QTimerEvent * event) override;
+
+private:
+    Engy::Entity * player_;
+    QPointF prevPos;
+};
 
 
 

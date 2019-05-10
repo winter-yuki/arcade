@@ -46,6 +46,22 @@ private:
 };
 
 
+class Shimmer final
+        : public Engy::ComponentT<Shimmer> {
+    ENGY_CREATABLE_COMPONENT
+
+    engy_component_ctor:
+        explicit Shimmer(int period = 5000);
+
+public:
+    ~Shimmer() override;
+
+private:
+    void timerEvent(QTimerEvent * event) override;
+    QGraphicsItem * item_ = nullptr;
+};
+
+
 class VMod final
         : public Engy::ComponentT<VMod> {
     ENGY_CREATABLE_COMPONENT

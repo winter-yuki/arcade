@@ -92,6 +92,37 @@ void PlatformSize::counter(Engy::Entity * a, Engy::Entity * b)
 }
 
 
+Shimmer::Shimmer(int period)
+{
+    connect(this, &Engy::Component::entitySetted, [this, period] {
+        startTimer(period);
+    });
+}
+
+
+Shimmer::~Shimmer()
+{
+    if (item_) {
+        delete item_;
+    }
+}
+
+
+void Shimmer::timerEvent(QTimerEvent * event)
+{
+    Q_UNUSED(event)
+    assert(entity());
+
+    if (item_) {
+        assert(!entity()->form());
+        entity()->addForm(item_);
+        item_ = nullptr;
+    } else {
+        item_ = entity()->extractForm();
+    }
+}
+
+
 VMod::VMod(float amplitude, int lifeTime)
     : amplitude_(amplitude)
     , lifeTime_ (lifeTime)

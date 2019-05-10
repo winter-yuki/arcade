@@ -198,6 +198,11 @@ std::vector<Engy::Entity *> GameWidget::makeField()
                                    upOffset + height * v + d * v);
             auto hp = Engy::Component::create<HP>();
             entity->addComponent(hp);
+
+            if (std::rand() % 6 == 0) {
+                entity->addComponent(Engy::Component::create<Shimmer>());
+            }
+
             es.push_back(entity);
         }
     }
@@ -275,8 +280,7 @@ Bonus::Applier GameWidget::getRandomBonus()
     case 3:
         return std::bind(&GameWidget::trampoline, this, _1);
     case 4:
-        // TODO
-        // return std::bind(&GameWidget::ballVModifier, this, _1);
+         return std::bind(&GameWidget::ballVModifier, this, _1);
     case 5:
         return std::bind(&GameWidget::ballAdhesion, this, _1);
     case 6:
@@ -320,7 +324,8 @@ void GameWidget::trampoline(Engy::Entity * e)
 void GameWidget::ballVModifier(Engy::Entity * e)
 {
     Q_UNUSED(e)
-    ball_->addComponent(Engy::Component::create<VMod>());
+    // TODO
+//    ball_->addComponent(Engy::Component::create<VMod>());
 }
 
 

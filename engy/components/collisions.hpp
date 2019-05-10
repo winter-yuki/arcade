@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include "engy/components/component.hpp"
+#include "component.hpp"
+#include "entity.hpp"
 #include "defs.hpp"
 
 
@@ -52,17 +53,38 @@ public:
      * @param interval in miliseconds.
      * If 0, Intangible component would not be created.
      */
-    void setIntangible(int interval);
-    int  intangible() const;
+    void setMarkerTime(int interval);
+    int  markerTimer() const;
+
+    template <class M>
+    static void addMarker(Entity * e, int lifeTime);
 
 private:
     void timerEvent(QTimerEvent * event) override;
     void applyHandlers(Entity * a, Entity * b);
 
 private:
-    int intangibleFor_ = 0; // TODO exception policy is needed
+    int collisionMarker_ = UPDATE_INTERVAL + 2;
     std::vector<Component::Id> hs_;
 };
+
+
+template <class M>
+void Collisions::addMarker(Entity * e, int lifeTime) {
+    assert(e);
+    assert(lifeTime >= 0);
+
+    if (lifeTime == 0) {
+        return;
+    }
+
+    auto c = Engy::Component::create<M>();
+    e->addComponent(c);
+
+    auto delTimer = new Engy::Timer(c);
+    delTimer->start(lifeTime);
+    connect(delTimer, &Engy::Timer::timeout, [c] { delete c; });
+}
 
 
 /**
@@ -107,6 +129,18 @@ public:
     Collisions::Handler handler() const override { return h_; }
 private:
     Collisions::Handler h_;
+};
+
+
+/**
+ * @ingroup component
+ * @brief Default marker of collision recently.
+ */
+class RecentlyCollided final
+        : public ComponentT<RecentlyCollided> {
+    ENGY_CREATABLE_COMPONENT
+    engy_component_ctor:
+        RecentlyCollided() = default;
 };
 
 } // Engy

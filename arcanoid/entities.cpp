@@ -4,7 +4,6 @@
 
 #include "components.hpp"
 #include "gamewidget.hpp"
-#include "engy/components/intangible.hpp"
 #include "engy/components/move.hpp"
 #include "engy/components/collisions.hpp"
 #include "engy/controllers/ecscenebounds.hpp"

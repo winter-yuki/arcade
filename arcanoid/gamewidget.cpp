@@ -1,7 +1,6 @@
 #include "gamewidget.hpp"
 
 #include <functional>
-#include <iostream> // TODO
 
 #include <QDialogButtonBox>
 
@@ -12,7 +11,6 @@
 #include "engy/components/move.hpp"
 #include "engy/controllers/ecscenebounds.hpp"
 #include "engy/components/mass.hpp"
-#include "engy/components/intangible.hpp"
 
 
 using namespace std::placeholders;
@@ -114,6 +112,10 @@ void GameWidget::createGame()
     collisions->addHandler(basic);
 
     auto hf = [this](Engy::Entity * a, Engy::Entity * b) {
+        if (a->findComponent<Engy::RecentlyCollided>() ||
+                b->findComponent<Engy::RecentlyCollided>()) {
+            return;
+        }
         scoreCounter(a, b);
         hpCounter(a,b);
         bonusCreator(a, b);
@@ -218,7 +220,6 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     movingBlock->addComponent(collisions);
 
     auto bonusF = [this](Engy::Entity * a, Engy::Entity * b) {
-        std::cout << "In bonusF!" << std::endl;
         if (b->name() == "Ball") {
             auto bonus = Engy::Entity::create<Bonus>(game_, a);
             bonus->setApplier([this](Engy::Entity *) {
@@ -330,6 +331,7 @@ void GameWidget::ballAdhesion(Engy::Entity * e)
 
 void platformSizeBonus(Engy::Entity * e)
 {
+    Q_UNUSED(e)
     // TODO
 }
 

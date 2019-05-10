@@ -20,7 +20,6 @@ SOURCES += \
 HEADERS += \
     $$PWD/components/basiccollisionhandler.hpp \
     $$PWD/components/collisions.hpp \
-    $$PWD/components/intangible.hpp \
     $$PWD/components/mass.hpp \
     $$PWD/components/value.hpp \
     $$PWD/controllers/ecscenebounds.hpp \

@@ -1,7 +1,6 @@
 #include "basiccollisionhandler.hpp"
 
 #include "entity.hpp"
-#include "intangible.hpp"
 #include "move.hpp"
 
 
@@ -19,7 +18,8 @@ void BasicCollisionHandler::reflectionHandler(Entity * a, Entity * b)
     assert(a && b);
     assert(a->form() && b->form());
 
-    if (a->findComponent<DisReflector>() || b->findComponent<DisReflector>()) {
+    if (a->findComponent<DisReflector>() ||
+            b->findComponent<DisReflector>()) {
         return;
     }
 
@@ -43,7 +43,7 @@ void BasicCollisionHandler::reflectionHandler(Entity * a, Entity * b)
         qDebug() << "Collision detection isn't in time,"
                     "object is already in figure";
         move->setV(-v);
-        move->update(300); // Move entity back slightly
+        move->update(2 * UPDATE_INTERVAL); // Move entity back slightly
     }
 }
 

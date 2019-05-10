@@ -17,15 +17,27 @@ Player::Player(Engy::Game * game)
 {
     const auto gsw = game->sceneSize().width();
     const auto gsh = game->sceneSize().height();
-    auto * platform = new QGraphicsRectItem(QRectF{0, 0, 200, 15});
-    platform->setPos({gsw / 2 - platform->boundingRect().width() / 2,
-                      gsh - platform->boundingRect().height()});
+    const double width = 200;
+    const double height = 15;
+
+    auto platform = createForm({gsw / 2 - width / 2,
+                                gsh - height}, {width, height});
+    addForm(platform);
+
+    setName(NAME);
+}
+
+
+QGraphicsItem * Player::createForm(QPointF pos, QSizeF size)
+{
+    auto * platform = new QGraphicsRectItem(QRectF({0, 0}, size));
+    platform->setPos(pos);
+
     QColor color(0xAA00BB);
     platform->setPen({color});
     platform->setBrush({color});
 
-    addForm(platform);
-    setName(NAME);
+    return platform;
 }
 
 

@@ -28,6 +28,24 @@ private:
 };
 
 
+class PlatformSize final
+        : public Engy::ComponentT<PlatformSize> {
+    ENGY_CREATABLE_COMPONENT
+
+    engy_component_ctor:
+        PlatformSize(qreal c, int hits = 3);
+
+public:
+    ~PlatformSize();
+
+    static void counter(Engy::Entity * a, Engy::Entity * b);
+
+private:
+    qreal coef_;
+    int hitsLeft_;
+};
+
+
 class VMod final
         : public Engy::ComponentT<VMod> {
     ENGY_CREATABLE_COMPONENT

@@ -11,7 +11,7 @@ class Player final
         explicit Player(Engy::Game * game);
 
 public:
-    void changeSize(int coef);
+    static QGraphicsItem * createForm(QPointF pos, QSizeF size);
 
     static constexpr char const * NAME = "Player";
 };

@@ -117,9 +117,10 @@ void GameWidget::createGame()
             return;
         }
         scoreCounter(a, b);
-        hpCounter(a,b);
+        hpCounter(a, b);
         bonusCreator(a, b);
         trampolineDestroyer(a, b);
+        PlatformSize::counter(a, b);
     };
     auto h = Engy::Component::create<Engy::FunctionHandler<decltype (hf)>>(hf);
     collisions->addHandler(h);
@@ -239,7 +240,7 @@ std::vector<Engy::Entity *> GameWidget::makeField()
 void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
 {
     if (a->name() == Ball::NAME &&
-            (b->name() == MovingBlock::NAME || b->name() == MovingBlock::NAME)) {
+            (b->name() == Block::NAME || b->name() == MovingBlock::NAME)) {
         if (auto hp = b->findComponent<HP>()) {
             hp->changeHp();
         }
@@ -264,7 +265,7 @@ Bonus::Applier GameWidget::getRandomBonus()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 5);
+    std::uniform_int_distribution<> dis(1, 6);
 
     switch (dis(gen)) {
     case 1:
@@ -278,6 +279,8 @@ Bonus::Applier GameWidget::getRandomBonus()
         // return std::bind(&GameWidget::ballVModifier, this, _1);
     case 5:
         return std::bind(&GameWidget::ballAdhesion, this, _1);
+    case 6:
+         return std::bind(&GameWidget::platformSizeBonus, this, _1);
     }
     qDebug() << "No such bonus to get";
     return {};
@@ -328,10 +331,13 @@ void GameWidget::ballAdhesion(Engy::Entity * e)
 }
 
 
-void platformSizeBonus(Engy::Entity * e)
+void GameWidget::platformSizeBonus(Engy::Entity * e)
 {
-    Q_UNUSED(e)
-    // TODO
+    if (e->findComponent<PlatformSize>()) {
+        return;
+    }
+    auto c = Engy::Component::create<PlatformSize>(std::rand() % 2 ? 2 : 0.5);
+    e->addComponent(c);
 }
 
 

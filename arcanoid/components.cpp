@@ -3,6 +3,7 @@
 #include "engy/entity.hpp"
 #include "engy/components/move.hpp"
 #include "gamewidget.hpp"
+#include "entities.hpp"
 
 
 HP::HP(int hp)
@@ -41,6 +42,53 @@ void HP::formChanged()
     textItem_ = new QGraphicsTextItem(entity()->form());
     textItem_->setTextWidth(entity()->form()->boundingRect().width());
     changeHp(0);
+}
+
+
+PlatformSize::PlatformSize(qreal c, int hits)
+    : coef_(c)
+    , hitsLeft_(hits)
+{
+    assert(c > 0);
+    assert(hits > 0);
+
+    connect(this, &Engy::Component::entitySetted, [this] {
+        assert(entity()->name() == Player::NAME);
+
+        auto size = entity()->form()->boundingRect().size();
+        auto form = Player::createForm(entity()->form()->pos(),
+        {size.width() * coef_, size.height()});
+
+        entity()->addForm(form);
+    });
+}
+
+
+PlatformSize::~PlatformSize()
+{
+    if (!entity()) {
+        return;
+    }
+
+    auto size = entity()->form()->boundingRect().size();
+    auto form = Player::createForm(entity()->form()->pos(),
+    {size.width() / coef_, size.height()});
+    entity()->addForm(form);
+}
+
+
+void PlatformSize::counter(Engy::Entity * a, Engy::Entity * b)
+{
+    assert(a->name() == Ball::NAME);
+    if (b->name() == Player::NAME) {
+        if (auto c = b->findComponent<PlatformSize>()) {
+            assert(c->hitsLeft_ > 0);
+            --c->hitsLeft_;
+            if (c->hitsLeft_ == 0) {
+                c->deleteLater();
+            }
+        }
+    }
 }
 
 

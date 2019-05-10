@@ -2,6 +2,7 @@
 
 #include "engy/entity.hpp"
 #include "engy/components/move.hpp"
+#include "engy/defs.hpp"
 #include "gamewidget.hpp"
 #include "entities.hpp"
 
@@ -57,7 +58,7 @@ PlatformSize::PlatformSize(qreal c, int hits)
 
         auto size = entity()->form()->boundingRect().size();
         auto form = Player::createForm(entity()->form()->pos(),
-        {size.width() * coef_, size.height()});
+        { size.width() * coef_, size.height() });
 
         entity()->addForm(form);
     });
@@ -162,23 +163,18 @@ void VMod::entitySetted()
     v_ = v0_;
 
     timer_ = new Engy::Timer(this);
-    timer_->start(15); /*60fps*/
+    timer_->start(UPDATE_INTERVAL);
 
     connect(timer_, &Engy::Timer::tickTime, this, &VMod::updateSpeed);
-    connect(timer_, &Engy::Timer::tickdt, this, &VMod::updatePos);
-    connect(move, &Engy::Move::vChanged, this, &VMod::vUpdated);
-    connect(this, &VMod::entityDeleted, [this] {
-        deleteLater();
-    });
+    connect(timer_, &Engy::Timer::tickdt,   this, &VMod::updatePos);
+    connect(move,   &Engy::Move::vChanged,  this, &VMod::vUpdated);
 }
 
 
 void VMod::updateSpeed(int64_t time)
 {
-    if (auto move = entity()->findComponent<Engy::Move>()) {
-        float add = amplitude_ * float(std::sin(time / 100));
-        v_ = { v0_.x() + add, v0_.y() + add };
-    }
+    float add = amplitude_ * float(std::sin(time / 100));
+    v_ = v0_ + QVector2D(add, add);
 }
 
 
@@ -191,15 +187,16 @@ void VMod::updatePos(int64_t dt)
 
 void VMod::vUpdated(QVector2D newV)
 {
-    // TODO wrong newV
     v0_ = newV.normalized() * v0_.length();
+    updateSpeed(timer_->time());
+    updatePos(timer_->interval());
 }
 
 
 void VMod::timerEvent(QTimerEvent * event)
 {
     Q_UNUSED(event)
-    delete this;
+    deleteLater();
 }
 
 

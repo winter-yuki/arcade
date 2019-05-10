@@ -280,11 +280,11 @@ Bonus::Applier GameWidget::getRandomBonus()
     case 3:
         return std::bind(&GameWidget::trampoline, this, _1);
     case 4:
-         return std::bind(&GameWidget::ballVModifier, this, _1);
+        return std::bind(&GameWidget::ballVModifier, this, _1);
     case 5:
         return std::bind(&GameWidget::ballAdhesion, this, _1);
     case 6:
-         return std::bind(&GameWidget::platformSizeBonus, this, _1);
+        return std::bind(&GameWidget::platformSizeBonus, this, _1);
     }
     qDebug() << "No such bonus to get";
     return {};
@@ -324,8 +324,7 @@ void GameWidget::trampoline(Engy::Entity * e)
 void GameWidget::ballVModifier(Engy::Entity * e)
 {
     Q_UNUSED(e)
-    // TODO
-//    ball_->addComponent(Engy::Component::create<VMod>());
+    ball_->addComponent(Engy::Component::create<VMod>());
 }
 
 

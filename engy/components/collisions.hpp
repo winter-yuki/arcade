@@ -110,7 +110,7 @@ class CollisionHandlerT
 protected:
     CollisionHandlerT()
         : CollisionHandler(id<H>())
-    {}
+    { static_assert (std::is_base_of_v<CollisionHandler, H>); }
 };
 
 

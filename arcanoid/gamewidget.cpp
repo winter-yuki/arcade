@@ -13,6 +13,21 @@
 #include "engy/components/mass.hpp"
 
 
+// we do not use enum class to have implicit cast to integers
+enum BonusType {
+    BONUS_BEGIN_NUM = 1,
+    BONUS_POINTS,
+    BONUS_LIFES,
+    BONUS_TRAMPOLINE,
+    BONUS_SPEED,
+    BONUS_ADHESION,
+    BONUS_PLATFORM_SIZE,
+    BONUS_END_NUM
+};
+
+//#define USE_ONLY_BONUS BonusType::POINTS
+
+
 using namespace std::placeholders;
 
 
@@ -270,20 +285,24 @@ Bonus::Applier GameWidget::getRandomBonus()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 6);
+    std::uniform_int_distribution<> dis(BONUS_BEGIN_NUM, BONUS_END_NUM);
 
+#ifdef USE_ONLY_BONUS
+    switch (USE_ONLY_BONUS) {
+#else
     switch (dis(gen)) {
-    case 1:
+#endif
+    case BONUS_POINTS:
         return std::bind(&GameWidget::bonusPoints, this, _1);
-    case 2:
+    case BONUS_LIFES:
         return std::bind(&GameWidget::bonusLifes, this, _1);
-    case 3:
+    case BONUS_TRAMPOLINE:
         return std::bind(&GameWidget::trampoline, this, _1);
-    case 4:
+    case BONUS_SPEED:
         return std::bind(&GameWidget::ballVModifier, this, _1);
-    case 5:
+    case BONUS_ADHESION:
         return std::bind(&GameWidget::ballAdhesion, this, _1);
-    case 6:
+    case BONUS_PLATFORM_SIZE:
         return std::bind(&GameWidget::platformSizeBonus, this, _1);
     }
     qDebug() << "No such bonus to get";
@@ -331,6 +350,8 @@ void GameWidget::ballVModifier(Engy::Entity * e)
 void GameWidget::ballAdhesion(Engy::Entity * e)
 {
     Q_UNUSED(e)
+    assert(e->name() == Player::NAME);
+
     // TODO
 }
 

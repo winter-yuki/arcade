@@ -143,7 +143,7 @@ private:
 
     Game * game_;
     QGraphicsItem * form_ = nullptr;
-    FocusHandler  * fh_; // TODO init
+    FocusHandler  * fh_;
     std::unordered_map<Component::Id, Component *> components_;
 };
 

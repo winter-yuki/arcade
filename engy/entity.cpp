@@ -150,7 +150,13 @@ void Entity::addComponent(Component * component)
 
 bool Entity::removeComponent(Component::Id id)
 {
-    return components_.erase(id);
+    auto search = components_.find(id);
+    if (search != components_.end()) {
+        search->second->deleteLater();
+        components_.erase(search);
+        return true;
+    }
+    return false;
 }
 
 

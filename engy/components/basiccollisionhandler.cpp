@@ -16,7 +16,10 @@ Collisions::Handler BasicCollisionHandler::handler() const
 void BasicCollisionHandler::reflectionHandler(Entity * a, Entity * b)
 {
     assert(a && b);
-    assert(a->form() && b->form());
+
+    if (!a->form() || !b->form()) {
+        return;
+    }
 
     if (a->findComponent<DisReflector>() ||
             b->findComponent<DisReflector>()) {

@@ -105,6 +105,10 @@ ECArrowKeys::OptD ECArrowKeys::bborder() const
 
 void ECArrowKeys::keyPressEvent(QKeyEvent * event)
 {
+    if (!entity()->form()) {
+        return;
+    }
+
     switch (event->key()) {
     case Qt::Key_Left:
         entity()->form()->setPos(left());
@@ -134,6 +138,8 @@ void ECArrowKeys::sceneResized()
 
 QPointF ECArrowKeys::left() const
 {
+    assert(entity()->form());
+
     if (dx_.has_value() == false) {
         return entity()->form()->pos();
     }
@@ -149,6 +155,8 @@ QPointF ECArrowKeys::left() const
 
 QPointF ECArrowKeys::right() const
 {
+    assert(entity()->form());
+
     if (dx_.has_value() == false) {
         return entity()->form()->pos();
     }
@@ -165,6 +173,8 @@ QPointF ECArrowKeys::right() const
 
 QPointF ECArrowKeys::up() const
 {
+    assert(entity()->form());
+
     if (dy_.has_value() == false) {
         return entity()->form()->pos();
     }
@@ -180,6 +190,8 @@ QPointF ECArrowKeys::up() const
 
 QPointF ECArrowKeys::down() const
 {
+    assert(entity()->form());
+
     if (dy_.has_value() == false) {
         return entity()->form()->pos();
     }

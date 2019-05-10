@@ -75,7 +75,9 @@ void Collisions::timerEvent(QTimerEvent * event)
 
     for (Entity * other : entity()->game()->entities()) {
         assert(other);
-        assert(other->form());
+        if (!other->form()) {
+            continue;
+        }
 
         if (entity()->form() != other->form() &&
                 entity()->form()->collidesWithItem(other->form())) {

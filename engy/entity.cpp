@@ -152,7 +152,7 @@ bool Entity::removeComponent(Component::Id id)
 {
     auto search = components_.find(id);
     if (search != components_.end()) {
-        search->second->deleteLater();
+        deleteComponent(search->second);
         components_.erase(search);
         return true;
     }

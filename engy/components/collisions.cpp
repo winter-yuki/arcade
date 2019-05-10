@@ -71,6 +71,7 @@ void Collisions::timerEvent(QTimerEvent * event)
     Q_UNUSED(event)
 
     assert(entity());
+    assert(entity()->form());
     assert(entity()->game());
 
     for (Entity * other : entity()->game()->entities()) {

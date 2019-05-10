@@ -43,7 +43,7 @@ void BasicCollisionHandler::reflectionHandler(Entity * a, Entity * b)
         qDebug() << "Collision detection isn't in time,"
                     "object is already in figure";
         move->setV(-v);
-        move->update(4 * UPDATE_INTERVAL); // Move entity back slightly
+        move->update(10 * UPDATE_INTERVAL); // Move entity back slightly
     }
 }
 

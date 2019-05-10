@@ -7,7 +7,7 @@
 namespace Engy
 {
 
-Collisions::Handler BasicCollisionHandler::handler() const
+Collisions::Handler BasicCollisionHandler::handler()
 {
     return reflectionHandler;
 }

@@ -94,7 +94,7 @@ void Collisions::addMarker(Entity * e, int lifeTime) {
 class CollisionHandler
         : public Component {
 public:
-    virtual Collisions::Handler handler() const = 0;
+    virtual Collisions::Handler handler() = 0;
 
 protected:
     explicit CollisionHandler(Component::Id id);
@@ -126,7 +126,7 @@ class FunctionHandler final
     engy_component_ctor:
         explicit FunctionHandler(Collisions::Handler h) : h_(std::move(h)) {}
 public:
-    Collisions::Handler handler() const override { return h_; }
+    Collisions::Handler handler() override { return h_; }
 private:
     Collisions::Handler h_;
 };

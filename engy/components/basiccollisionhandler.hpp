@@ -17,7 +17,7 @@ class BasicCollisionHandler final
         BasicCollisionHandler() = default;
 
 public:
-    Collisions::Handler handler() const override;
+    Collisions::Handler handler() override;
 
     static void reflectionHandler(Entity * a, Entity * b);
     static std::optional<QVector2D>

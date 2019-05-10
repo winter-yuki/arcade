@@ -12,6 +12,8 @@ class Player final
 
 public:
     void changeSize(int coef);
+
+    static constexpr char const * NAME = "Player";
 };
 
 
@@ -21,16 +23,35 @@ class Ball final
 
     engy_entity_ctor:
         explicit Ball(Engy::Game * game);
+
+public:
+    static constexpr char const * NAME = "Ball";
 };
 
 
-class Box final
+class Block final
         : public Engy::Entity {
     ENGY_CREATABLE_ENTITY
 
     engy_entity_ctor:
-        Box(Engy::Game * game, QRectF rect);
+        Block(Engy::Game * game, QRectF rect);
+
+public:
+    static constexpr char const * NAME = "Block";
 };
+
+
+class MovingBlock final
+        : public Engy::Entity {
+    ENGY_CREATABLE_ENTITY
+
+    engy_entity_ctor:
+        MovingBlock(Engy::Game * game, QRectF rect);
+
+public:
+    static constexpr char const * NAME = "MovingBlock";
+};
+
 
 class GameWidget;
 
@@ -46,6 +67,8 @@ public:
     void setApplier(Applier a);
     void setRecepient(QString name);
 
+    static constexpr char const * NAME = "Bonus";
+
 private:
     Applier applier_;
     QString recepient_ = "Player";
@@ -58,6 +81,9 @@ class Trampoline final
 
     engy_entity_ctor:
         explicit Trampoline(Engy::Game * game);
+
+public:
+    static constexpr char const * NAME = "Trampoline";
 };
 
 

@@ -25,7 +25,7 @@ Player::Player(Engy::Game * game)
     platform->setBrush({color});
 
     addForm(platform);
-    setName("Player");
+    setName(NAME);
 }
 
 
@@ -41,11 +41,11 @@ Ball::Ball(Engy::Game * game)
     ball->setPen(QPen(ballColor));
 
     addForm(ball);
-    setName("Ball");
+    setName(NAME);
 }
 
 
-Box::Box(Engy::Game * game, QRectF rect)
+Block::Block(Engy::Game * game, QRectF rect)
     : Engy::Entity(game)
 {
     auto form = new QGraphicsRectItem(rect);
@@ -55,7 +55,21 @@ Box::Box(Engy::Game * game, QRectF rect)
     form->setBrush(QBrush(color));
 
     addForm(form);
-    setName("Box");
+    setName(NAME);
+}
+
+
+MovingBlock::MovingBlock(Engy::Game * game, QRectF rect)
+    : Engy::Entity(game)
+{
+    auto form = new QGraphicsRectItem(rect);
+
+    QColor color(0xAA00DD);
+    form->setPen(QPen(color));
+    form->setBrush(QBrush(color));
+
+    addForm(form);
+    setName(NAME);
 }
 
 
@@ -64,7 +78,7 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
 {
     assert(ancestor);
 
-    setName("Bonus");
+    setName(NAME);
 
     auto awidth  = ancestor->form()->boundingRect().width();
     auto aheight = ancestor->form()->boundingRect().height();
@@ -89,7 +103,7 @@ Bonus::Bonus(Engy::Game * game, Engy::Entity * ancestor)
     addComponent(Engy::Component::create<Engy::DisReflector>());
 
     auto applyF = [this](Engy::Entity * a, Engy::Entity * b) {
-        assert(a->name() == "Bonus");
+        assert(a->name() == NAME);
         if (b->name() == recepient_) {
             if (applier_) {
                 applier_(b);
@@ -118,7 +132,7 @@ void Bonus::setRecepient(QString name)
 Trampoline::Trampoline(Engy::Game * game)
     : Engy::Entity(game)
 {
-    setName("Trampoline");
+    setName(NAME);
     int height = 10;
     auto rect = new QGraphicsRectItem(0, game->sceneSize().height() - height,
                                       game->sceneSize().width(), height);

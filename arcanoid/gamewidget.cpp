@@ -62,9 +62,9 @@ void GameWidget::endGame()
 
 void GameWidget::scoreCounter(Engy::Entity * a, Engy::Entity * b)
 {
-    if (a->name() == "Ball" && (b->name() == "Player" ||
-                                b->name() == "Box" ||
-                                b->name() == "MovingBox")) {
+    if (a->name() == Ball::NAME && (b->name() == Player::NAME ||
+                                    b->name() == Block::NAME ||
+                                    b->name() == MovingBlock::NAME)) {
         updateScore(10);
     }
 }
@@ -192,7 +192,7 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     for (int h = 0; h < hor; ++h) {
         for (int v = 0; v < vert; ++v) {
             QRectF rect(0, 0, width, height);
-            auto entity = Engy::Entity::create<Box>(game_, rect);
+            auto entity = Engy::Entity::create<Block>(game_, rect);
             entity->form()->setPos(leftOffset + width * h + d * h,
                                    upOffset + height * v + d * v);
             auto hp = Engy::Component::create<HP>();
@@ -203,10 +203,9 @@ std::vector<Engy::Entity *> GameWidget::makeField()
 
     // Make moving block
     QRectF rect(0, 0, width + 10, height + 10);
-    auto movingBlock = Engy::Entity::create<Box>(game_, rect);
+    auto movingBlock = Engy::Entity::create<MovingBlock>(game_, rect);
     movingBlock->form()->setPos(leftOffset + width,
                                 game_->sceneSize().height() - downOffset + 100);
-    movingBlock->setName("MovingBox");
     es.push_back(movingBlock);
 
     auto move = Engy::Component::create<Engy::Move>();
@@ -239,8 +238,8 @@ std::vector<Engy::Entity *> GameWidget::makeField()
 
 void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
 {
-    if (a->name() == "Ball" &&
-            (b->name() == "Box" || b->name() == "MovingBox")) {
+    if (a->name() == Ball::NAME &&
+            (b->name() == MovingBlock::NAME || b->name() == MovingBlock::NAME)) {
         if (auto hp = b->findComponent<HP>()) {
             hp->changeHp();
         }
@@ -250,8 +249,8 @@ void GameWidget::hpCounter(Engy::Entity * a, Engy::Entity * b) const
 
 void GameWidget::bonusCreator(Engy::Entity * a, Engy::Entity * b)
 {
-    assert("Collision controller must track ball" && a->name() == "Ball");
-    if (b->name() == "Box") {
+    assert("Collision controller must track ball" && a->name() == Ball::NAME);
+    if (b->name() == Block::NAME) {
         assert(a->game() == b->game());
         if (std::rand() % 3 == 0) {
             auto bonus = Engy::Entity::create<Bonus>(a->game(), b);
@@ -287,8 +286,8 @@ Bonus::Applier GameWidget::getRandomBonus()
 
 void GameWidget::trampolineDestroyer(Engy::Entity * a, Engy::Entity * b)
 {
-    assert(a->name() == "Ball");
-    if (b->name() == "Trampoline") {
+    assert(a->name() == Ball::NAME);
+    if (b->name() == Trampoline::NAME) {
         b->deleteLater();
     }
 }

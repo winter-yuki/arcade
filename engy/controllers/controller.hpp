@@ -45,7 +45,7 @@ class Game;
  * self deletion if parents (game or entity) deleted.
  */
 class Controller
-        : public QGraphicsObject {
+        : public QObject {
     Q_OBJECT
 
 public:
@@ -70,17 +70,6 @@ public:
      */
     Entity * entity();
     Entity const * entity() const;
-
-    /**
-     * @brief paint Unused
-     */
-    void paint(QPainter * painter, QStyleOptionGraphicsItem const * option,
-               QWidget * widget = nullptr) final;
-    /**
-     * @brief boundingRect Unused.
-     * @return Zero rect.
-     */
-    QRectF boundingRect() const final;
 
 protected slots:
     /**

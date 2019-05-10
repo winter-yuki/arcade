@@ -14,12 +14,12 @@ ECArrowKeys::ECArrowKeys(Entity * entity)
     : Controller(entity)
 {
     assert(entity);
-    assert(entity->form());
-
-    setFlag(QGraphicsItem::ItemIsFocusable);
-    setFocus();
-
     connect(game(), &Game::sceneResized, this, &ECArrowKeys::sceneResized);
+    connect(entity, &Entity::keyPressed, this, &ECArrowKeys::keyPressed);
+
+    if (!entity->hasFocus()) {
+        qDebug() << "ECArrowKeys: tracked entity doesn't have focus";
+    }
 }
 
 
@@ -103,7 +103,7 @@ ECArrowKeys::OptD ECArrowKeys::bborder() const
 }
 
 
-void ECArrowKeys::keyPressEvent(QKeyEvent * event)
+void ECArrowKeys::keyPressed(QKeyEvent * event)
 {
     if (!entity()->form()) {
         return;

@@ -12,8 +12,13 @@ namespace Engy
 
 Entity::Entity(Game * game)
     : game_(game)
+    , fh_(new FocusHandler)
 {
     assert(game);
+    assert(game->scene());
+
+    game_->scene()->addItem(fh_);
+    connect(fh_, &FocusHandler::keyPressed, this, &Entity::keyPressed);
 }
 
 
@@ -110,6 +115,18 @@ QGraphicsItem * Entity::extractForm()
 }
 
 
+void Entity::setFocus()
+{
+    fh_->setFocus();
+}
+
+
+bool Entity::hasFocus() const
+{
+    return fh_->hasFocus();
+}
+
+
 void Entity::gameDeleted()
 {
     game_ = nullptr;
@@ -158,6 +175,34 @@ void Entity::deleteComponent(Component * c) const
 {
     c->delEntity();
     delete c;
+}
+
+
+Entity::FocusHandler::FocusHandler()
+{
+    setFlag(QGraphicsItem::ItemIsFocusable);
+}
+
+
+void Entity::FocusHandler::keyPressEvent(QKeyEvent * event)
+{
+    emit keyPressed(event);
+}
+
+
+void Entity::FocusHandler::paint(QPainter * painter,
+                                 QStyleOptionGraphicsItem const * option,
+                                 QWidget * widget)
+{
+    Q_UNUSED(painter)
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+}
+
+
+QRectF Entity::FocusHandler::boundingRect() const
+{
+    return { 0, 0, 0, 0 };
 }
 
 } // Engy

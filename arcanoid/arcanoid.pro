@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     components.cpp \
+    controllers.cpp \
     entities.cpp \
     gamewidget.cpp \
     main.cpp
 
 HEADERS += \
     components.hpp \
+    controllers.hpp \
     entities.hpp \
     gamewidget.hpp
 

@@ -40,7 +40,8 @@ public:
     void setBBorder(OptD x);
     OptD bborder() const;
 
-    void keyPressEvent(QKeyEvent * event) override;
+public slots:
+    void keyPressed(QKeyEvent * event);
 
 private slots:
     void sceneResized();

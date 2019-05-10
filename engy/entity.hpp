@@ -77,6 +77,12 @@ public:
     QGraphicsItem * extractForm();
 
     /**
+     * @brief Entity will emit "keyPressed" signal
+     */
+    void setFocus();
+    bool hasFocus() const;
+
+    /**
      * @brief Entity gets ownership of component. Entity can have only one
      * instance of a component type. If component of incoming type alredy exists,
      * replaces old with new one.
@@ -103,6 +109,7 @@ public:
 signals:
     void formAdded();
     void formChanged();
+    void keyPressed(QKeyEvent * event);
 
 protected:
     /**
@@ -130,11 +137,34 @@ private:
     void deleteComponent(Component * c) const;
 
 private:
+    class FocusHandler;
+
     QString name_;
 
     Game * game_;
-    QGraphicsItem  * form_ = nullptr;
+    QGraphicsItem * form_ = nullptr;
+    FocusHandler  * fh_; // TODO init
     std::unordered_map<Component::Id, Component *> components_;
+};
+
+
+class Entity::FocusHandler final
+        : public QGraphicsObject {
+    Q_OBJECT
+
+    friend class Entity;
+    FocusHandler();
+
+signals:
+    void keyPressed(QKeyEvent * event);
+
+private:
+    void keyPressEvent(QKeyEvent * event) override;
+
+    // Unused
+    void paint(QPainter * painter, QStyleOptionGraphicsItem const * option,
+               QWidget * widget = nullptr) final;
+    QRectF boundingRect() const final;
 };
 
 

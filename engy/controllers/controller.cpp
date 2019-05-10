@@ -16,7 +16,6 @@ Controller::Controller(Entity * e)
 {
     assert(game_);
 
-    game_->scene()->addItem(this);
     deleteControllerIfEntityDeleted(true);
     deleteControllerIfGameDeleted(true);
 }
@@ -37,21 +36,6 @@ Entity * Controller::entity()
 Entity const * Controller::entity() const
 {
     return entity_;
-}
-
-
-void Controller::paint(QPainter * painter,
-                       QStyleOptionGraphicsItem const * option, QWidget * widget)
-{
-    Q_UNUSED(painter)
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-}
-
-
-QRectF Controller::boundingRect() const
-{
-    return { 0, 0, 0, 0 };
 }
 
 

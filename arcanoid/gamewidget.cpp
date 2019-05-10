@@ -13,7 +13,7 @@
 #include "engy/components/mass.hpp"
 
 
-// we do not use enum class to have implicit cast to integers
+// We do not use enum class to have implicit cast to integers
 enum BonusType {
     BONUS_BEGIN_NUM = 1,
     BONUS_POINTS,
@@ -25,7 +25,7 @@ enum BonusType {
     BONUS_END_NUM
 };
 
-#define DBG_USE_ONLY_BONUS BONUS_SPEED
+#define DBG_USE_ONLY_BONUS BONUS_ADHESION
 
 
 using namespace std::placeholders;
@@ -99,6 +99,8 @@ void GameWidget::createGame()
     // Create player
     double borderWidth = 5;
     auto player = Engy::Entity::create<Player>(game_);
+    player->setFocus();
+
     auto keyController = Engy::Controller::create<Engy::ECArrowKeys>(player);
     keyController->setDx(25);
     keyController->setDy(std::nullopt);

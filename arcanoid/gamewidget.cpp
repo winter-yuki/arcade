@@ -242,7 +242,7 @@ std::vector<Engy::Entity *> GameWidget::makeField()
     movingBlock->addComponent(collisions);
 
     auto bonusF = [this](Engy::Entity * a, Engy::Entity * b) {
-        if (b->name() == "Ball") {
+        if (b->name() == Ball::NAME) {
             auto bonus = Engy::Entity::create<Bonus>(game_, a);
             bonus->setApplier([this](Engy::Entity *) {
                 updateScore(100);
@@ -287,7 +287,7 @@ Bonus::Applier GameWidget::getRandomBonus()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(BONUS_BEGIN_NUM, BONUS_END_NUM);
+    std::uniform_int_distribution<> dis(BONUS_BEGIN_NUM, BONUS_END_NUM - 1);
 
 #ifdef DBG_USE_ONLY_BONUS
     switch (DBG_USE_ONLY_BONUS) {

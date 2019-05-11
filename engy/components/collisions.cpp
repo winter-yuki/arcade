@@ -1,5 +1,6 @@
 #include "collisions.hpp"
 
+#include <iterator>
 #include "entity.hpp"
 
 
@@ -16,7 +17,7 @@ Collisions::Collisions(int checkingInterval)
 
 void Collisions::addHandler(Component::Id handler)
 {
-    hs_.push_back(handler);
+    hs_.insert(handler);
 }
 
 
@@ -31,16 +32,16 @@ void Collisions::addHandler(Component * handler)
 
 void Collisions::addHandlers(std::initializer_list<Component::Id> l)
 {
-    hs_.insert(hs_.end(), l.begin(), l.end());
+    hs_.insert(l);
 }
 
 
 void Collisions::addHandlers(std::initializer_list<Component *> l)
 {
-    transform(l.begin(), l.end(), std::back_inserter(hs_),
-              [this](Component * c) {
-        if (entity()) {
-            entity()->addComponent(c);
+    transform(l.begin(), l.end(), std::inserter(hs_, hs_.begin()),
+              [e = entity()](Component * c) {
+        if (e) {
+            e->addComponent(c);
         }
         return c->id();
     });
@@ -62,7 +63,7 @@ int Collisions::markerTimer() const
 
 void Collisions::rmHandler(Component::Id id)
 {
-    hs_.erase(remove(hs_.begin(), hs_.end(), id), hs_.end());
+    hs_.erase(id);
 }
 
 

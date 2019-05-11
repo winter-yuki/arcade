@@ -65,7 +65,7 @@ private:
 
 private:
     int collisionMarker_ = UPDATE_INTERVAL + 2;
-    std::vector<Component::Id> hs_;
+    std::unordered_set<Component::Id> hs_;
 };
 
 

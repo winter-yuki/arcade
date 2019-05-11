@@ -67,7 +67,7 @@ class VMod final
     ENGY_CREATABLE_COMPONENT
 
     engy_component_ctor:
-        explicit VMod(float amplitude = 0.6f, int lifeTime = 5000);
+        explicit VMod(float amplitude = 0.6f, int lifeTime = 10000);
 
 public:
     ~VMod() override;

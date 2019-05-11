@@ -25,7 +25,10 @@ enum BonusType {
     BONUS_END_NUM
 };
 
-//#define DBG_USE_ONLY_BONUS BONUS_ADHESION
+static const auto BONUS_BEGIN = BONUS_BEGIN_NUM + 1;
+static const auto BONUS_END   = BONUS_END_NUM   - 1;
+
+//#define DBG_USE_ONLY_BONUS BONUS_SPEED
 
 
 using namespace std::placeholders;
@@ -287,7 +290,7 @@ Bonus::Applier GameWidget::getRandomBonus()
 {
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(BONUS_BEGIN_NUM, BONUS_END_NUM - 1);
+    std::uniform_int_distribution<> dis(BONUS_BEGIN, BONUS_END);
 
 #ifdef DBG_USE_ONLY_BONUS
     switch (DBG_USE_ONLY_BONUS) {

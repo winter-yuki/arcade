@@ -13,7 +13,6 @@
 #include "engy/components/mass.hpp"
 
 
-// We do not use enum class to have implicit cast to integers
 enum BonusType {
     BONUS_BEGIN_NUM = 1,
     BONUS_POINTS,
